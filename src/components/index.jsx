@@ -1,2 +1,6 @@
 export { default as Header } from "./Header"
+export { default as Products } from "./Products"
+export { default as ProductItem } from "./ProductItem"
+export { default as CreateProducts } from "./Admin/CreateProducts"
+export { default as UpdateProducts } from "./Admin/UpdateProducts"
 export { default as Footer } from "./Footer"

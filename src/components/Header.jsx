@@ -10,23 +10,29 @@ import avatar from "../assets/avatar.png"
 import { auth } from "../firebase/config"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { toast } from "react-toastify"
-import { useDispatch } from "react-redux"
-import {
-  REMOVE_ACTIVE_USER,
-  SET_ACTIVE_USER,
-} from "../redux/features/authFeature"
+import { useDispatch, useSelector } from "react-redux"
+import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from "../redux/slice/authSlice"
 import ShowOnLogin, { ShowOnLogout } from "./hiddenLinks"
+import {
+  selectIsLoggedIn,
+  selectUserEmail,
+  selectUserName,
+  selectUserPhoto,
+} from "../redux/slice/authSlice"
 
 const Header = () => {
   // const [isCollapsed, setIsCollapsed] = useState(true)
-  const [isLogged, setIsLogged] = useState(false)
-  const [isAdmin, setIsAdmin] = useState(true)
-  const [darkMode, setDarkMode] = useState(Boolean ? Boolean : undefined)
   const [Collapsed, setCollapsed] = useState(true)
   const [CollapsedPmenu, setCollapsedPmenu] = useState(false)
+  const [darkMode, setDarkMode] = useState(Boolean ? Boolean : undefined)
+  const [isAdmin, setIsAdmin] = useState(false)
+  // const [isLogged, setIsLogged] = useState(false)
   const [userName, setUserName] = useState("")
-  const [userEmail, setUserEmail] = useState("")
-  const [userPhoto, setuserPhoto] = useState("")
+  // const [userEmail, setUserEmail] = useState("")
+  // const [userPhoto, setUserPhoto] = useState("")
+  const user = useSelector(selectUserName)
+  const userEmail = useSelector(selectUserEmail)
+  const userPhoto = useSelector(selectUserPhoto)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -45,7 +51,8 @@ const Header = () => {
       .then(() => {
         // Sign-out successful.
         toast.success("Signout Successful")
-        setIsLogged(false)
+        setUserName("")
+        dispatch(REMOVE_ACTIVE_USER())
         navigate("/")
       })
       .catch((error) => {
@@ -66,14 +73,20 @@ const Header = () => {
           setUserName(user.displayName)
         }
 
-        const uid = user.uid
-        const displayName = user.displayName
-        const email = user.email
-        const photoURL = user.photoURL
-        setUserName(displayName)
-        setUserEmail(email)
-        setuserPhoto(photoURL)
-        setIsLogged(true)
+        if (user.email == "moroamr2005@gmail.com") {
+          setIsAdmin(true)
+        } else {
+          setIsAdmin(false)
+        }
+
+        // const uid = user.uid
+        // const displayName = user.displayName
+        // const email = user.email
+        // const photoURL = user.photoURL
+        // setUserName(displayName)
+        // setUserEmail(email)
+        // setUserPhoto(photoURL)
+        // setIsLogged(true)
 
         dispatch(
           SET_ACTIVE_USER({
