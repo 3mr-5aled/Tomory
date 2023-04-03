@@ -1,5 +1,5 @@
 import React from "react"
-import logo from "../assets/logo.png"
+import logo from "../../assets/logo.png"
 
 const Footer = () => {
   const date = new Date()
@@ -13,7 +13,7 @@ const Footer = () => {
             <a href="https://flowbite.com/" className="flex items-center">
               <img src={logo} className="h-8 mr-3" alt="FlowBite Logo" />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                Ecommercy
+                Tomory
               </span>
             </a>
           </div>

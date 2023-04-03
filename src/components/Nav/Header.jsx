@@ -5,28 +5,29 @@ import {
   BsFillMoonStarsFill,
   BsFillSunFill,
 } from "react-icons/bs"
-import logo from "../assets/logo.png"
-import avatar from "../assets/avatar.png"
-import { auth } from "../firebase/config"
+import logo from "../../assets/logo.png"
+import avatar from "../../assets/avatar.png"
+import { auth } from "../../firebase/config"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { toast } from "react-toastify"
 import { useDispatch, useSelector } from "react-redux"
-import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from "../redux/slice/authSlice"
+import {
+  REMOVE_ACTIVE_USER,
+  SET_ACTIVE_USER,
+} from "../../redux/slice/authSlice"
 import ShowOnLogin, { ShowOnLogout } from "./hiddenLinks"
 import {
   selectIsLoggedIn,
   selectUserEmail,
   selectUserName,
   selectUserPhoto,
-} from "../redux/slice/authSlice"
+} from "../../redux/slice/authSlice"
 
 const Header = () => {
-  // const [isCollapsed, setIsCollapsed] = useState(true)
   const [Collapsed, setCollapsed] = useState(true)
   const [CollapsedPmenu, setCollapsedPmenu] = useState(false)
   const [darkMode, setDarkMode] = useState(Boolean ? Boolean : undefined)
   const [isAdmin, setIsAdmin] = useState(false)
-  // const [isLogged, setIsLogged] = useState(false)
   const [userName, setUserName] = useState("")
   // const [userEmail, setUserEmail] = useState("")
   // const [userPhoto, setUserPhoto] = useState("")
@@ -105,8 +106,8 @@ const Header = () => {
 
   const activeLink = ({ isActive }) => {
     return isActive
-      ? "block font-bold py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white underline underline-offset-4 decoration-blue-700 decoration-3 decoration-wavy"
-      : "block font-bold py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+      ? "block font-bold py-2 pl-3 pr-4 text-white bg-orange-500 rounded md:bg-transparent md:text-orange-700 md:p-0 dark:text-white underline underline-offset-4 decoration-orange-700 decoration-3 decoration-wavy"
+      : "block font-bold py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
   }
 
   // Dark mode
@@ -128,10 +129,10 @@ const Header = () => {
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="md:flex md:items-center md:gap-12">
-            <Link className="flex flex-row items-center text-blue-600" to="/">
+            <Link className="flex flex-row items-center text-orange-600" to="/">
               <span className="sr-only">Home</span>
-              <img className="h-10 w-10 mr-3" src={logo} alt="" />
-              <span className="font-bold text-xl">Ecommercy</span>
+              <img className="h-10 w-10 mr-1 ml-3" src={logo} alt="" />
+              <span className="font-bold text-xl">Tomory</span>
             </Link>
           </div>
 
@@ -160,7 +161,7 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="text-blue-600" onClick={switchMode}>
+            <button className="text-orange-600" onClick={switchMode}>
               {/* switching darkmode */}
               {!darkMode ? (
                 <BsFillMoonStarsFill size={20} />
@@ -171,13 +172,13 @@ const Header = () => {
             {/* switching navbar components on login */}
             <ShowOnLogin>
               <div className="relative flex flex-row items-center">
-                <NavLink className="relative mr-5 text-blue-600" to="/cart">
+                <NavLink className="relative mr-5 text-orange-600" to="/cart">
                   <BsFillCartFill size={25} />
                   <p className="absolute -top-3.5 -right-1.5 font-bold">0</p>
                 </NavLink>
                 <button>
                   <img
-                    className="bg-blue-300 rounded-full h-10 w-10 hover:border-gray-500 hover:border-2"
+                    className="bg-orange-300 rounded-full h-10 w-10 hover:border-gray-500 hover:border-2"
                     src={userPhoto || avatar}
                     alt=""
                     onClick={collapsePmenu}
@@ -235,7 +236,7 @@ const Header = () => {
             <ShowOnLogout>
               <div className="sm:flex sm:gap-4">
                 <NavLink
-                  className="rounded-md bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow"
+                  className="rounded-md bg-orange-600 px-5 py-2.5 text-sm font-medium text-white shadow"
                   to="/login"
                 >
                   Login
@@ -243,7 +244,7 @@ const Header = () => {
 
                 <div className="hidden sm:flex">
                   <NavLink
-                    className="rounded-md bg-gray-200 px-5 py-2.5 text-sm font-medium text-blue-600 dark:bg-gray-100"
+                    className="rounded-md bg-gray-200 px-5 py-2.5 text-sm font-medium text-orange-600 dark:bg-gray-100"
                     to="/register"
                   >
                     Register

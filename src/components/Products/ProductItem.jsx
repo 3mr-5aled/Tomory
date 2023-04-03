@@ -1,32 +1,24 @@
 import React, { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
+// import { doc, getDoc } from "firebase/firestore"
+import { db } from "../../firebase/config"
+import { selectProducts } from "../../redux/slice/productSlice"
+import AddToCartButton from "../addCart"
 
 const ProductItem = () => {
-  const [size, setSize] = useState("")
-  const [color, setColor] = useState()
-  const [selectedSize, setSelectedSize] = useState()
+  const [products, setProducts] = useSelector(selectProducts)
   const [quantity, setQuantity] = useState(1)
-  const [sizeError, setSizeError] = useState("")
-  const [selectedColor, setSelectedColor] = useState("")
 
-  const product = {
-    name: "Iphone 14 pro max",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum ad ullam similique, placeat molestias libero, qui officiis delectus porro cumque corrupti possimus excepturi cupiditate eveniet dolores voluptatem. Ratione, est reprehenderit!",
-    price: "230",
-    colors: ["blue", "red", "green"],
-    sizes: ["64GB", "128GB", "265GB"],
-    images: [
-      "https://i.dummyjson.com/data/products/1/1.jpg",
-      "https://i.dummyjson.com/data/products/1/3.jpg",
-      "https://i.dummyjson.com/data/products/1/4.jpg",
-    ],
-  }
+  const { id } = useParams()
+  const product = products.find((p) => p.id === id)
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (!selectedSize) {
-      setSizeError("Please select a size")
-      return
-    }
+    // if (!selectedSize) {
+    //   setSizeError("Please select a size")
+    //   return
+    // }
   }
   return (
     <section>
@@ -34,11 +26,11 @@ const ProductItem = () => {
         <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
             <img
-              alt="Les Paul"
-              src={product.images[0]}
+              alt={product.name}
+              src={product.imageUrl}
               className="w-full rounded-xl object-cover bg-center"
             />
-            <div className="grid grid-cols-2 gap-4 lg:mt-4">
+            {/* <div className="grid grid-cols-2 gap-4 lg:mt-4">
               {product.images.length > 1 && // check if there are at least two images
                 product.images.slice(1).map((img) => {
                   // start from index 1 and go till the end
@@ -51,10 +43,11 @@ const ProductItem = () => {
                   )
                 })}
             </div>
+          */}
           </div>
 
           <div className="sticky top-0">
-            {/* <strong className="rounded-full border border-blue-600 bg-gray-100 px-3 py-0.5 text-xs font-medium tracking-wide text-blue-600">
+            {/* <strong className="rounded-full border border-orange-600 bg-gray-100 px-3 py-0.5 text-xs font-medium tracking-wide text-orange-600">
               Pre Order
             </strong> */}
 
@@ -121,83 +114,16 @@ const ProductItem = () => {
 
             <div className="mt-4">
               <div className="prose max-w-none">
-                <p>{product.desc}</p>
+                <p>{product.description}</p>
               </div>
             </div>
 
             <form className="mt-8" onSubmit={handleSubmit}>
-              <fieldset>
-                <legend className="mb-1 text-sm font-medium">Color</legend>
-
-                <div className="flex flex-wrap gap-3">
-                  {product.colors.length > 0 &&
-                    product.colors.map((color, index) => {
-                      return (
-                        <label
-                          htmlFor={"color_" + color}
-                          className="cursor-pointer"
-                        >
-                          <input
-                            type="radio"
-                            name="color"
-                            id={"color_" + color}
-                            className="peer sr-only"
-                            value={color}
-                            checked={color === selectedColor} // set checked attribute based on selectedColor state variable
-                            onChange={(e) => setSelectedColor(e.target.value)} // update selectedColor state variable on change
-                            required
-                          />
-                          <span
-                            className={`group inline-flex px-6 border-black border-1 py-3 h-8 w-8 items-center justify-center rounded-full border text-xs font-medium peer-checked:bg-black peer-checked:text-white`}
-                          >
-                            {color}
-                          </span>
-                        </label>
-                      )
-                    })}
-                </div>
-              </fieldset>
-
-              <fieldset className="mt-4">
-                <legend className="mb-1 text-sm font-medium">Size</legend>
-                <div className="flex flex-wrap gap-3">
-                  {product.sizes.length > 0 &&
-                    product.sizes.map((size, index) => {
-                      return (
-                        <label
-                          htmlFor={"size_" + size}
-                          className="cursor-pointer"
-                        >
-                          <input
-                            type="radio"
-                            name="size"
-                            id={"size_" + size}
-                            className="peer sr-only"
-                            value={size}
-                            checked={size === selectedSize} // set checked attribute based on selectedColor state variable
-                            onChange={(e) => setSelectedSize(e.target.value)} // update selectedColor state variable on change
-                            required
-                          />
-                          <span
-                            className={`group inline-flex px-6 border-black border-1 py-3 h-8 w-8 items-center justify-center rounded-full border text-xs font-medium peer-checked:bg-black peer-checked:text-white`}
-                          >
-                            {size}
-                          </span>
-                        </label>
-                      )
-                    })}
-                </div>
-              </fieldset>
-
-              {sizeError && (
-                <div className="text-red-500 text-sm mt-1">{sizeError}</div>
-              )}
-              <div className="mt-8 flex gap-4">
-                <div>
+              <div className="mt-8 flex justify-between w-11/12">
+                <div className="flex items-center">
                   <label htmlFor="quantity" className="sr-only">
                     Qty
                   </label>
-
                   <input
                     type="number"
                     pattern="[0-9]*"
@@ -208,13 +134,17 @@ const ProductItem = () => {
                       )
                     }
                   />
+                  <p className="mx-5 text-xl font-bold">Kg</p>
                 </div>
-                <button
-                  type="submit"
-                  className="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500"
-                >
-                  Add to Cart
-                </button>
+                <AddToCartButton
+                  item={
+                    (product.id,
+                    product.name,
+                    product.imageUrl,
+                    product.price,
+                    quantity)
+                  }
+                />
               </div>
             </form>
           </div>

@@ -99,7 +99,7 @@ function Register() {
             <div className="max-w-xl lg:max-w-3xl">
               <div className="relative -mt-16 block lg:hidden">
                 <a
-                  className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-blue-600 sm:h-20 sm:w-20"
+                  className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-orange-600 sm:h-20 sm:w-20"
                   href="/"
                 >
                   <span className="sr-only">Home</span>
@@ -237,7 +237,7 @@ function Register() {
                 </div>
                 <div
                   id="loginWithGoogle"
-                  className="shadow bg-blue-600 flex flex-row justify-center items-center col-span-6 w-full p-2 rounded-lg text-white "
+                  className="shadow bg-orange-600 flex flex-row justify-center items-center col-span-6 w-full p-2 rounded-lg text-white "
                 >
                   <BsGoogle />
                   <button className="px-2" onClick={signinWithGoogle}>
@@ -267,7 +267,7 @@ function Register() {
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                   <button
                     type="submit"
-                    className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                    className="inline-block shrink-0 rounded-md border border-orange-600 bg-orange-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-orange-600 focus:outline-none focus:ring active:text-orange-500"
                   >
                     Create an account
                   </button>

@@ -86,7 +86,7 @@ function Reset() {
 
             <button
               type="submit"
-              class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
+              class="inline-block rounded-lg bg-orange-500 px-5 py-3 text-sm font-medium text-white"
             >
               Reset Password
             </button>
