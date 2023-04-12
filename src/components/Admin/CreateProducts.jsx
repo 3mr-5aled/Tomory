@@ -3,7 +3,7 @@ import { db, storage } from "../../firebase/config"
 import { addDoc, collection, updateDoc } from "firebase/firestore"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { useSelector, useDispatch } from "react-redux"
-import { ProductsState } from "../../redux/slice/productSlice"
+import { STORE_PRODUCTS } from "../../redux/slice/productSlice"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 import Admin from "../../pages/Admin"
@@ -75,7 +75,7 @@ const CreateProducts = () => {
       toast.success("Product data updated successfully.")
 
       // Add product to Redux store
-      dispatch(ProductsState({ id: productId, ...product, imageUrl }))
+      dispatch(STORE_PRODUCTS({ id: productId, ...product, imageUrl }))
 
       // Reset form fields
       setName("")
@@ -93,7 +93,7 @@ const CreateProducts = () => {
 
   return (
     <Admin>
-      <div className="flex flex-col w-full p-5">
+      <div className="flex flex-col w-full p-5 dark:text-white">
         <h2 className="text-xl font-bold dark:text-white">Create a Product</h2>
         <form onSubmit={handleSubmit}>
           <div className="mt-3 flex flex-row flex-wrap">

@@ -1,66 +1,52 @@
+import { onAuthStateChanged, signOut } from "firebase/auth"
 import React, { useEffect, useState } from "react"
-import { Link, NavLink, useNavigate } from "react-router-dom"
 import {
   BsFillCartFill,
   BsFillMoonStarsFill,
   BsFillSunFill,
 } from "react-icons/bs"
-import logo from "../../assets/logo.png"
-import avatar from "../../assets/avatar.png"
-import { auth } from "../../firebase/config"
-import { onAuthStateChanged, signOut } from "firebase/auth"
-import { toast } from "react-toastify"
 import { useDispatch, useSelector } from "react-redux"
+import { Link, NavLink, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import avatar from "../../assets/avatar.png"
+import logo from "../../assets/logo.png"
+import { auth } from "../../firebase/config"
 import {
   REMOVE_ACTIVE_USER,
   SET_ACTIVE_USER,
-} from "../../redux/slice/authSlice"
-import ShowOnLogin, { ShowOnLogout } from "./hiddenLinks"
-import {
-  selectIsLoggedIn,
+  selectIsAdmin,
   selectUserEmail,
   selectUserName,
   selectUserPhoto,
 } from "../../redux/slice/authSlice"
+import { selectCartItems } from "../../redux/slice/cartSlice"
+import ShowOnLogin, { ShowOnLogout } from "./hiddenLinks"
 
 const Header = () => {
-  const [Collapsed, setCollapsed] = useState(true)
-  const [CollapsedPmenu, setCollapsedPmenu] = useState(false)
-  const [darkMode, setDarkMode] = useState(Boolean ? Boolean : undefined)
-  const [isAdmin, setIsAdmin] = useState(false)
-  const [userName, setUserName] = useState("")
-  // const [userEmail, setUserEmail] = useState("")
-  // const [userPhoto, setUserPhoto] = useState("")
-  const user = useSelector(selectUserName)
+  const userName = useSelector(selectUserName)
   const userEmail = useSelector(selectUserEmail)
   const userPhoto = useSelector(selectUserPhoto)
-  const navigate = useNavigate()
+  const isAdmin = useSelector(selectIsAdmin)
+  const cartItems = useSelector(selectCartItems)
+  const [Collapsed, setCollapsed] = useState(true)
+  const [CollapsedPMenu, setCollapsedPMenu] = useState(false)
+  const [darkMode, setDarkMode] = useState(Boolean ? Boolean : undefined)
+  const [userNameState, setUserName] = useState("")
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const collapse = () => {
     setCollapsed(!Collapsed)
   }
-  const collapsePmenu = () => {
-    setCollapsedPmenu(!CollapsedPmenu)
+  const collapsePMenu = () => {
+    setCollapsedPMenu(!CollapsedPMenu)
   }
   const switchMode = () => {
     setDarkMode(!darkMode)
   }
 
-  const logoutUser = () => {
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        toast.success("Signout Successful")
-        setUserName("")
-        dispatch(REMOVE_ACTIVE_USER())
-        navigate("/")
-      })
-      .catch((error) => {
-        toast.error(error.message)
-        // An error happened.
-      })
-  }
+  // ! Getting user information
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -74,25 +60,11 @@ const Header = () => {
           setUserName(user.displayName)
         }
 
-        if (user.email == "moroamr2005@gmail.com") {
-          setIsAdmin(true)
-        } else {
-          setIsAdmin(false)
-        }
-
-        // const uid = user.uid
-        // const displayName = user.displayName
-        // const email = user.email
-        // const photoURL = user.photoURL
-        // setUserName(displayName)
-        // setUserEmail(email)
-        // setUserPhoto(photoURL)
-        // setIsLogged(true)
-
         dispatch(
           SET_ACTIVE_USER({
+            isLoggedIn: true,
             userID: user.uid,
-            userName: user.displayName ? user.displayName : userName,
+            userName: user.displayName ? user.displayName : userNameState,
             userEmail: user.email,
             userPhoto: user.photoURL,
           })
@@ -102,7 +74,22 @@ const Header = () => {
         dispatch(REMOVE_ACTIVE_USER())
       }
     })
-  }, [dispatch, userName])
+  }, [dispatch, userNameState])
+
+  const logoutUser = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        toast.success("Signout Successful")
+        setUserName2("")
+        dispatch(REMOVE_ACTIVE_USER())
+        navigate("/")
+      })
+      .catch((error) => {
+        toast.error(error.message)
+        // An error happened.
+      })
+  }
 
   const activeLink = ({ isActive }) => {
     return isActive
@@ -131,7 +118,11 @@ const Header = () => {
           <div className="md:flex md:items-center md:gap-12">
             <Link className="flex flex-row items-center text-orange-600" to="/">
               <span className="sr-only">Home</span>
-              <img className="h-10 w-10 mr-1 ml-3" src={logo} alt="" />
+              <img
+                className="h-10 w-10 mr-1 ml-3 rotate-12"
+                src={logo}
+                alt=""
+              />
               <span className="font-bold text-xl">Tomory</span>
             </Link>
           </div>
@@ -174,19 +165,21 @@ const Header = () => {
               <div className="relative flex flex-row items-center">
                 <NavLink className="relative mr-5 text-orange-600" to="/cart">
                   <BsFillCartFill size={25} />
-                  <p className="absolute -top-3.5 -right-1.5 font-bold">0</p>
+                  <p className="absolute -top-3.5 -right-1.5 font-bold">
+                    {cartItems.length}
+                  </p>
                 </NavLink>
                 <button>
                   <img
                     className="bg-orange-300 rounded-full h-10 w-10 hover:border-gray-500 hover:border-2"
                     src={userPhoto || avatar}
                     alt=""
-                    onClick={collapsePmenu}
+                    onClick={collapsePMenu}
                   />
                 </button>
                 <div
                   className={`z-50 ${
-                    !CollapsedPmenu ? "hidden" : "block"
+                    !CollapsedPMenu ? "hidden" : "block"
                   } absolute right-0 top-7 my-4 whitespace-nowrap font-bold text-base list-none bg-gray-300 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}
                 >
                   <div className="px-4 py-3">

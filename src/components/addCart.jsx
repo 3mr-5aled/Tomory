@@ -1,21 +1,14 @@
 import { useDispatch } from "react-redux"
-import { addItem } from "../redux/slice/cartSlice"
+// import { ADD_TO_CART } from "../redux/slice/cartSlice"
 
-const AddToCartButton = ({ item }) => {
+const AddToCartButton = ({ id, name, image, price }) => {
   const dispatch = useDispatch()
 
   const handleAddToCart = () => {
-    dispatch(addItem(item))
+    // dispatch(ADD_TO_CART({ id, name, image, price }))
   }
 
-  return (
-    <button
-      className="block w-full rounded bg-orange-600 text-white p-4 text-sm font-medium transition hover:scale-105"
-      onClick={handleAddToCart}
-    >
-      Add to Cart
-    </button>
-  )
+  return <div>add to cart</div>
 }
 
 export default AddToCartButton

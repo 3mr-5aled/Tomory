@@ -10,8 +10,12 @@ const Footer = () => {
       <div className="mx-auto w-full container p-4 sm:p-6">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
-            <a href="https://flowbite.com/" className="flex items-center">
-              <img src={logo} className="h-8 mr-3" alt="FlowBite Logo" />
+            <a href="#" className="flex items-center">
+              <img
+                src={logo}
+                className="h-8 mr-3 rotate-12"
+                alt="FlowBite Logo"
+              />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 Tomory
               </span>
@@ -24,16 +28,13 @@ const Footer = () => {
               </h2>
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
-                  <a href="https://flowbite.com/" className="hover:underline">
-                    Flowbite
+                  <a href="#" className="hover:underline">
+                    Link
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="https://tailwindcss.com/"
-                    className="hover:underline"
-                  >
-                    Tailwind CSS
+                  <a href="#" className="hover:underline">
+                    Link 2
                   </a>
                 </li>
               </ul>
@@ -44,18 +45,12 @@ const Footer = () => {
               </h2>
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
-                  <a
-                    href="https://github.com/themesberg/flowbite"
-                    className="hover:underline "
-                  >
+                  <a href="" className="hover:underline ">
                     Github
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="https://discord.gg/4eeurUVvTy"
-                    className="hover:underline"
-                  >
+                  <a href="" className="hover:underline">
                     Discord
                   </a>
                 </li>
@@ -84,10 +79,14 @@ const Footer = () => {
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
             © {year} &copy;
-            <a href="https://flowbite.com/" className="hover:underline">
-              Flowbite™
+            <a href="#" className="hover:underline">
+              Tomory
             </a>
-            . All Rights Reserved.
+            . All Rights Reserved. Developer
+            <a className="text-cyan-500" href="https://3mr5aled.netlify.app/">
+              {" "}
+              @3mr 5aled
+            </a>
           </span>
           <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
             <a

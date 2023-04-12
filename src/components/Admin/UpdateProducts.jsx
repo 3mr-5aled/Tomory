@@ -1,87 +1,96 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Navigate, useNavigate, useParams } from "react-router-dom"
-import { selectProducts } from "../../redux/slice/productSlice"
+import { STORE_PRODUCTS, selectProducts } from "../../redux/slice/productSlice"
 import { Admin } from "../../pages"
-import { addDoc, doc, updateDoc } from "firebase/firestore"
+import { addDoc, doc, getDoc, updateDoc } from "firebase/firestore"
 import { toast } from "react-toastify"
 import { db, storage } from "../../firebase/config"
-import { ref, uploadBytes } from "firebase/storage"
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
+import Loader from "../Loader"
+import useFetchDocument from "../../customHooks/useFetchProducts"
 
 const UpdateProducts = () => {
-  const [products, setProducts] = useSelector(selectProducts)
   const { id } = useParams()
-  const product = products.find((p) => p.id === id)
-  const [name, setName] = useState(product.name)
-  const [description, setDescription] = useState(product.description)
-  const [price, setPrice] = useState(product.price)
-  const [amount, setAmount] = useState(product.amount)
-  const [image, setImage] = useState(product.image)
-  const [preview, setPreview] = useState()
+  const [product, setProduct] = useState(null)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { document } = useFetchDocument("products", id)
+  const [preview, setPreview] = useState()
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [price, setPrice] = useState("")
+  const [amount, setAmount] = useState("")
+  const [image, setImage] = useState(null)
 
-  // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
-    if (!image) {
-      setPreview(undefined)
-      return
+    setProduct(document)
+    setName(document?.name)
+    setDescription(document?.description)
+    setPrice(document?.price)
+    setAmount(document?.amount)
+    setImage(document?.imageUrl)
+  }, [document])
+
+  if (!product) {
+    return <Loader />
+  }
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]
+    setImage(file)
+
+    // Show preview
+    const reader = new FileReader()
+    reader.onload = () => {
+      setPreview(reader.result)
     }
-
-    const objectUrl = URL.createObjectURL(image)
-    setPreview(objectUrl)
-
-    // free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl)
-  }, [image])
-
-  const onSelectFile = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setImage(undefined)
-      return
-    }
-
-    // I've kept this example simple by using the first image instead of multiple
-    setImage(e.target.files[0])
+    reader.readAsDataURL(file)
   }
 
-  const productRef = doc(db, "products", product.id)
-
-  // Set the "capital" field of the city 'DC'
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // try {
-    // Update product in Firestore
-    await updateDoc(productRef, {
-      name,
-      description,
-      price,
-      amount,
-    })
-    toast.success("Product updated successfully")
+    try {
+      await updateDoc(doc(db, "products", id), {
+        name,
+        description,
+        price,
+        amount,
+      })
 
-    // Update image in Firebase Storage
-    if (image) {
-      const imageRef = ref(storage, `images/${product.id}`)
-      await uploadBytes(imageRef, image)
-      const imageUrl = await getDownloadURL(imageRef)
+      toast.success("Product updated successfully")
 
-      // Update product data in Firestore with image URL
-      const productDocRef = await doc(db, "products", product.id)
-      const productId = productDocRef.id
-      await updateDoc(productDocRef, { imageUrl })
-      toast.success("image updated successfully.")
+      if (image) {
+        const imageRef = ref(storage, `images/${id}`)
+        await uploadBytes(imageRef, image)
+        const imageUrl = await getDownloadURL(imageRef)
 
-      // Add product to Redux store
-      dispatch(ProductsState({ id: productId, ...product, imageUrl }))
+        await updateDoc(doc(db, "products", id), { imageUrl })
+
+        dispatch(
+          STORE_PRODUCTS({
+            id,
+            ...document,
+            imageUrl,
+          })
+        )
+
+        toast.success("Image updated successfully")
+      }
+
+      setProduct({
+        ...product,
+        name,
+        description,
+        price,
+        amount,
+        imageUrl: image ? URL.createObjectURL(image) : product.imageUrl,
+      })
+
+      navigate("/admin/product_view")
+    } catch (error) {
+      console.error(error)
+      toast.error("Failed to update product")
     }
-    navigate("/admin/product_view")
-    // }
-    //   catch (error) {
-    //   console.error(error)
-    //   toast.error("Failed to update product")
-    // }
   }
 
   return (
@@ -145,9 +154,7 @@ const UpdateProducts = () => {
                 id="img"
                 name="img"
                 accept="image/*"
-                onChange={(e) => {
-                  setImage(e.target.files[0])
-                }}
+                onChange={handleImageChange}
               />
             </div>
             <button

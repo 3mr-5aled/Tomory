@@ -3,11 +3,11 @@ import ReactDOM from "react-dom"
 
 function Loader() {
   return ReactDOM.createPortal(
-    <div class="absolute bg-black opacity-70 flex h-full w-full items-center justify-center text-center z-30">
+    <div className="absolute bg-black opacity-70 flex h-full w-full items-center justify-center text-center z-30">
       <div role="status">
         <svg
           aria-hidden="true"
-          class="mr-2 inline h-10 w-10 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
+          className="mr-2 inline h-10 w-10 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,7 @@ function Loader() {
             fill="currentFill"
           />
         </svg>
-        <span class="sr-only">Loading...</span>
+        <span className="sr-only">Loading...</span>
       </div>
     </div>,
     document.getElementById("loader")

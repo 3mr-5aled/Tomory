@@ -11,7 +11,24 @@ const Contact = () => {
           Got a technical issue? Want to send feedback about a beta feature?
           Need details about our Business plan? Let us know.
         </p>
-        <form action="#" className="space-y-8">
+        <div class="flex justify-center items-center text-white font-bold rounded-xl py-5 bg-slate-700 bg-opacity-66">
+          <img
+            id="devlogo"
+            src="https://d33wubrfki0l68.cloudfront.net/b3e8b3e14752c6c7e8ea1286fc5c9e83460d90ad/fc5ad/public/assets/icons/facelogo.webp"
+            alt="dev face icon"
+            width="40px"
+            height="40px"
+            className="rounded-full mr-3"
+          />
+          <a
+            rel="noopener"
+            href="https://3mr5aled.netlify.app/"
+            target="_blank"
+          >
+            <span>Developer website</span>
+          </a>
+        </div>
+        {/* <form action="#" className="space-y-8">
           <div>
             <label
               for="email"
@@ -62,7 +79,7 @@ const Contact = () => {
           >
             Send message
           </button>
-        </form>
+        </form> */}
       </div>
     </section>
   )
