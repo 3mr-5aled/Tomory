@@ -112,8 +112,8 @@ const Login = () => {
                     required
                   />
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-start">
+                <div className="flex items-center justify-center w-full">
+                  {/* <div className="flex items-start">
                     <div className="flex items-center h-5">
                       <input
                         id="remember"
@@ -131,10 +131,10 @@ const Login = () => {
                         Remember me
                       </label>
                     </div>
-                  </div>
+                  </div> */}
                   <Link
                     to="/reset"
-                    className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 dark:text-white"
+                    className="text-sm font-medium text-grey-600 hover:underline dark:text-primary-500 dark:text-white"
                   >
                     Forgot password?
                   </Link>
@@ -164,6 +164,7 @@ const Login = () => {
                     to="/register"
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500 dark:text-white"
                   >
+                    {" "}
                     Sign up
                   </Link>
                 </p>

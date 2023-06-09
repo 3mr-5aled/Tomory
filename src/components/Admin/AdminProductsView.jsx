@@ -1,6 +1,6 @@
 import { deleteDoc, doc } from "firebase/firestore"
 import { deleteObject, ref } from "firebase/storage"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, NavLink } from "react-router-dom"
 import { toast } from "react-toastify"
@@ -9,6 +9,7 @@ import { db, storage } from "../../firebase/config"
 import { Admin } from "../../pages"
 import { STORE_PRODUCTS, selectProducts } from "../../redux/slice/productSlice"
 import Loader from "../Loader"
+import { BsSearch } from "react-icons/bs"
 
 const AdminProductsView = () => {
   const { data, isLoading } = useFetchCollection("products")
@@ -41,21 +42,45 @@ const AdminProductsView = () => {
       toast.error(error.message)
     }
   }
+  const isProductOutOfStock = (product) => {
+    return product.amount <= 0
+  }
+  // start search
+  const [searchQuery, setSearchQuery] = useState("")
+  const filteredProducts = products.filter((product) => {
+    return product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  })
+
+  // end search
 
   return (
     <Admin>
       {isLoading && <Loader />}
+      <div className="ml-5 mr-8 relative">
+        <input
+          type="text"
+          className="h-10 rounded border-gray-300 text-sm px-3 w-full mx-3"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+
+        <div className="absolute right-3 top-3">
+          <BsSearch />
+        </div>
+      </div>
+
       {products ? (
-        <ul className="mx-5 my-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {products.map((product) => {
+        <ul className="mx-5 my-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {filteredProducts.map((product) => {
             return (
               <li
                 key={product.id}
-                className="bg-white shadow-xl p-3 rounded-xl"
+                className="bg-white dark:bg-slate-700 shadow-xl p-3 rounded-xl"
               >
                 <a
                   href={`/product/${product.id}`}
-                  className="group relative block overflow-hidden "
+                  className="group relative block overflow-hidden"
                 >
                   <img
                     src={product.imageUrl}
@@ -63,17 +88,24 @@ const AdminProductsView = () => {
                     className="h-64 w-full object-contain transition duration-500 group-hover:scale-105 sm:h-72 bg-white rounded-t-xl border-b-orange-400 border-2"
                   />
 
-                  <div className="relative border border-gray-100 bg-white p-6">
+                  <div className="relative border-gray-100 bg-white px-6 py-2 dark:bg-slate-700 dark:border-orange-600 border-2 rounded-b-md">
                     {/* <span className="whitespace-nowrap bg-yellow-400 px-3 py-1.5 text-xs font-medium">
                     New
                   </span> */}
 
-                    <h3 className="mt-4 text-lg font-medium text-gray-900">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                       {product.name}
                     </h3>
 
-                    <p className="mt-1.5 text-sm text-gray-700">
-                      Price: {product.price} $
+                    <p className="mt-1.5 text-sm text-gray-700 dark:text-gray-200">
+                      <span>Price: {product.price} $</span>
+                      {isProductOutOfStock(product) ? (
+                        <span className="text-red-500 ml-3 font-bold">
+                          Out of Stock
+                        </span>
+                      ) : (
+                        ""
+                      )}
                     </p>
                   </div>
                 </a>

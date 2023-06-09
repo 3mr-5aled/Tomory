@@ -40,10 +40,20 @@ function Checkout() {
         payWithCard()
       }
       if (payState == "payOnShip") {
-        navigate("/checkout/success")
+        navigate("/checkout/success", {
+          state: {
+            firstName,
+            lastName,
+            country,
+            email,
+            phoneNumber,
+            postalCode,
+          },
+        })
       }
     }
   }
+
   useEffect(() => {
     handlePayChoice({ target: { value: "payOnShip" } })
   }, []) // Empty dependency array to run effect only once on mount
@@ -422,7 +432,7 @@ function Checkout() {
                     onChange={handlePayChoice}
                   />
                   <span className="mx-5 w-full whitespace-nowrap">
-                    Pay on Ship 📦
+                    Pay on Delivery 📦
                   </span>
                 </label>
               </div>

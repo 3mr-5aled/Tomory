@@ -112,14 +112,14 @@ const Header = () => {
   }, [darkMode])
 
   return (
-    <header aria-label="Site Header" className="bg-gray-100 dark:bg-slate-700">
-      <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+    <header className="bg-gray-100 dark:bg-slate-700">
+      <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 ">
         <div className="flex h-16 items-center justify-between">
           <div className="md:flex md:items-center md:gap-12">
             <Link className="flex flex-row items-center text-orange-600" to="/">
               <span className="sr-only">Home</span>
               <img
-                className="h-10 w-10 mr-1 ml-3 rotate-12"
+                className="h-10 w-10 mr-3 ml-3 rotate-12 bg-white rounded-full"
                 src={logo}
                 alt=""
               />
@@ -152,19 +152,31 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="text-orange-600" onClick={switchMode}>
+            <button
+              className="relative group text-orange-600"
+              onClick={switchMode}
+            >
               {/* switching darkmode */}
               {!darkMode ? (
                 <BsFillMoonStarsFill size={20} />
               ) : (
                 <BsFillSunFill size={20} />
               )}
+              <span className="pointer-events-none text-sm z-index-50 absolute top-5 -right-3 w-max opacity-0 transition-opacity group-hover:opacity-100 bg-gray-700 rounded-md px-3 text-white">
+                Darkmode
+              </span>
             </button>
             {/* switching navbar components on login */}
             <ShowOnLogin>
               <div className="relative flex flex-row items-center">
-                <NavLink className="relative mr-5 text-orange-600" to="/cart">
+                <NavLink
+                  className="relative group mr-5 text-orange-600"
+                  to="/cart"
+                >
                   <BsFillCartFill size={25} />
+                  <span className="pointer-events-none text-sm z-index-50 absolute top-5 -left-3 w-max opacity-0 transition-opacity group-hover:opacity-100 bg-gray-700 rounded-md px-3 text-white">
+                    Cart
+                  </span>
                   <p className="absolute -top-3.5 -right-1.5 font-bold">
                     {cartItems.length}
                   </p>
@@ -193,7 +205,7 @@ const Header = () => {
                   <ul className="py-2">
                     {isAdmin ? (
                       <a
-                        href="/admin"
+                        href="/admin/dashboard"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                       >
                         Dashboard
@@ -203,17 +215,17 @@ const Header = () => {
                     )}
 
                     <NavLink
-                      to="/myorders"
+                      to="/orders"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     >
                       My Orders
                     </NavLink>
 
                     <NavLink
-                      to="/orderhistory"
+                      to="/wish_list"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     >
-                      Order History
+                      Wishlist ♥
                     </NavLink>
 
                     <NavLink

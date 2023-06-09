@@ -1,7 +1,9 @@
 import React from "react"
 import Products from "../components/Products/ProductsList"
 import logo from "../assets/logo.png"
+import datesPlate from "../assets/datesPlate.png"
 import { BsFillArrowDownCircleFill } from "react-icons/bs"
+import { NavLink } from "react-router-dom"
 
 const Home = () => {
   return (
@@ -20,24 +22,24 @@ const Home = () => {
                 the Middle East. Order now!
               </p>
               <div className="flex mt-8">
-                <a
-                  href="#"
+                <NavLink
+                  to="/login"
                   className="px-4 py-2 mr-4 text-white uppercase bg-orange-500 border-2 border-transparent rounded-lg text-md hover:bg-orange-300"
                 >
                   Get started
-                </a>
-                <a
+                </NavLink>
+                {/* <a
                   href="#"
                   className="px-4 py-2 text-orange-700 uppercase bg-transparent border-2 border-orange-700 rounded-lg dark:text-white hover:bg-orange-500 hover:text-white text-md"
                 >
                   Read more
-                </a>
+                </a> */}
               </div>
             </div>
             <div className="relative  sm:block sm:w-1/3 lg:w-2/5">
               <img
-                src={logo}
-                className="max-w-xs m-auto md:max-w-sm rotate-12 bg-white rounded-full drop-shadow-2xl animate-wiggle transition-all ease-in-out border-8na border-orange-400"
+                src={datesPlate}
+                className="max-w-xs m-auto md:max-w-sm rotate-12 bg-orange-600 rounded-full drop-shadow-2xl animate-wiggle transition-all ease-in-out border-8 border-orange-400"
               />
             </div>
           </div>

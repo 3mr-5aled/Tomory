@@ -10,6 +10,10 @@ import {
   Reset,
   Checkout,
   SuccessCheckout,
+  UnSuccessCheckout,
+  Orders,
+  OrderDetails,
+  WishList,
 } from "./pages/index"
 // components
 import { Provider, useSelector } from "react-redux"
@@ -18,7 +22,9 @@ import "react-toastify/dist/ReactToastify.css"
 import { PersistGate } from "redux-persist/integration/react"
 import ProductItem from "./components/Products/ProductItem"
 import {
-  AdminDefault,
+  AdminDashboard,
+  AdminOrderDetails,
+  AdminOrderView,
   AdminProductsView,
   CreateProducts,
   Footer,
@@ -46,9 +52,9 @@ function App() {
           <BrowserRouter>
             <ToastContainer />
             {location.pathname.startsWith("/admin") ? (
-              <Navigation location={location} />
+              <Navigation />
             ) : (
-              <Header location={location} />
+              <Header />
             )}
             {/* {location.pathname === "/admin" && <Navigation location={location} />} */}
             <Routes>
@@ -58,14 +64,18 @@ function App() {
               {/* {isAdmin && <Route path="/admin" element={<Admin />} />} */}
               <Route path="/product/:id" element={<ProductItem />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/wish_list" element={<WishList />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/checkout/success" element={<SuccessCheckout />} />
+              <Route path="/checkout/fail" element={<UnSuccessCheckout />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/order-details/:id" element={<OrderDetails />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/reset" element={<Reset />} />
               {isAdmin && (
                 <>
-                  <Route path="/admin" element={<AdminDefault />} />
+                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
                   <Route path="/admin/create" element={<CreateProducts />} />
                   <Route
                     path="/admin/update/:id"
@@ -74,6 +84,11 @@ function App() {
                   <Route
                     path="/admin/product_view"
                     element={<AdminProductsView />}
+                  />
+                  <Route path="/admin/orders" element={<AdminOrderView />} />
+                  <Route
+                    path="/admin/order-details/:id"
+                    element={<AdminOrderDetails />}
                   />
                 </>
               )}

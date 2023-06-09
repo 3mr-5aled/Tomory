@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import useFetchDocument from "../../customHooks/useFetchProducts"
 import {
   ADD_TO_CART,
@@ -8,10 +8,18 @@ import {
   DECREASE_CART,
 } from "../../redux/slice/cartSlice"
 import Loader from "../Loader"
+import {
+  BsFillCartFill,
+  BsFillBagPlusFill,
+  BsArrowLeftCircleFill,
+} from "react-icons/bs"
+import { auth } from "../../firebase/config"
+import { onAuthStateChanged } from "firebase/auth"
 
 const ProductItem = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const [product, setProduct] = useState(null)
 
@@ -52,8 +60,14 @@ const ProductItem = () => {
   }
 
   const handleAddToCart = (product) => {
-    dispatch(ADD_TO_CART(product))
-    dispatch(CALCULATE_TOTAL_QUANTITY())
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(ADD_TO_CART(product))
+        dispatch(CALCULATE_TOTAL_QUANTITY())
+      } else {
+        navigate("/register")
+      }
+    })
     // const userCartRef = collection(db, "carts")
     // const cartRef = doc(userCartRef, uid)
     // const cartSnap = await getDoc(cartRef)
@@ -94,12 +108,27 @@ const ProductItem = () => {
     //   toast.success("Product added to cart")
   }
 
+  const isProductOutOfStock = (product) => {
+    return product.amount <= 0
+  }
+
   return (
     <>
       <section className="dark:bg-slate-800 dark:text-white">
         <div className="relative mx-auto max-w-screen-xl px-4 py-8">
           <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
+              <div>
+                <button
+                  onClick={() => {
+                    navigate(-1)
+                  }}
+                  className="flex flex-row items-center text-orange-600 hover:text-orange-400 mx-5"
+                >
+                  <BsArrowLeftCircleFill />
+                  <p className="px-3">Back To Orders</p>
+                </button>
+              </div>
               <img
                 alt={product.name}
                 src={product.imageUrl}
@@ -163,10 +192,15 @@ const ProductItem = () => {
                     </svg>
                   </div>
                 </div>
-
-                <p className="text-2xl text-teal-600 font-bold mr-20 mt-3">
-                  ${product.price}
-                </p>
+                {isProductOutOfStock(product) ? (
+                  <p className="text-2xl text-red-600 font-bold mr-20 mt-3">
+                    Out of Stock
+                  </p>
+                ) : (
+                  <p className="text-2xl text-teal-600 font-bold mr-20 mt-3">
+                    ${product.price}
+                  </p>
+                )}
               </div>
 
               <div className="mt-4">
@@ -182,15 +216,22 @@ const ProductItem = () => {
               <div>
                 <button
                   type="submit"
-                  className="inline w-1/3 mt-5 rounded bg-orange-600 text-white p-4 text-sm font-medium transition hover:scale-105"
+                  className="flex w-1/3 mt-5 rounded bg-orange-600 text-white p-4 text-sm font-medium transition hover:scale-105 align-middle text-center items-center"
+                  disabled={isProductOutOfStock(product) ? true : false}
                   onClick={() => handleAddToCart(product)}
                 >
+                  <div className="px-2">
+                    <BsFillBagPlusFill />
+                  </div>
                   Add a Kilo to the cart
                 </button>
                 <Link
                   to="/cart"
-                  className="inline w-1/3 mt-5 mx-5 rounded bg-gray-600 text-white p-4 text-sm font-medium transition hover:bg-gray-400"
+                  className="flex w-fit mt-5 rounded bg-gray-600 text-white p-4 text-sm font-medium transition hover:bg-gray-400 items-center align-middle"
                 >
+                  <div className="pr-2">
+                    <BsFillCartFill />
+                  </div>
                   Go to Cart
                 </Link>
               </div>

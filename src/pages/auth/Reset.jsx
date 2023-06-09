@@ -33,8 +33,8 @@ function Reset() {
             Password reset
           </h1>
           <p class="mt-4 text-gray-500 dark:text-gray-300">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et libero
-            nulla eaque error neque ipsa culpa autem, at itaque nostrum!
+            If you forgot your password write here your email and check your
+            inbox for a resting password reset link
           </p>
         </div>
 
@@ -78,7 +78,7 @@ function Reset() {
 
           <div class="flex items-center justify-between">
             <p class="text-sm text-gray-500">
-              No account?
+              No account?{" "}
               <Link class="underline" to="/register">
                 Sign up
               </Link>
