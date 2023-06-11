@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react"
-import Loader from "../components/Loader"
+import Loader from "../../../components/Loader"
 import { useDispatch, useSelector } from "react-redux"
-import { STORE_ORDERS, selectOrderHistory } from "../redux/slice/orderSlice"
-import { selectUserID } from "../redux/slice/authSlice"
-import useFetchCollection from "../customHooks/useFetchCollection"
+import {
+  STORE_ORDERS,
+  selectOrderHistory,
+} from "../../../redux/slice/orderSlice"
+import { selectUserID } from "../../../redux/slice/authSlice"
+import useFetchCollection from "../../../customHooks/useFetchCollection"
 import { useNavigate } from "react-router-dom"
 
 function Orders() {

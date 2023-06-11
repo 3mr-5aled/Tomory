@@ -11,13 +11,13 @@ import {
   CLEAR_CART,
   selectCartItems,
   selectCartTotalAmount,
-} from "../redux/slice/cartSlice"
+} from "../../redux/slice/cartSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify"
-import { selectUserEmail, selectUserID } from "../redux/slice/authSlice"
+import { selectUserEmail, selectUserID } from "../../redux/slice/authSlice"
 import { useNavigate, useLocation } from "react-router-dom"
-import { auth, db } from "../firebase/config"
-import Loader from "../components/Loader"
+import { auth, db } from "../../firebase/config"
+import Loader from "../../components/Loader"
 
 function SuccessCheckout() {
   const { state } = useLocation()
@@ -33,8 +33,6 @@ function SuccessCheckout() {
   const cartTotalAmount = useSelector(selectCartTotalAmount)
 
   useEffect(() => {
-    // ! fix this
-
     setIsLoading(true)
     const saveOrder = async () => {
       try {

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import Loader from "../components/Loader"
+import Loader from "../../components/Loader"
 import { NavLink, useNavigate } from "react-router-dom"
-import { selectIsLoggedIn } from "../redux/slice/authSlice"
+import { selectIsLoggedIn } from "../../redux/slice/authSlice"
 import {
   selectWishListItems,
   CLEAR_WISHLIST,
   REMOVE_FROM_WISHLIST,
-} from "../redux/slice/wishListSlice"
+} from "../../redux/slice/wishListSlice"
 import { BsXCircleFill } from "react-icons/bs"
 const WishList = () => {
   const [isLoading, setIsLoading] = useState(false)

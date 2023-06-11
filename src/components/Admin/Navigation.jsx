@@ -27,7 +27,7 @@ const Navigation = () => {
   const userPhoto = useSelector(selectUserPhoto)
   const [Collapsed, setCollapsed] = useState(true)
   const [CollapsedPMenu, setCollapsedPMenu] = useState(false)
-  const [darkMode, setDarkMode] = useState(Boolean ? Boolean : undefined)
+  const [darkMode, setDarkMode] = useState(Boolean ? undefined : Boolean)
 
   const collapse = () => {
     setCollapsed(!Collapsed)

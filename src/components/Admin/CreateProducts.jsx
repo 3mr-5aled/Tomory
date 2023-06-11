@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { STORE_PRODUCTS } from "../../redux/slice/productSlice"
 import { toast } from "react-toastify"
 import { NavLink, useNavigate } from "react-router-dom"
-import Admin from "../../pages/Admin"
+import Admin from "../../pages/admin/Admin"
 
 const CreateProducts = () => {
   const [name, setName] = useState("")

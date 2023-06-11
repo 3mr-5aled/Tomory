@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import useFetchDocument from "../../customHooks/useFetchProducts"
 import {
@@ -12,9 +12,17 @@ import {
   BsFillCartFill,
   BsFillBagPlusFill,
   BsArrowLeftCircleFill,
+  BsStarFill,
+  BsStarHalf,
+  BsStar,
 } from "react-icons/bs"
 import { auth } from "../../firebase/config"
 import { onAuthStateChanged } from "firebase/auth"
+import {
+  ADD_TO_WISHLIST,
+  selectWishListItems,
+} from "../../redux/slice/wishListSlice"
+import { Reviews, AddReview, ShareButton, RelatedProducts } from "../index"
 
 const ProductItem = () => {
   const { id } = useParams()
@@ -24,6 +32,19 @@ const ProductItem = () => {
   const [product, setProduct] = useState(null)
 
   const { document } = useFetchDocument("products", id)
+
+  // add to wishlist
+  const wishListItems = useSelector(selectWishListItems)
+
+  const getProductClasses = (product) => {
+    const index = wishListItems.findIndex((item) => item.id === product.id)
+    return index !== -1
+      ? "fill-current text-red-500 h-6 w-6"
+      : "fill-none h-6 w-6"
+  }
+  const handleWishList = (product) => {
+    dispatch(ADD_TO_WISHLIST(product))
+  }
 
   useEffect(() => {
     setProduct(document)
@@ -68,44 +89,30 @@ const ProductItem = () => {
         navigate("/register")
       }
     })
-    // const userCartRef = collection(db, "carts")
-    // const cartRef = doc(userCartRef, uid)
-    // const cartSnap = await getDoc(cartRef)
-    // let cartData = cartSnap.exists() ? cartSnap.data() : null
+  }
+  const renderStars = (rating) => {
+    if (rating <= 0) {
+      return <p>Product isn't rated</p>
+    } else {
+      const fullStars = Math.floor(rating)
+      const hasHalfStar = rating % 1 !== 0
 
-    // // Create the cart document if it doesn't exist
-    // if (!cartData) {
-    //   cartData = {
-    //     products: [],
-    //   }
-    //   await setDoc(cartRef, cartData)
-    // }
+      const stars = []
+      for (let i = 0; i < fullStars; i++) {
+        stars.push(<BsStarFill color="yellow" />)
+      }
 
-    // const existingProductIndex = cartData.products.findIndex(
-    //   (p) => p.id === product.id
-    // )
+      if (hasHalfStar) {
+        stars.push(<BsStarHalf color="yellow" />)
+      }
 
-    // if (existingProductIndex > -1) {
-    //   // Update the quantity of the existing product in the cart
-    //   const updatedProducts = [...cartData.products]
-    //   updatedProducts[existingProductIndex].quantity += quantity
+      const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0)
+      for (let i = 0; i < emptyStars; i++) {
+        stars.push(<BsStar color="yellow" />)
+      }
 
-    //   const updatedCartData = {
-    //     products: updatedProducts,
-    //   }
-    //   await updateDoc(cartRef, updatedCartData)
-    //   dispatch(ADD_TO_CART({ ...product, quantity }))
-    //   toast.success("Product quantity updated in cart")
-    // } else {
-    //   // Add the new product to the cart
-    //   const updatedProducts = [...cartData.products, { ...product, quantity }]
-
-    //   const updatedCartData = {
-    //     products: updatedProducts,
-    //   }
-    //   await updateDoc(cartRef, updatedCartData)
-    //   dispatch(ADD_TO_CART({ ...product, quantity }))
-    //   toast.success("Product added to cart")
+      return stars
+    }
   }
 
   const isProductOutOfStock = (product) => {
@@ -114,7 +121,7 @@ const ProductItem = () => {
 
   return (
     <>
-      <section className="dark:bg-slate-800 dark:text-white">
+      <section className="dark:bg-slate-800 dark:text-white divide-y-4">
         <div className="relative mx-auto max-w-screen-xl px-4 py-8">
           <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
@@ -143,64 +150,57 @@ const ProductItem = () => {
                     {product.name}
                   </h1>
 
-                  <p className="text-sm">Highest Rated Product</p>
-
-                  <div className="-ml-0.5 flex">
-                    <svg
-                      className="h-5 w-5 text-yellow-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-
-                    <svg
-                      className="h-5 w-5 text-yellow-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-
-                    <svg
-                      className="h-5 w-5 text-yellow-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-
-                    <svg
-                      className="h-5 w-5 text-yellow-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-
-                    <svg
-                      className="h-5 w-5 text-gray-200"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
+                  <div className="flex flex-row">
+                    <span className="flex flex-row mr-3 mt-1">
+                      {renderStars(product.averageRating)}{" "}
+                    </span>
+                    {product.averageRating <= 0 ? (
+                      ""
+                    ) : (
+                      <>
+                        <p>{product.averageRating} of 5</p>
+                      </>
+                    )}
                   </div>
                 </div>
-                {isProductOutOfStock(product) ? (
-                  <p className="text-2xl text-red-600 font-bold mr-20 mt-3">
-                    Out of Stock
-                  </p>
-                ) : (
-                  <p className="text-2xl text-teal-600 font-bold mr-20 mt-3">
-                    ${product.price}
-                  </p>
-                )}
+                <div className="flex flex-row items-center">
+                  <ShareButton product={product} />
+                  <div className="group relative mx-5 mt-2.5">
+                    <button
+                      onClick={() => handleWishList(product)}
+                      className="rounded-full p-1 bg-white text-gray-900 transition hover:text-gray-900/50 "
+                    >
+                      <span className="sr-only">Wishlist</span>
+
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className={getProductClasses(product)}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                        />
+                      </svg>
+                      <span class="pointer-events-none absolute -top-10 -left-5 w-max opacity-0 transition-opacity group-hover:opacity-100 bg-gray-700 rounded-md px-3 py-2 text-white">
+                        WishList
+                      </span>
+                    </button>
+                  </div>
+                  {isProductOutOfStock(product) ? (
+                    <p className="text-2xl text-red-600 font-bold mr-20 mt-3">
+                      Out of Stock
+                    </p>
+                  ) : (
+                    <p className="text-2xl text-teal-600 font-bold mr-20">
+                      ${product.price}
+                    </p>
+                  )}
+                </div>
               </div>
 
               <div className="mt-4">
@@ -238,6 +238,9 @@ const ProductItem = () => {
             </div>
           </div>
         </div>
+        <RelatedProducts />
+        <AddReview product={product} />
+        <Reviews productId={product.id} />
       </section>
     </>
   )

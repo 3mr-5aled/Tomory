@@ -30,7 +30,7 @@ const Header = () => {
   const cartItems = useSelector(selectCartItems)
   const [Collapsed, setCollapsed] = useState(true)
   const [CollapsedPMenu, setCollapsedPMenu] = useState(false)
-  const [darkMode, setDarkMode] = useState(Boolean ? Boolean : undefined)
+  const [darkMode, setDarkMode] = useState(Boolean ? undefined : Boolean)
   const [userNameState, setUserName] = useState("")
   const dispatch = useDispatch()
   const navigate = useNavigate()

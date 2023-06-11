@@ -5,7 +5,7 @@ import {
   BsXCircleFill,
 } from "react-icons/bs"
 import { useDispatch, useSelector } from "react-redux"
-import Loader from "../components/Loader"
+import Loader from "../../components/Loader"
 import {
   ADD_TO_CART,
   CALCULATE_SUBTOTAL,
@@ -16,9 +16,9 @@ import {
   selectCartItems,
   selectCartTotalAmount,
   selectCartTotalQuantity,
-} from "../redux/slice/cartSlice"
+} from "../../redux/slice/cartSlice"
 import { NavLink, useNavigate } from "react-router-dom"
-import { selectIsLoggedIn } from "../redux/slice/authSlice"
+import { selectIsLoggedIn } from "../../redux/slice/authSlice"
 
 const Cart = () => {
   const [isLoading, setIsLoading] = useState(false)

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import useFetchDocument from "../customHooks/useFetchProducts"
-import Loader from "../components/Loader"
+import useFetchDocument from "../../../customHooks/useFetchProducts"
+import Loader from "../../../components/Loader"
 import { BsArrowLeftCircleFill } from "react-icons/bs"
 
 const OrderDetails = () => {

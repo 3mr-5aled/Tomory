@@ -51,11 +51,7 @@ function App() {
         >
           <BrowserRouter>
             <ToastContainer />
-            {location.pathname.startsWith("/admin") ? (
-              <Navigation />
-            ) : (
-              <Header />
-            )}
+            {location.pathname.startsWith("/admin") ? null : <Header />}
             {/* {location.pathname === "/admin" && <Navigation location={location} />} */}
             <Routes>
               <Route path="/" element={<Home />} />
@@ -94,11 +90,7 @@ function App() {
               )}
               <Route path="*" element={<NotFound />} />
             </Routes>
-            {location.pathname.startsWith("/admin") ? (
-              ""
-            ) : (
-              <Footer location={location} />
-            )}
+            {location.pathname.startsWith("/admin") ? null : <Footer />}
           </BrowserRouter>
         </div>
       </PersistGate>

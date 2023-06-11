@@ -4,16 +4,16 @@ import {
   selectCartItems,
   selectCartTotalAmount,
   selectCartTotalQuantity,
-} from "../redux/slice/cartSlice"
-import logo from "../assets/logo.png"
+} from "../../redux/slice/cartSlice"
+import logo from "../../assets/logo.png"
 import { Link, useNavigate } from "react-router-dom"
 import { BsFillArrowLeftCircleFill } from "react-icons/bs"
-import { CountrySelect } from "../components"
+import { CountrySelect } from "../../components/"
 import {
   selectIsLoggedIn,
   selectUserEmail,
   selectUserName,
-} from "../redux/slice/authSlice"
+} from "../../redux/slice/authSlice"
 
 function Checkout() {
   const [payState, setPayState] = useState("")

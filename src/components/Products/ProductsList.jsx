@@ -8,9 +8,10 @@ import {
   REMOVE_FROM_WISHLIST,
   selectWishListItems,
 } from "../../redux/slice/wishListSlice"
-import Pagination from "../Pagination"
+import Pagination from "../features/Pagination"
 import { toast } from "react-toastify"
 import { BsSearch } from "react-icons/bs"
+import Loader from "../Loader"
 
 const ProductsList = () => {
   const { data, isLoading } = useFetchCollection("products")
@@ -94,6 +95,8 @@ const ProductsList = () => {
         className="relative bg-white
      dark:bg-gray-800"
       >
+        {isLoading && <Loader />}
+
         <span className="absolute top-0 left-0 w-full h-1 bg-slate-700"></span>
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           <header>
@@ -156,7 +159,7 @@ const ProductsList = () => {
 
               <select
                 id="SortBy"
-                className="h-10 rounded border-gray-300 text-sm px-3"
+                className="h-10 rounded border-gray-300 text-sm px-3 focus:border-orange-600 focus:ring-orange-600"
                 onChange={(e) => setSort(e.target.value)}
               >
                 <option>Sort By</option>
@@ -169,7 +172,7 @@ const ProductsList = () => {
             <div className="w-full relative mr-3">
               <input
                 type="text"
-                className="h-10 rounded border-gray-300 text-sm px-3 w-full mx-3"
+                className="h-10 rounded border-gray-300 text-sm px-3 w-full mx-3 focus:border-orange-600 focus:ring-orange-600"
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
