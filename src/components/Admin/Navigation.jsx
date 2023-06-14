@@ -19,51 +19,19 @@ import {
   selectUserName,
   selectUserPhoto,
 } from "../../redux/slice/authSlice"
+import DarkModeButton from "../features/DarkModeButton"
 
 const Navigation = () => {
   const userName = useSelector(selectUserName)
   const userEmail = useSelector(selectUserEmail)
   const isAdmin = useSelector(selectIsAdmin)
   const userPhoto = useSelector(selectUserPhoto)
-  const [Collapsed, setCollapsed] = useState(true)
-  const [CollapsedPMenu, setCollapsedPMenu] = useState(false)
-  const [darkMode, setDarkMode] = useState(Boolean ? undefined : Boolean)
 
-  const collapse = () => {
-    setCollapsed(!Collapsed)
-  }
+  const [CollapsedPMenu, setCollapsedPMenu] = useState(false)
+
   const collapsePMenu = () => {
     setCollapsedPMenu(!CollapsedPMenu)
   }
-
-  const logoutUser = () => {
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        toast.success("Signout Successful")
-        setUserName2("")
-        dispatch(REMOVE_ACTIVE_USER())
-        navigate("/")
-      })
-      .catch((error) => {
-        toast.error(error.message)
-        // An error happened.
-      })
-  }
-  const switchMode = () => {
-    setDarkMode(!darkMode)
-  }
-  useEffect(() => {
-    if (darkMode) {
-      localStorage.setItem("darkMode", "true")
-      window.document.documentElement.classList.add("dark")
-    } else if (darkMode === false) {
-      localStorage.setItem("darkMode", "false")
-      window.document.documentElement.classList.remove("dark")
-    } else {
-      setDarkMode(localStorage.getItem("darkMode") === "true")
-    }
-  }, [darkMode])
 
   const activeLink = ({ isActive }) => {
     return isActive
@@ -114,14 +82,7 @@ const Navigation = () => {
                   Tomory
                 </span>
               </a>
-              <button className="text-orange-600" onClick={switchMode}>
-                {/* switching darkmode */}
-                {!darkMode ? (
-                  <BsFillMoonStarsFill size={20} />
-                ) : (
-                  <BsFillSunFill size={20} />
-                )}
-              </button>
+              <DarkModeButton />
             </div>
             <ul className="space-y-2 font-medium">
               <li>

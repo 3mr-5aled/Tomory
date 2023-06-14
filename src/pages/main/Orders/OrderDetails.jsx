@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import useFetchDocument from "../../../customHooks/useFetchProducts"
+import useFetchDocument from "../../../customHooks/useFetchDocument"
 import Loader from "../../../components/Loader"
 import { BsArrowLeftCircleFill } from "react-icons/bs"
+import { useSelector } from "react-redux"
+import { selectOrderById } from "../../../redux/slice/orderSlice"
 
 const OrderDetails = () => {
-  const [order, setOrder] = useState(null)
   const { id } = useParams()
-  const { document } = useFetchDocument("orders", id)
-
-  useEffect(() => {
-    setOrder(document)
-  }, [document])
+  const order = useSelector((state) => selectOrderById(state, id))
 
   return (
     <section>

@@ -19,6 +19,7 @@ function Orders() {
 
   useEffect(() => {
     setOrders(data)
+    dispatch(STORE_ORDERS(data))
   }, [dispatch, data])
 
   const handleClick = (id) => {
@@ -28,7 +29,7 @@ function Orders() {
   const filteredOrders = orders.filter((order) => order.userID === userID)
   return (
     <>
-      <h1 className="text-slate-900 text-2xl font-bold text-center my-5 decoration-wavy underline underline-offset-4">
+      <h1 className="text-slate-900 text-2xl font-bold text-center my-5 decoration-wavy underline underline-offset-4 dark:text-white">
         Orders
       </h1>
       {isLoading && <Loader />}

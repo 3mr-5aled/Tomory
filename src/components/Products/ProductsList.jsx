@@ -3,22 +3,19 @@ import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
 import { STORE_PRODUCTS, selectProducts } from "../../redux/slice/productSlice"
 import useFetchCollection from "../../customHooks/useFetchCollection"
-import {
-  ADD_TO_WISHLIST,
-  REMOVE_FROM_WISHLIST,
-  selectWishListItems,
-} from "../../redux/slice/wishListSlice"
-import Pagination from "../features/Pagination"
-import { toast } from "react-toastify"
-import { BsSearch } from "react-icons/bs"
 import Loader from "../Loader"
+import { SearchField, Pagination, Sort } from "../index"
+import AddToWishList from "../features/AddToWishList"
 
 const ProductsList = () => {
   const { data, isLoading } = useFetchCollection("products")
-  const [wishListFill, setWishListFill] = useState("none")
-  const wishListItems = useSelector(selectWishListItems)
   const products = useSelector(selectProducts)
   const dispatch = useDispatch()
+  const [filteredProducts, setFilteredProducts] = useState([])
+
+  const handleFilter = (filteredItems) => {
+    setFilteredProducts(filteredItems)
+  }
   var currentProducts
   // pagination start
   const [currentPage, setCurrentPage] = useState(1)
@@ -34,10 +31,7 @@ const ProductsList = () => {
   //  end
 
   // start search
-  const [searchQuery, setSearchQuery] = useState("")
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+
   currentProducts = filteredProducts.slice(
     indexOfFirstProduct,
     indexOfLastProduct
@@ -49,39 +43,8 @@ const ProductsList = () => {
     dispatch(STORE_PRODUCTS({ products: data }))
   }, [dispatch, data])
 
-  const handleWishList = (product) => {
-    dispatch(ADD_TO_WISHLIST(product))
-  }
   // sorting start
-  const [sort, setSort] = useState("")
-
-  const sorting = () => {
-    let sortedData = [...data] // Create a copy of the data array
-    console.log(sort)
-    if (sort === "Price,ASC") {
-      sortedData.sort((a, b) => (a.price > b.price ? 1 : -1))
-    } else if (sort === "Price,DESC") {
-      sortedData.sort((a, b) => (a.price < b.price ? 1 : -1))
-    } else if (sort === "Title,ASC") {
-      sortedData.sort((a, b) => (a.name > b.name ? 1 : -1))
-    } else if (sort === "Title,DESC") {
-      sortedData.sort((a, b) => (a.name < b.name ? 1 : -1))
-    }
-
-    dispatch(STORE_PRODUCTS({ products: sortedData })) // Update the sorted products in the Redux store
-  }
-
-  useEffect(() => {
-    sorting()
-  }, [sort])
   // end
-
-  const getProductClasses = (product) => {
-    const index = wishListItems.findIndex((item) => item.id === product.id)
-    return index !== -1
-      ? "fill-current text-red-500 h-6 w-6"
-      : "fill-none h-6 w-6"
-  }
 
   useEffect(() => {}, [dispatch])
 
@@ -97,7 +60,6 @@ const ProductsList = () => {
       >
         {isLoading && <Loader />}
 
-        <span className="absolute top-0 left-0 w-full h-1 bg-slate-700"></span>
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           <header>
             <h2 className="text-xl font-bold text-gray-900 dark:text-white sm:text-3xl">
@@ -152,36 +114,8 @@ const ProductsList = () => {
               </button>
               </div> */}
 
-            <div>
-              <label htmlFor="SortBy" className="sr-only">
-                SortBy
-              </label>
-
-              <select
-                id="SortBy"
-                className="h-10 rounded border-gray-300 text-sm px-3 focus:border-orange-600 focus:ring-orange-600"
-                onChange={(e) => setSort(e.target.value)}
-              >
-                <option>Sort By</option>
-                <option value="Title,ASC">A to Z</option>
-                <option value="Title,DESC">Z to A</option>
-                <option value="Price,ASC">Price: Low to High</option>
-                <option value="Price,DESC">Price: High to Low</option>
-              </select>
-            </div>
-            <div className="w-full relative mr-3">
-              <input
-                type="text"
-                className="h-10 rounded border-gray-300 text-sm px-3 w-full mx-3 focus:border-orange-600 focus:ring-orange-600"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-
-              <div className="absolute right-3 top-3">
-                <BsSearch />
-              </div>
-            </div>
+            <Sort data={data} />
+            <SearchField items={products} onFilter={handleFilter} />
           </div>
 
           {products ? (
@@ -194,30 +128,7 @@ const ProductsList = () => {
                       className="relative dark:bg-orange-600 rounded-xl"
                     >
                       <div className="relative group">
-                        <button
-                          onClick={() => handleWishList(product)}
-                          className="absolute right-4 top-4 z-50 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75"
-                        >
-                          <span className="sr-only">Wishlist</span>
-
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className={getProductClasses(product)}
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                            />
-                          </svg>
-                          <span class="pointer-events-none absolute -top-8 -left-5 w-max opacity-0 transition-opacity group-hover:opacity-100 bg-gray-700 rounded-md px-3 py-2 text-white">
-                            WishList
-                          </span>
-                        </button>
+                        <AddToWishList product={product} />
                       </div>
                       <NavLink
                         to={`/product/${product.id}`}

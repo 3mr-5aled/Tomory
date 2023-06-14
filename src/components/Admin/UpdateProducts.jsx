@@ -8,7 +8,7 @@ import { toast } from "react-toastify"
 import { db, storage } from "../../firebase/config"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import Loader from "../Loader"
-import useFetchDocument from "../../customHooks/useFetchProducts"
+import useFetchDocument from "../../customHooks/useFetchDocument"
 
 const UpdateProducts = () => {
   const { id } = useParams()

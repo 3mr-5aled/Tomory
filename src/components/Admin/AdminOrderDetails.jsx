@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { Admin } from "../../pages"
-import useFetchDocument from "../../customHooks/useFetchProducts"
+import useFetchDocument from "../../customHooks/useFetchDocument"
 import { Link, NavLink, useParams } from "react-router-dom"
 import Loader from "../Loader"
 import ChangeOrderStatus from "./ChangeOrderStatus"
 import { BsArrowLeftCircleFill } from "react-icons/bs"
 
 const AdminOrderDetails = () => {
-  const [order, setOrder] = useState(null)
   const { id } = useParams()
-  const { document } = useFetchDocument("orders", id)
-
-  useEffect(() => {
-    setOrder(document)
-  }, [document])
 
   return (
     <Admin>

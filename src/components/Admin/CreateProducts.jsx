@@ -55,6 +55,7 @@ const CreateProducts = () => {
       description,
       price,
       amount,
+      reviews: [],
     }
 
     try {

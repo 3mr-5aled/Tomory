@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { BsGoogle } from "react-icons/bs"
+import { BsEyeFill, BsEyeSlashFill, BsGoogle } from "react-icons/bs"
 import logo from "../../assets/logo.png"
 import {
   GoogleAuthProvider,
@@ -16,6 +16,11 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
 
   const navigate = useNavigate()
 
@@ -101,16 +106,25 @@ const Login = () => {
                   >
                     Password
                   </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-orange-500"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      id="password"
+                      placeholder="••••••••"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-orange-500"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <BsEyeSlashFill /> : <BsEyeFill />}
+                    </button>
+                  </div>
                 </div>
                 <div className="flex items-center justify-center w-full">
                   {/* <div className="flex items-start">

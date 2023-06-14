@@ -9,7 +9,7 @@ import { db, storage } from "../../firebase/config"
 import { Admin } from "../../pages"
 import { STORE_PRODUCTS, selectProducts } from "../../redux/slice/productSlice"
 import Loader from "../Loader"
-import { BsSearch } from "react-icons/bs"
+import SearchField from "../features/SearchField"
 
 const AdminProductsView = () => {
   const { data, isLoading } = useFetchCollection("products")
@@ -19,7 +19,10 @@ const AdminProductsView = () => {
   const [showModal, setShowModal] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [filteredProducts, setFilteredProducts] = useState([])
-  const [searchQuery, setSearchQuery] = useState("")
+
+  const handleFilter = (filteredItems) => {
+    setFilteredProducts(filteredItems)
+  }
 
   useEffect(() => {
     if (data.length) {
@@ -30,15 +33,6 @@ const AdminProductsView = () => {
       )
     }
   }, [dispatch, data])
-
-  useEffect(() => {
-    if (products) {
-      const filteredProducts = products.filter((product) => {
-        return product.name.toLowerCase().includes(searchQuery.toLowerCase())
-      })
-      setFilteredProducts(filteredProducts)
-    }
-  }, [products, searchQuery])
 
   const handleDeleteProduct = (productId, imageUrl) => {
     setSelectedProduct({ id: productId, imageUrl })
@@ -151,18 +145,8 @@ const AdminProductsView = () => {
   return (
     <Admin>
       {isLoading && <Loader />}
-      <div className="ml-5 mr-8 relative">
-        <input
-          type="text"
-          className="h-10 rounded border-gray-300 text-sm px-3 w-full mx-3 focus:border-orange-600 focus:ring-orange-600"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-
-        <div className="absolute right-3 top-3">
-          <BsSearch />
-        </div>
+      <div className="mr-8 mt-3">
+        <SearchField items={products} onFilter={handleFilter} />
       </div>
 
       {filteredProducts.length > 0 ? (

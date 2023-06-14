@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { BsGoogle } from "react-icons/bs"
+import { BsEyeFill, BsEyeSlashFill, BsGoogle } from "react-icons/bs"
 import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import {
@@ -18,6 +18,15 @@ function Register() {
   const [password, setPassword] = useState("")
   const [cPassword, setCPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword2, setShowPassword2] = useState(false)
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
+  const togglePasswordVisibility2 = () => {
+    setShowPassword2(!showPassword2)
+  }
 
   const navigate = useNavigate()
 
@@ -188,16 +197,24 @@ function Register() {
                   >
                     Password
                   </label>
-
-                  <input
-                    type="password"
-                    id="Password"
-                    name="password"
-                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700  shadow-sm"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="Password"
+                      name="password"
+                      className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700  shadow-sm"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <BsEyeSlashFill /> : <BsEyeFill />}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
@@ -208,15 +225,24 @@ function Register() {
                     Password Confirmation
                   </label>
 
-                  <input
-                    type="password"
-                    id="PasswordConfirmation"
-                    name="password_confirmation"
-                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                    value={cPassword}
-                    onChange={(e) => setCPassword(e.target.value)}
-                    required
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword2 ? "text" : "password"}
+                      id="PasswordConfirmation"
+                      name="password_confirmation"
+                      className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                      value={cPassword}
+                      onChange={(e) => setCPassword(e.target.value)}
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500"
+                      onClick={togglePasswordVisibility2}
+                    >
+                      {showPassword2 ? <BsEyeSlashFill /> : <BsEyeFill />}
+                    </button>
+                  </div>
                 </div>
 
                 {/* <div className="col-span-6">

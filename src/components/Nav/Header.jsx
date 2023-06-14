@@ -21,6 +21,7 @@ import {
 } from "../../redux/slice/authSlice"
 import { selectCartItems } from "../../redux/slice/cartSlice"
 import ShowOnLogin, { ShowOnLogout } from "./hiddenLinks"
+import DarkModeButton from "../features/DarkModeButton"
 
 const Header = () => {
   const userName = useSelector(selectUserName)
@@ -28,9 +29,8 @@ const Header = () => {
   const userPhoto = useSelector(selectUserPhoto)
   const isAdmin = useSelector(selectIsAdmin)
   const cartItems = useSelector(selectCartItems)
-  const [Collapsed, setCollapsed] = useState(true)
+  const [Collapsed, setCollapsed] = useState(false)
   const [CollapsedPMenu, setCollapsedPMenu] = useState(false)
-  const [darkMode, setDarkMode] = useState(Boolean ? undefined : Boolean)
   const [userNameState, setUserName] = useState("")
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -40,9 +40,6 @@ const Header = () => {
   }
   const collapsePMenu = () => {
     setCollapsedPMenu(!CollapsedPMenu)
-  }
-  const switchMode = () => {
-    setDarkMode(!darkMode)
   }
 
   // ! Getting user information
@@ -97,20 +94,6 @@ const Header = () => {
       : "block font-bold py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
   }
 
-  // Dark mode
-
-  useEffect(() => {
-    if (darkMode) {
-      localStorage.setItem("darkMode", "true")
-      window.document.documentElement.classList.add("dark")
-    } else if (darkMode === false) {
-      localStorage.setItem("darkMode", "false")
-      window.document.documentElement.classList.remove("dark")
-    } else {
-      setDarkMode(localStorage.getItem("darkMode") === "true")
-    }
-  }, [darkMode])
-
   return (
     <header className="bg-gray-100 dark:bg-slate-700">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 ">
@@ -152,20 +135,7 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button
-              className="relative group text-orange-600"
-              onClick={switchMode}
-            >
-              {/* switching darkmode */}
-              {!darkMode ? (
-                <BsFillMoonStarsFill size={20} />
-              ) : (
-                <BsFillSunFill size={20} />
-              )}
-              <span className="pointer-events-none text-sm z-index-50 absolute top-5 -right-3 w-max opacity-0 transition-opacity group-hover:opacity-100 bg-gray-700 rounded-md px-3 text-white">
-                Darkmode
-              </span>
-            </button>
+            <DarkModeButton />
             {/* switching navbar components on login */}
             <ShowOnLogin>
               <div className="relative flex flex-row items-center">

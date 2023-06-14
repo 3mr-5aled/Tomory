@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import useFetchDocument from "../../customHooks/useFetchProducts"
+import useFetchDocument from "../../customHooks/useFetchDocument"
 import {
   ADD_TO_CART,
   CALCULATE_TOTAL_QUANTITY,
-  DECREASE_CART,
+  // DECREASE_CART,
 } from "../../redux/slice/cartSlice"
 import Loader from "../Loader"
 import {
@@ -22,16 +22,23 @@ import {
   ADD_TO_WISHLIST,
   selectWishListItems,
 } from "../../redux/slice/wishListSlice"
-import { Reviews, AddReview, ShareButton, RelatedProducts } from "../index"
+import {
+  Reviews,
+  AddReview,
+  ShareButton,
+  RelatedProducts,
+  Divider,
+} from "../index"
+import { selectProductById } from "../../redux/slice/productSlice"
 
 const ProductItem = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const product = useSelector((state) => selectProductById(state, id))
+  // const [product, setProduct] = useState(null)
 
-  const [product, setProduct] = useState(null)
-
-  const { document } = useFetchDocument("products", id)
+  // const { document } = useFetchDocument("products", id)
 
   // add to wishlist
   const wishListItems = useSelector(selectWishListItems)
@@ -46,39 +53,27 @@ const ProductItem = () => {
     dispatch(ADD_TO_WISHLIST(product))
   }
 
-  useEffect(() => {
-    setProduct(document)
-  }, [document])
-
   // useEffect(() => {
-  //   if (products || products.length) {
-  //     const fetchProduct = async () => {
-  //       const productRef = doc(db, "products", id)
-  //       const productSnap = await getDoc(productRef)
-  //       const data = productSnap.data()
-  //       setProduct({ ...data, id: productRef.id })
-  //     }
-  //     fetchProduct()
-  //   } else {
-  //     const productRed = products.find((p) => p.id === id)
-  //     setProduct(productRed)
+  //   if (document) {
+  //     setProduct(document)
   //   }
-  // }, [products, dispatch, id])
+  // }, [document])
 
   const handleSubmit = (event) => {
     event.preventDefault()
   }
+
   if (!product) {
     return <Loader />
   }
 
-  const increaseCart = (product) => {
-    dispatch(ADD_TO_CART(product))
-  }
+  // const increaseCart = (product) => {
+  //   dispatch(ADD_TO_CART(product))
+  // }
 
-  const decreaseCart = (product) => {
-    dispatch(DECREASE_CART(product))
-  }
+  // const decreaseCart = (product) => {
+  //   dispatch(DECREASE_CART(product))
+  // }
 
   const handleAddToCart = (product) => {
     onAuthStateChanged(auth, (user) => {
@@ -86,7 +81,7 @@ const ProductItem = () => {
         dispatch(ADD_TO_CART(product))
         dispatch(CALCULATE_TOTAL_QUANTITY())
       } else {
-        navigate("/register")
+        navigate("/login")
       }
     })
   }
@@ -121,7 +116,7 @@ const ProductItem = () => {
 
   return (
     <>
-      <section className="dark:bg-slate-800 dark:text-white divide-y-4">
+      <section className="dark:bg-slate-800 dark:text-white">
         <div className="relative mx-auto max-w-screen-xl px-4 py-8">
           <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
@@ -158,7 +153,9 @@ const ProductItem = () => {
                       ""
                     ) : (
                       <>
-                        <p>{product.averageRating} of 5</p>
+                        <p>
+                          {Math.round(product.averageRating * 10) / 10} of 5
+                        </p>
                       </>
                     )}
                   </div>
@@ -238,9 +235,12 @@ const ProductItem = () => {
             </div>
           </div>
         </div>
-        <RelatedProducts />
+        <Divider />
+        <RelatedProducts product={product} />
+        <Divider />
         <AddReview product={product} />
-        <Reviews productId={product.id} />
+        <Divider />
+        <Reviews productItem={product} productId={product.id} />
       </section>
     </>
   )

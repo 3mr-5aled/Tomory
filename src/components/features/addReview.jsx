@@ -1,115 +1,152 @@
+import { Timestamp, arrayUnion, doc, updateDoc } from "firebase/firestore"
 import React, { useState } from "react"
-import { collection, addDoc, Timestamp } from "firebase/firestore"
-import { auth, db } from "../../firebase/config"
-import { onAuthStateChanged } from "firebase/auth"
+import { BsFillStarFill } from "react-icons/bs"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
+import { auth, db } from "../../firebase/config"
+import { v4 } from "uuid"
+import { useDispatch, useSelector } from "react-redux"
+import { ADD_REVIEW, STORE_PRODUCTS } from "../../redux/slice/productSlice"
+import {
+  selectIsLoggedIn,
+  selectUserEmail,
+  selectUserID,
+  selectUserName,
+  selectUserPhoto,
+} from "../../redux/slice/authSlice"
 
-const addReview = ({ product }) => {
+const AddReview = ({ product }) => {
   const [review, setReview] = useState({ rating: 0, comment: "" })
+  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const handleSubmitReview = (event) => {
-    event.preventDefault()
+  const uniqueId = v4()
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const userID = useSelector(selectUserID)
+  const userName = useSelector(selectUserName)
+  const userPhoto = useSelector(selectUserPhoto)
+
+  const [rating, setRating] = useState(0)
+  const [hover, setHover] = useState(0)
+
+  const handleSubmitReview = async (e) => {
+    e.preventDefault()
 
     // Check if the user is signed in
-    const user = auth.currentUser
-    if (!user) {
-      navigate("/login") // Redirect to login page if user is not signed in
-      return
-    }
+
+    // if (!isLoggedIn) {
+    //   navigate("/login") // Redirect to login page if user is not signed in
+    //   return
+    // }
 
     // Construct the review object
     const today = new Date()
     const date = today.toDateString()
     const newReview = {
-      userId: user.uid,
-      userName: user.displayName,
-      userPhoto: user.photoURL,
-      productId: product.id,
+      id: uniqueId,
+      userID,
+      userName,
+      userPhoto,
       rating: review.rating,
       comment: review.comment,
       date: date,
+      createdAt: Timestamp.now().toDate(),
     }
 
-    // Add the review to Firestore
-    const reviewsRef = collection(db, "Reviews")
-    addDoc(reviewsRef, newReview)
-      .then(() => {
-        // Review added successfully
-        toast.success("Your comment has been added")
-        setReview({ rating: 0, comment: "" })
-        window.location.reload(false)
+    // Update the product document in Firestore
+    const productRef = doc(db, "products", product.id)
+    try {
+      await updateDoc(productRef, {
+        reviews: arrayUnion(newReview), // Use arrayUnion to add the new review to the array
       })
-      .catch((error) => {
-        // Error adding review
-        toast.error("Error adding review: ", error)
-      })
+
+      // Dispatch the action to update the Redux store
+      dispatch(ADD_REVIEW({ productId: product.id, review: newReview }))
+
+      // Review added successfully
+      setReview({ rating: 0, comment: "" })
+      setRating(0)
+      setHover(0)
+      toast.success("Your review has been added")
+    } catch (error) {
+      // Error adding review
+      console.log(error)
+      toast.error("Error adding review: ", error)
+    }
   }
 
-  const handleRatingChange = (rating) => {
-    setReview({ ...review, rating })
+  const handleRatingChange = (index) => {
+    const newRating = index
+    setRating(newRating)
+    setReview({ ...review, rating: newRating })
   }
-
-  // Array to represent the stars
-  const stars = Array.from({ length: 5 }, (_, index) => index + 1)
 
   return (
-    <>
-      {/* Existing JSX code... */}
-      <div className="mt-8">
-        <h2 className="text-lg font-semibold mb-2">Reviews</h2>
-        {auth.currentUser ? (
-          <form onSubmit={handleSubmitReview}>
-            <div className="flex items-center mb-4">
-              <label htmlFor="rating" className="mr-2">
-                Rating:
-              </label>
-              {stars.map((star) => (
-                <label key={star} className="rating-star">
-                  <input
-                    type="radio"
-                    name="rating"
-                    value={star}
-                    checked={review.rating === star}
-                    onChange={() => handleRatingChange(star)}
-                    required
-                  />
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#000000"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className={`feather feather-star ${
-                      review.rating >= star ? "active" : ""
-                    }`}
+    <div className="mt-8 container p-8">
+      <h2 className="text-xl font-bold text-gray-900 dark:text-white sm:text-3xl underline">
+        Add a Review
+      </h2>
+      {isLoggedIn ? (
+        <form onSubmit={handleSubmitReview} className="my-3">
+          <div className="flex items-center mb-4">
+            <label htmlFor="rating" className="mr-2">
+              Rating:
+            </label>
+            <div className="star-rating">
+              {[...Array(5)].map((star, index) => {
+                index += 1
+                return (
+                  <button
+                    type="button"
+                    key={index}
+                    className={
+                      index <= (hover || rating)
+                        ? "text-yellow-400 p-1"
+                        : "text-gray-400 p-1"
+                    }
+                    onClick={() => handleRatingChange(index)}
+                    onMouseEnter={() => setHover(index)}
+                    onMouseLeave={() => setHover(rating)}
+                    onDoubleClick={() => {
+                      setRating(0)
+                      setHover(0)
+                    }}
                   >
-                    <polygon points="12 2 15.09 8.5 22 9.27 17 14 18.18 21.19 12 17.77 5.82 21.19 7 14 2 9.27 8.91 8.5 12 2" />
-                  </svg>
-                </label>
-              ))}
+                    <BsFillStarFill />
+                  </button>
+                )
+              })}
             </div>
-            <div className="mb-4">
-              <label htmlFor="comment">Comment:</label>
-              <textarea
-                id="comment"
-                value={review.comment}
-                onChange={(e) =>
-                  setReview({ ...review, comment: e.target.value })
-                }
-                // required
-              ></textarea>
-            </div>
-            <button type="submit">Submit Review</button>
-          </form>
-        ) : (
-          <p>Please sign in to add a review.</p>
-        )}
-      </div>
-    </>
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="comment"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Comment:
+            </label>
+            <textarea
+              id="message"
+              rows="4"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+              value={review.comment}
+              onChange={(e) =>
+                setReview({ ...review, comment: e.target.value })
+              }
+              placeholder="Write your thoughts here..."
+            ></textarea>
+          </div>
+          <button
+            className="bg-orange-600 rounded-md text-white hover:bg-orange-400 p-3"
+            type="submit"
+          >
+            Submit Review
+          </button>
+        </form>
+      ) : (
+        <p>Please sign in to add a review.</p>
+      )}
+    </div>
   )
 }
 
-export default addReview
+export default AddReview
