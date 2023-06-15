@@ -1,6 +1,8 @@
+<img src="https://github.com/3mr-5aled/Tomory/blob/master/src/assets/logo.png?raw=true" width="200" height="200" />
+
 # Tomory
 
-ecommerce website for buying the best dates from the Middle East.
+Ecommerce React website for buying the best dates from the Middle East.
 
 ## Features
 
