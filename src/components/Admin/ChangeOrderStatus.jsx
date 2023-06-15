@@ -5,36 +5,53 @@ import { toast } from "react-toastify"
 import { db } from "../../firebase/config"
 import { Admin } from "../../pages"
 import Loader from "../Loader"
+import { useDispatch } from "react-redux"
+import { UPDATE_ORDERS_STATUS } from "../../redux/slice/orderSlice"
 
 const ChangeOrderStatus = ({ order, id }) => {
   const [status, setStatus] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const editOrder = (e, id) => {
+  const editOrder = async (e, id) => {
     e.preventDefault()
     setIsLoading(true)
+    const editedTime = Timestamp.now().toDate()
 
     const orderConfig = {
       userID: order.userID,
-      userEmail: order.userEmail,
+      firstName: order.firstName,
+      lastName: order.lastName,
+      email: order.email,
+      phoneNumber: order.phoneNumber,
+      country: order.country,
+      postalCode: order.postalCode,
       orderDate: order.orderDate,
       orderTime: order.orderTime,
       orderAmount: order.orderAmount,
-      orderStatus: status,
       cartItems: order.cartItems,
       createdAt: order.createdAt,
-      editedAt: Timestamp.now().toDate(),
+      orderStatus: status,
+      editedAt: editedTime,
     }
-    try {
-      setDoc(doc(db, "orders", id), orderConfig)
 
+    try {
+      await setDoc(doc(db, "orders", id), orderConfig)
+      dispatch(
+        UPDATE_ORDERS_STATUS({
+          orderId: id,
+          orderStatus: status,
+          editedAt: editedTime,
+        })
+      )
       setIsLoading(false)
       toast.success("Order status changes successfully")
       navigate("/admin/orders")
     } catch (error) {
       setIsLoading(false)
       toast.error(error.message)
+      console.error(error.message)
     }
   }
 

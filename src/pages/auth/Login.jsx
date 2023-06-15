@@ -155,7 +155,7 @@ const Login = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full text-white bg-orange-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  className="inline-block rounded-lg border-2 border-orange-600 bg-white p-2 font-medium text-orange-600 transition hover:bg-orange-600 hover:text-white focus:outline-none focus:ring active:text-orange-500 w-full"
                 >
                   Sign in
                 </button>
@@ -165,7 +165,7 @@ const Login = () => {
                 </p>
                 <div
                   id="loginWithGoogle"
-                  className="shadow bg-[orangered] flex flex-row justify-center items-center col-span-6 w-full p-2 rounded-lg text-white "
+                  className="shadow bg-[orangered] flex flex-row justify-center items-center col-span-6 w-full p-2 rounded-lg text-white hover:text-orange-600 hover:bg-white cursor-pointer transition border-[orangered] border-2 "
                 >
                   <BsGoogle />
                   <button className="px-2" onClick={signinWithGoogle}>

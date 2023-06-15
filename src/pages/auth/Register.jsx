@@ -53,7 +53,7 @@ function Register() {
   }
 
   const provider = new GoogleAuthProvider()
-  const signinWithGoogle = () => {
+  const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user
@@ -262,10 +262,10 @@ function Register() {
                 </div> */}
                 <div
                   id="loginWithGoogle"
-                  className="shadow bg-orange-600 flex flex-row justify-center items-center col-span-6 w-full p-2 rounded-lg text-white "
+                  className="shadow bg-[orangered] flex flex-row justify-center items-center col-span-6 w-full p-2 rounded-lg text-white hover:text-orange-600 hover:bg-white cursor-pointer transition border-[orangered] border-2"
                 >
                   <BsGoogle />
-                  <button className="px-2" onClick={signinWithGoogle}>
+                  <button className="px-2" onClick={signInWithGoogle}>
                     Sign up with Google
                   </button>
                 </div>
@@ -292,7 +292,7 @@ function Register() {
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                   <button
                     type="submit"
-                    className="inline-block shrink-0 rounded-md border border-orange-600 bg-orange-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-orange-600 focus:outline-none focus:ring active:text-orange-500"
+                    className="inline-block shrink-0 rounded-md border-2 border-orange-600 bg-white px-12 py-3 text-sm font-medium text-orange-600 transition hover:bg-orange-600 hover:text-white focus:outline-none focus:ring active:text-orange-500"
                   >
                     Create an account
                   </button>

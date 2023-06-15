@@ -9,8 +9,7 @@ import {
   Register,
   Reset,
   Checkout,
-  SuccessCheckout,
-  UnSuccessCheckout,
+  CheckoutStatus,
   Orders,
   OrderDetails,
   WishList,
@@ -29,7 +28,6 @@ import {
   CreateProducts,
   Footer,
   Header,
-  Navigation,
   UpdateProducts,
 } from "./components/index"
 import { selectIsAdmin } from "./redux/slice/authSlice"
@@ -62,8 +60,7 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/wish_list" element={<WishList />} />
               <Route path="/checkout" element={<Checkout />} />
-              <Route path="/checkout/success" element={<SuccessCheckout />} />
-              <Route path="/checkout/fail" element={<UnSuccessCheckout />} />
+              <Route path="/checkout/status" element={<CheckoutStatus />} />
               <Route path="/orders" element={<Orders />} />
               <Route path="/order-details/:id" element={<OrderDetails />} />
               <Route path="/login" element={<Login />} />

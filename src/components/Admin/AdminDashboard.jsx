@@ -1,8 +1,41 @@
 import React from "react"
 import { Admin } from "../../pages"
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { selectProducts } from "../../redux/slice/productSlice"
+import {
+  BsFillBagFill,
+  BsFillBoxSeamFill,
+  BsCurrencyDollar,
+} from "react-icons/bs"
+import { FaTruck } from "react-icons/fa"
+import {
+  selectAdminOrders,
+  selectDeliveredOrdersCount,
+  selectTotalOrderAmountSum,
+} from "../../redux/slice/orderSlice"
 
 const AdminDashboard = () => {
+  const products = useSelector(selectProducts)
+  const adminOrders = useSelector(selectAdminOrders)
+  const totalProfit = useSelector(selectTotalOrderAmountSum)
+  const totalDelivered = useSelector(selectDeliveredOrdersCount)
+
+  const displayedData = [
+    { number: products.length, icon: BsFillBagFill, totalOf: "Products" },
+    {
+      number: adminOrders.length,
+      icon: BsFillBoxSeamFill,
+      totalOf: "Orders",
+    },
+    { number: totalProfit + " $", icon: BsCurrencyDollar, totalOf: "Profit" },
+    {
+      number: totalDelivered,
+      icon: FaTruck,
+      totalOf: "Deliverd Orders",
+    },
+  ]
+
   return (
     <Admin>
       <div className="p-5">
@@ -29,6 +62,22 @@ const AdminDashboard = () => {
           >
             Manage Orders
           </Link>
+        </div>
+        <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-4 my-5 gap-5">
+          {displayedData.map((data, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center bg-gray-100 p-5 rounded-xl w-full dark:bg-slate-500"
+            >
+              <data.icon className="text-4xl text-orange-600 my-2 dark:text-orange-500" />
+              <span className="text-2xl font-bold my-2 dark:text-white">
+                {data.number}
+              </span>
+              <h3 className="text-lg text-gray-700 dark:text-gray-300">
+                Total {data.totalOf}
+              </h3>
+            </div>
+          ))}
         </div>
       </div>
     </Admin>

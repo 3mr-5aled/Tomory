@@ -40,7 +40,7 @@ function Checkout() {
         payWithCard()
       }
       if (payState == "payOnShip") {
-        navigate("/checkout/success", {
+        navigate("/checkout/status", {
           state: {
             firstName,
             lastName,
