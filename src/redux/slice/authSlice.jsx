@@ -8,6 +8,8 @@ const initialState = {
   userPhoto: null,
   isAdmin: false,
 }
+const admin1 = import.meta.env.VITE_ADMIN_1
+const admin2 = import.meta.env.VITE_ADMIN_2
 
 const authFeature = createSlice({
   name: "auth",
@@ -20,9 +22,7 @@ const authFeature = createSlice({
       state.userName = userName
       state.userEmail = userEmail
       state.userPhoto = userPhoto
-      state.isAdmin =
-        userEmail === import.meta.env.VITE_ADMIN_1 ||
-        import.meta.env.VITE_ADMIN_2
+      state.isAdmin = userEmail === admin1 || admin2
     },
     REMOVE_ACTIVE_USER(state, action) {
       state.isLoggedIn = false
