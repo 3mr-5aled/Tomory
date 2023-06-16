@@ -22,7 +22,7 @@ const authFeature = createSlice({
       state.userName = userName
       state.userEmail = userEmail
       state.userPhoto = userPhoto
-      state.isAdmin = userEmail === admin1 || admin2
+      state.isAdmin = userEmail === admin2 || admin1
     },
     REMOVE_ACTIVE_USER(state, action) {
       state.isLoggedIn = false
