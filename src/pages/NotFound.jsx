@@ -2,7 +2,7 @@ import React from "react"
 
 function NotFound() {
   return (
-    <div class="grid h-screen px-4 bg-white place-content-center">
+    <div class="grid h-screen px-4 bg-white dark:bg-slate-800 place-content-center">
       <div class="text-center">
         <h1 class="font-black text-gray-200 text-9xl">404</h1>
 

@@ -94,10 +94,12 @@ const CreateProducts = () => {
 
   return (
     <Admin>
-      <div className="flex flex-col w-full p-5 dark:text-white">
-        <h2 className="text-xl font-bold dark:text-white">Create a Product</h2>
+      <div className="flex flex-col md:p-5 dark:text-white py-5">
+        <h2 className="text-xl font-bold dark:text-white ml-5">
+          Create a Product
+        </h2>
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-row">
+          <div className="flex flex-row flex-wrap">
             <div className="mt-3 flex flex-col flex-wrap">
               <div className="block p-5">
                 <h6 className="dark:text-white">Name</h6>
@@ -150,7 +152,7 @@ const CreateProducts = () => {
               <div>
                 {preview && (
                   <img
-                    className="max-w-sm max-h-auto border-black border-2 m-3"
+                    className="w-3/4 md:max-w-sm md:max-h-auto border-black border-2 my-5 mx-3 md:m-3"
                     src={preview}
                   />
                 )}
@@ -165,7 +167,7 @@ const CreateProducts = () => {
               />
             </div>
           </div>
-          <div className="flex flex-row float-right">
+          <div className="flex flex-row w-full items-center mt-3 justify-around md:mt-0 md:float-right">
             <button
               className="bg-orange-600 text-white rounded-md px-5 py-3 float-right w-fit place-self-end mr-5 focus:bg-orange-400 hover:bg-orange-800"
               type="submit"

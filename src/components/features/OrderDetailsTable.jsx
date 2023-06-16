@@ -16,7 +16,7 @@ const OrderDetailsTable = ({ order }) => {
       </div>
 
       <br />
-      <table className="w-full text-center mb-20">
+      <table className="w-full text-center mb-20 overflow-x-auto">
         <thead className="bg-gray-200 w-full dark:bg-slate-500 dark:text-white">
           <tr>
             <th>s/n</th>

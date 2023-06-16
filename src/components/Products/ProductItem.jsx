@@ -94,16 +94,16 @@ const ProductItem = () => {
 
       const stars = []
       for (let i = 0; i < fullStars; i++) {
-        stars.push(<BsStarFill color="yellow" />)
+        stars.push(<BsStarFill key={i} color="yellow" />)
       }
 
       if (hasHalfStar) {
-        stars.push(<BsStarHalf color="yellow" />)
+        stars.push(<BsStarHalf key={i} color="yellow" />)
       }
 
       const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0)
       for (let i = 0; i < emptyStars; i++) {
-        stars.push(<BsStar color="yellow" />)
+        stars.push(<BsStar key={i} color="yellow" />)
       }
 
       return stars
@@ -118,28 +118,26 @@ const ProductItem = () => {
     <>
       <section className="dark:bg-slate-800 dark:text-white">
         <div className="relative mx-auto max-w-screen-xl px-4 py-8">
-          <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
-              <div>
-                <button
-                  onClick={() => {
-                    navigate(-1)
-                  }}
-                  className="flex flex-row items-center text-orange-600 hover:text-orange-400 mx-5"
-                >
-                  <BsArrowLeftCircleFill />
-                  <p className="px-3">Back To Orders</p>
-                </button>
-              </div>
+          <div className="grid grid-cols-1 items-start gap-4 md:gap-8 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-1">
+              <button
+                onClick={() => {
+                  navigate(-1)
+                }}
+                className="flex flex-row items-center text-orange-600 hover:text-orange-400 mx-5"
+              >
+                <BsArrowLeftCircleFill />
+                <p className="px-3">Back To Orders</p>
+              </button>
               <img
                 alt={product.name}
                 src={product.imageUrl}
-                className="w-full rounded-xl object-cover bg-center"
+                className="w-full rounded-xl object-cover bg-center "
               />
             </div>
 
             <div className="sticky top-0">
-              <div className="mt-8 flex justify-between">
+              <div className="mt-4 md:mt-8 flex justify-between w-full">
                 <div className="max-w-[35ch] space-y-2">
                   <h1 className="text-xl font-bold sm:text-2xl ">
                     {product.name}
@@ -183,7 +181,7 @@ const ProductItem = () => {
                           d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
                         />
                       </svg>
-                      <span class="pointer-events-none absolute -top-10 -left-5 w-max opacity-0 transition-opacity group-hover:opacity-100 bg-gray-700 rounded-md px-3 py-2 text-white">
+                      <span className="pointer-events-none absolute -top-10 -left-5 w-max opacity-0 transition-opacity group-hover:opacity-100 bg-gray-700 rounded-md px-3 py-2 text-white">
                         WishList
                       </span>
                     </button>
@@ -193,7 +191,7 @@ const ProductItem = () => {
                       Out of Stock
                     </p>
                   ) : (
-                    <p className="text-2xl text-teal-600 font-bold mr-20">
+                    <p className="text-2xl text-teal-600 font-bold mr-3 md:mr-20">
                       ${product.price}
                     </p>
                   )}
@@ -210,10 +208,10 @@ const ProductItem = () => {
                   the dates last for one year under normal conditions
                 </p>
               </div>
-              <div>
+              <div className="flex flex-row md:flex-col gap-5 w-full">
                 <button
                   type="submit"
-                  className="flex w-1/3 mt-5 rounded bg-orange-600 text-white p-4 text-sm font-medium transition hover:scale-105 align-middle text-center items-center"
+                  className="flex w-1/2 md:w-1/3 mt-5 text-center rounded bg-orange-600 text-white p-4 text-sm font-medium transition hover:scale-105 align-middle text-center items-center"
                   disabled={isProductOutOfStock(product) ? true : false}
                   onClick={() => handleAddToCart(product)}
                 >
@@ -224,7 +222,7 @@ const ProductItem = () => {
                 </button>
                 <Link
                   to="/cart"
-                  className="flex w-fit mt-5 rounded bg-gray-600 text-white p-4 text-sm font-medium transition hover:bg-gray-400 items-center align-middle"
+                  className="flex text-center w-1/2 md:w-fit mt-5 rounded bg-gray-600 text-white p-4 text-sm font-medium transition hover:bg-gray-400 items-center align-middle"
                 >
                   <div className="pr-2">
                     <BsFillCartFill />

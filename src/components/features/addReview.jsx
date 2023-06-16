@@ -132,22 +132,24 @@ const AddReview = ({ product }) => {
             placeholder="Write your thoughts here..."
           ></textarea>
         </div>
-        <button
-          className="bg-orange-600 rounded-md text-white hover:bg-orange-400 p-3"
-          type="submit"
-        >
-          Submit Review
-        </button>
-        {!isLoggedIn ? (
+        <div className="flex flex-row gap-4">
           <button
-            className="bg-transparent mx-3 rounded-md text-orange-600 border border-orange-600 hover:bg-orange-600 hover:text-white p-3"
-            onClick={() => navigate("/login")}
+            className="bg-orange-600 rounded-md text-white hover:bg-orange-400 p-3"
+            type="submit"
           >
-            Go to login page
+            Submit Review
           </button>
-        ) : (
-          ""
-        )}
+          {!isLoggedIn ? (
+            <button
+              className="bg-transparent  md:mx-3 rounded-md text-orange-600 border border-orange-600 hover:bg-orange-600 hover:text-white p-3"
+              onClick={() => navigate("/login")}
+            >
+              Go to login page
+            </button>
+          ) : (
+            ""
+          )}
+        </div>
       </form>
     </div>
   )

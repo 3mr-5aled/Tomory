@@ -43,7 +43,7 @@ const AdminDashboard = () => {
         <p className="mt-5 dark:text-white">
           You can here add new products and edit them
         </p>
-        <div className="flex flex-row gap-5">
+        <div className="flex flex-row gap-2 md:gap-5">
           <Link
             to="/admin/create"
             className="block bg-orange-600 hover:bg-orange-400 text-white rounded-xl my-5 p-3 w-fit"

@@ -4,7 +4,7 @@ import { Hero, Features, Divider, AdBanner } from "../../components"
 
 const Home = () => {
   return (
-    <>
+    <div className="w-screen">
       <Hero />
       <Divider />
       <AdBanner />
@@ -12,7 +12,7 @@ const Home = () => {
       <Features />
       <Divider />
       <Products />
-    </>
+    </div>
   )
 }
 
