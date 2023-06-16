@@ -4,7 +4,7 @@ import { Hero, Features, Divider, AdBanner } from "../../components"
 
 const Home = () => {
   return (
-    <div className="w-screen">
+    <div className="w-screen md:w-auto">
       <Hero />
       <Divider />
       <AdBanner />

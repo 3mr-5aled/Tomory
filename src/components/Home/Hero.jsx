@@ -2,8 +2,11 @@ import React from "react"
 import { BsFillArrowDownCircleFill } from "react-icons/bs"
 import { NavLink } from "react-router-dom"
 import datesPlate from "../../assets/datesPlate.png"
+import { useSelector } from "react-redux"
+import { selectIsLoggedIn } from "../../redux/slice/authSlice"
 
 const Hero = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn)
   return (
     <main className="flex flex-col justify-center items-center relative h-[calc(100vh-4rem)] overflow-hidden bg-fixed">
       {/* desktop */}
@@ -94,7 +97,7 @@ const Hero = () => {
             </p>
             <div className="flex mt-8">
               <NavLink
-                to="/login"
+                to={isLoggedIn ? "/product" : "/login"}
                 className="px-4 py-2 mr-4 text-white uppercase bg-orange-500 border-2 border-transparent rounded-lg text-md hover:bg-orange-300"
               >
                 Get started

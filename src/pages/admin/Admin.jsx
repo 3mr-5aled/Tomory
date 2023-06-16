@@ -4,7 +4,7 @@ import { Navigation } from "../../components"
 const Admin = ({ children }) => {
   return (
     <>
-      {/* <Navigation /> */}
+      <Navigation />
       <div
         className={
           (localStorage.getItem("darkMode" === "true" ? "dark" : "light"),

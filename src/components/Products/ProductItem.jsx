@@ -30,12 +30,15 @@ import {
   Divider,
 } from "../index"
 import { selectProductById } from "../../redux/slice/productSlice"
+import { selectIsLoggedIn } from "../../redux/slice/authSlice"
+import { toast } from "react-toastify"
 
 const ProductItem = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const product = useSelector((state) => selectProductById(state, id))
+  const isLoggedIn = useSelector(selectIsLoggedIn)
   // const [product, setProduct] = useState(null)
 
   // const { document } = useFetchDocument("products", id)
@@ -76,15 +79,18 @@ const ProductItem = () => {
   // }
 
   const handleAddToCart = (product) => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch(ADD_TO_CART(product))
-        dispatch(CALCULATE_TOTAL_QUANTITY())
-      } else {
-        navigate("/login")
-      }
-    })
+    if (isProductOutOfStock(product)) {
+      toast.error("This product is out of stock come back when it is in stock")
+      return
+    }
+    if (isLoggedIn) {
+      dispatch(ADD_TO_CART(product))
+      dispatch(CALCULATE_TOTAL_QUANTITY())
+    } else {
+      navigate("/login")
+    }
   }
+
   const renderStars = (rating) => {
     if (rating <= 0) {
       return <p>Product isn't rated</p>
@@ -211,8 +217,11 @@ const ProductItem = () => {
               <div className="flex flex-row md:flex-col gap-5 md:gap-2 w-full">
                 <button
                   type="submit"
-                  className="flex w-1/2 md:w-1/3 mt-5 text-center rounded bg-orange-600 text-white p-4 text-sm font-medium transition hover:scale-105 align-middle text-center items-center"
-                  disabled={isProductOutOfStock(product) ? true : false}
+                  className={`flex w-1/2 md:w-1/3 mt-5 cursor-pointer rounded text-white p-4 text-sm font-medium transition hover:scale-105 align-middle text-center items-center ${
+                    isProductOutOfStock(product)
+                      ? "bg-gray-600"
+                      : "bg-orange-600"
+                  }`}
                   onClick={() => handleAddToCart(product)}
                 >
                   <div className="px-2">

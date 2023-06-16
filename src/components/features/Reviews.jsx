@@ -1,14 +1,14 @@
-import { doc, getDoc, updateDoc } from "firebase/firestore"
-import React, { useEffect, useState } from "react"
+import { doc, updateDoc } from "firebase/firestore"
+import React, { useEffect } from "react"
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs"
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify"
 import { db } from "../../firebase/config"
 import { selectIsAdmin } from "../../redux/slice/authSlice"
+import avatar from "../../assets/avatar.png"
+
 import {
   REMOVE_REVIEW,
-  SET_REVIEWS,
-  STORE_A_PRODUCT,
   UPDATE_AVERAGE_RATING,
   selectProductReviews,
 } from "../../redux/slice/productSlice"
@@ -88,9 +88,9 @@ const Reviews = ({ productItem, productId }) => {
                 <div>
                   <div className="flex items-center mb-4 space-x-4">
                     <img
-                      className="w-10 h-10 rounded-full"
-                      src={review.userPhoto}
-                      alt=""
+                      className="w-10 h-10 rounded-full bg-orange-300"
+                      src={review.userPhoto || avatar}
+                      alt="avatar"
                     />
                     <div className="space-y-1 font-medium dark:text-white">
                       <p>{review.userName}</p>
