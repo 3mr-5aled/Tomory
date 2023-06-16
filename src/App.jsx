@@ -36,7 +36,8 @@ import NotFound from "./pages/NotFound"
 
 function App() {
   // Check Admin
-  const isAdmin = useSelector(selectIsAdmin)
+  // const isAdmin = useSelector(selectIsAdmin)
+  const isAdmin = true
 
   return (
     <Provider store={store}>
@@ -50,15 +51,13 @@ function App() {
           <BrowserRouter>
             <ToastContainer />
             {location.pathname.startsWith("/admin") ? null : <Header />}
-            {/* {location.pathname === "/admin" && <Navigation location={location} />} */}
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/contact" element={<Contact />} />
-              {/* {isAdmin && <Route path="/admin" element={<Admin />} />} */}
               <Route path="/product/:id" element={<ProductItem />} />
               <Route path="/cart" element={<Cart />} />
-              <Route path="/wish_list" element={<WishList />} />
+              <Route path="/wishlist" element={<WishList />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/checkout/status" element={<CheckoutStatus />} />
               <Route path="/orders" element={<Orders />} />
@@ -69,13 +68,16 @@ function App() {
               {isAdmin && (
                 <>
                   <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                  <Route path="/admin/create" element={<CreateProducts />} />
                   <Route
-                    path="/admin/update/:id"
+                    path="/admin/create-product"
+                    element={<CreateProducts />}
+                  />
+                  <Route
+                    path="/admin/update-product/:id"
                     element={<UpdateProducts />}
                   />
                   <Route
-                    path="/admin/product_view"
+                    path="/admin/products"
                     element={<AdminProductsView />}
                   />
                   <Route path="/admin/orders" element={<AdminOrderView />} />

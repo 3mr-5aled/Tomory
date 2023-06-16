@@ -94,7 +94,7 @@ const CreateProducts = () => {
 
   return (
     <Admin>
-      <div className="flex flex-col md:p-5 dark:text-white py-5">
+      <div className="flex flex-col md:p-5 dark:text-white py-5 max-w-xs md:max-w-auto">
         <h2 className="text-xl font-bold dark:text-white ml-5">
           Create a Product
         </h2>
@@ -167,7 +167,7 @@ const CreateProducts = () => {
               />
             </div>
           </div>
-          <div className="flex flex-row w-full items-center mt-3 justify-around md:mt-0 md:float-right">
+          <div className="flex flex-row w-full items-center mt-3 justify-around md:justify-end md:mt-0 md:float-right">
             <button
               className="bg-orange-600 text-white rounded-md px-5 py-3 float-right w-fit place-self-end mr-5 focus:bg-orange-400 hover:bg-orange-800"
               type="submit"

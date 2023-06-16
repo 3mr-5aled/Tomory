@@ -48,7 +48,7 @@ const AdminDashboard = () => {
             to="/admin/create"
             className="block bg-orange-600 hover:bg-orange-400 text-white rounded-xl my-5 p-3 w-fit"
           >
-            Create a Product
+            Create Product
           </Link>
           <Link
             to="/admin/product_view"

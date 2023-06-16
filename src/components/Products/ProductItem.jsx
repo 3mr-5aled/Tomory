@@ -132,12 +132,12 @@ const ProductItem = () => {
               <img
                 alt={product.name}
                 src={product.imageUrl}
-                className="w-full rounded-xl object-cover bg-center "
+                className="w-full rounded-xl object-cover bg-center bg-white"
               />
             </div>
 
             <div className="sticky top-0">
-              <div className="mt-4 md:mt-8 flex justify-between w-full">
+              <div className="mt-4 md:mt-20 flex justify-between w-full">
                 <div className="max-w-[35ch] space-y-2">
                   <h1 className="text-xl font-bold sm:text-2xl ">
                     {product.name}
@@ -160,10 +160,10 @@ const ProductItem = () => {
                 </div>
                 <div className="flex flex-row items-center">
                   <ShareButton product={product} />
-                  <div className="group relative mx-5 mt-2.5">
+                  <div className="mt-1.5 mx-5">
                     <button
                       onClick={() => handleWishList(product)}
-                      className="rounded-full p-1 bg-white text-gray-900 transition hover:text-gray-900/50 "
+                      className="rounded-full p-1 bg-white text-gray-900 transition hover:text-gray-900/50"
                     >
                       <span className="sr-only">Wishlist</span>
 
@@ -208,7 +208,7 @@ const ProductItem = () => {
                   the dates last for one year under normal conditions
                 </p>
               </div>
-              <div className="flex flex-row md:flex-col gap-5 w-full">
+              <div className="flex flex-row md:flex-col gap-5 md:gap-2 w-full">
                 <button
                   type="submit"
                   className="flex w-1/2 md:w-1/3 mt-5 text-center rounded bg-orange-600 text-white p-4 text-sm font-medium transition hover:scale-105 align-middle text-center items-center"
@@ -234,7 +234,7 @@ const ProductItem = () => {
           </div>
         </div>
         <Divider />
-        <RelatedProducts product={product} />
+        <RelatedProducts productId={product.id} />
         <Divider />
         <AddReview product={product} />
         <Divider />
