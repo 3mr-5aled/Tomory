@@ -33,11 +33,11 @@ import {
 import { selectIsAdmin } from "./redux/slice/authSlice"
 import store, { persistor } from "./redux/store"
 import NotFound from "./pages/NotFound"
+import ScrollToTop from "./components/features/ScrollToTop"
 
 function App() {
   // Check Admin
-  // const isAdmin = useSelector(selectIsAdmin)
-  const isAdmin = true
+  const isAdmin = useSelector(selectIsAdmin)
 
   return (
     <Provider store={store}>
@@ -51,6 +51,7 @@ function App() {
           <BrowserRouter>
             <ToastContainer />
             {location.pathname.startsWith("/admin") ? null : <Header />}
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<ProductsPage />} />

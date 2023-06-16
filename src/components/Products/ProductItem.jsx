@@ -98,12 +98,12 @@ const ProductItem = () => {
       }
 
       if (hasHalfStar) {
-        stars.push(<BsStarHalf key={i} color="yellow" />)
+        stars.push(<BsStarHalf key={fullStars} color="yellow" />)
       }
 
       const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0)
       for (let i = 0; i < emptyStars; i++) {
-        stars.push(<BsStar key={i} color="yellow" />)
+        stars.push(<BsStar key={fullStars + i + 1} color="yellow" />)
       }
 
       return stars

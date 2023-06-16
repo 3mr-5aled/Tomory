@@ -30,7 +30,7 @@ const RelatedProducts = ({ productId }) => {
       <h1 className="text-slate-900 dark:text-white text-2xl font-bold text-center my-5 decoration-wavy underline underline-offset-4 mt-5">
         Related Products
       </h1>
-      <div className="my-8 mx-10 flex items-center justify-between">
+      <div className="my-8 mx-10 flex items-center justify-evenly">
         {products ? (
           <>
             <ul className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
