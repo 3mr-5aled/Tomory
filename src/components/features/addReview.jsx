@@ -33,10 +33,10 @@ const AddReview = ({ product }) => {
 
     // Check if the user is signed in
 
-    // if (!isLoggedIn) {
-    //   navigate("/login") // Redirect to login page if user is not signed in
-    //   return
-    // }
+    if (!isLoggedIn) {
+      toast.error("Please login first to add a review")
+      return
+    }
 
     // Construct the review object
     const today = new Date()
@@ -85,66 +85,70 @@ const AddReview = ({ product }) => {
       <h2 className="text-xl font-bold text-gray-900 dark:text-white sm:text-3xl underline">
         Add a Review
       </h2>
-      {isLoggedIn ? (
-        <form onSubmit={handleSubmitReview} className="my-3">
-          <div className="flex items-center mb-4">
-            <label htmlFor="rating" className="mr-2">
-              Rating:
-            </label>
-            <div className="star-rating">
-              {[...Array(5)].map((star, index) => {
-                index += 1
-                return (
-                  <button
-                    type="button"
-                    key={index}
-                    className={
-                      index <= (hover || rating)
-                        ? "text-yellow-400 p-1"
-                        : "text-gray-400 p-1"
-                    }
-                    onClick={() => handleRatingChange(index)}
-                    onMouseEnter={() => setHover(index)}
-                    onMouseLeave={() => setHover(rating)}
-                    onDoubleClick={() => {
-                      setRating(0)
-                      setHover(0)
-                    }}
-                  >
-                    <BsFillStarFill />
-                  </button>
-                )
-              })}
-            </div>
+      <form onSubmit={handleSubmitReview} className="my-3">
+        <div className="flex items-center mb-4">
+          <label htmlFor="rating" className="mr-2">
+            Rating:
+          </label>
+          <div className="star-rating">
+            {[...Array(5)].map((star, index) => {
+              index += 1
+              return (
+                <button
+                  type="button"
+                  key={index}
+                  className={
+                    index <= (hover || rating)
+                      ? "text-yellow-400 p-1"
+                      : "text-gray-400 p-1"
+                  }
+                  onClick={() => handleRatingChange(index)}
+                  onMouseEnter={() => setHover(index)}
+                  onMouseLeave={() => setHover(rating)}
+                  onDoubleClick={() => {
+                    setRating(0)
+                    setHover(0)
+                  }}
+                >
+                  <BsFillStarFill />
+                </button>
+              )
+            })}
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="comment"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Comment:
-            </label>
-            <textarea
-              id="message"
-              rows="4"
-              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
-              value={review.comment}
-              onChange={(e) =>
-                setReview({ ...review, comment: e.target.value })
-              }
-              placeholder="Write your thoughts here..."
-            ></textarea>
-          </div>
-          <button
-            className="bg-orange-600 rounded-md text-white hover:bg-orange-400 p-3"
-            type="submit"
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="comment"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Submit Review
+            Comment:
+          </label>
+          <textarea
+            id="message"
+            rows="4"
+            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+            value={review.comment}
+            onChange={(e) => setReview({ ...review, comment: e.target.value })}
+            placeholder="Write your thoughts here..."
+          ></textarea>
+        </div>
+        <button
+          className="bg-orange-600 rounded-md text-white hover:bg-orange-400 p-3"
+          type="submit"
+        >
+          Submit Review
+        </button>
+        {!isLoggedIn ? (
+          <button
+            className="bg-transparent mx-3 rounded-md text-orange-600 border border-orange-600 hover:bg-orange-600 hover:text-white p-3"
+            onClick={() => navigate("/login")}
+          >
+            Go to login page
           </button>
-        </form>
-      ) : (
-        <p>Please sign in to add a review.</p>
-      )}
+        ) : (
+          ""
+        )}
+      </form>
     </div>
   )
 }

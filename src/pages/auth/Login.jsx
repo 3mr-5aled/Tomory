@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { BsEyeFill, BsEyeSlashFill, BsGoogle } from "react-icons/bs"
 import logo from "../../assets/logo.png"
@@ -30,15 +30,18 @@ const Login = () => {
    * @returns None
    */
 
-  const loginUser = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
+  }
+
+  const logInWithEmail = () => {
     setIsLoading(true)
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // const user = userCredential.user
         setIsLoading(false)
         toast.success("Login Successful..")
-        navigate("/")
+        // navigate("/")
       })
       .catch((error) => {
         setIsLoading(false)
@@ -51,15 +54,22 @@ const Login = () => {
    * @returns None
    */
   const provider = new GoogleAuthProvider()
-  const signinWithGoogle = () => {
+  const signInWithGoogle = () => {
+    setIsLoading(true)
     signInWithPopup(auth, provider)
       .then((result) => {
-        // const user = result.user
+        setIsLoading(false)
         toast.success("Login Successful")
         navigate("/")
       })
       .catch((error) => {
-        toast.error(error.message)
+        setIsLoading(false)
+        if (error.code === "auth/popup-closed-by-user") {
+          toast.error("User closed the sign in pop-up")
+        } else {
+          toast.error(error.message)
+        }
+        console.log(error)
       })
   }
 
@@ -80,7 +90,7 @@ const Login = () => {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
               </h1>
-              <form className="space-y-4 md:space-y-6" onSubmit={loginUser}>
+              <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label
                     htmlFor="email"
@@ -154,7 +164,7 @@ const Login = () => {
                   </Link>
                 </div>
                 <button
-                  type="submit"
+                  onClick={logInWithEmail}
                   className="inline-block rounded-lg border-2 border-orange-600 bg-white p-2 font-medium text-orange-600 transition hover:bg-orange-600 hover:text-white focus:outline-none focus:ring active:text-orange-500 w-full"
                 >
                   Sign in
@@ -168,7 +178,7 @@ const Login = () => {
                   className="shadow bg-[orangered] flex flex-row justify-center items-center col-span-6 w-full p-2 rounded-lg text-white hover:text-orange-600 hover:bg-white cursor-pointer transition border-[orangered] border-2 "
                 >
                   <BsGoogle />
-                  <button className="px-2" onClick={signinWithGoogle}>
+                  <button className="px-2" onClick={signInWithGoogle}>
                     Sign in with Google
                   </button>
                 </div>

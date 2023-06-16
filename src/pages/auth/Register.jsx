@@ -30,8 +30,11 @@ function Register() {
 
   const navigate = useNavigate()
 
-  const registerUser = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
+  }
+
+  const registerWithEmail = () => {
     if (password !== cPassword) {
       toast.error("Passwords don't match")
     }
@@ -54,14 +57,20 @@ function Register() {
 
   const provider = new GoogleAuthProvider()
   const signInWithGoogle = () => {
+    setIsLoading(true)
     signInWithPopup(auth, provider)
       .then((result) => {
-        const user = result.user
-        toast.success("Signup Successfull")
+        setIsLoading(false)
+        toast.success("Signup Successful")
         navigate("/")
       })
       .catch((error) => {
-        toast.success(error.message)
+        setIsLoading(false)
+        if (error.code === "auth/popup-closed-by-user") {
+          toast.error("User closed the sign up pop-up")
+        } else {
+          toast.error(error.message)
+        }
       })
   }
   return (
@@ -136,7 +145,7 @@ function Register() {
                 Sign up
               </h2>
               <form
-                onSubmit={registerUser}
+                onSubmit={handleSubmit}
                 className="mt-8 grid grid-cols-6 gap-6"
               >
                 {/* <div className="col-span-6 sm:col-span-3">
@@ -291,7 +300,7 @@ function Register() {
 
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                   <button
-                    type="submit"
+                    onClick={registerWithEmail}
                     className="inline-block shrink-0 rounded-md border-2 border-orange-600 bg-white px-12 py-3 text-sm font-medium text-orange-600 transition hover:bg-orange-600 hover:text-white focus:outline-none focus:ring active:text-orange-500"
                   >
                     Create an account

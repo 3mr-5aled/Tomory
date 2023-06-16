@@ -78,7 +78,7 @@ const Header = () => {
       .then(() => {
         // Sign-out successful.
         toast.success("Signout Successful")
-        setUserName2("")
+        setUserName("")
         dispatch(REMOVE_ACTIVE_USER())
         navigate("/")
       })

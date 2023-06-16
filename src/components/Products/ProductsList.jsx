@@ -55,7 +55,7 @@ const ProductsList = () => {
   return (
     <>
       <section
-        className="relative bg-white
+        className="relative bg-white 
      dark:bg-gray-800"
       >
         {isLoading && <Loader />}
