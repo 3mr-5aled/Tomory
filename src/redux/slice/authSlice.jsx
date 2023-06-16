@@ -20,7 +20,9 @@ const authFeature = createSlice({
       state.userName = userName
       state.userEmail = userEmail
       state.userPhoto = userPhoto
-      state.isAdmin = userEmail === "moroamr2005@gmail.com"
+      state.isAdmin =
+        userEmail === import.meta.env.VITE_ADMIN_1 ||
+        import.meta.env.VITE_ADMIN_2
     },
     REMOVE_ACTIVE_USER(state, action) {
       state.isLoggedIn = false

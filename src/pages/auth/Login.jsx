@@ -41,7 +41,7 @@ const Login = () => {
         // const user = userCredential.user
         setIsLoading(false)
         toast.success("Login Successful..")
-        // navigate("/")
+        navigate("/")
       })
       .catch((error) => {
         setIsLoading(false)
