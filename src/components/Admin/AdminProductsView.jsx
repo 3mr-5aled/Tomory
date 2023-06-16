@@ -183,7 +183,7 @@ const AdminProductsView = () => {
               </a>
               <div className="mt-4 flex flex-row gap-2 justify-between text-center">
                 <NavLink
-                  to={`/admin/update/${product.id}`}
+                  to={`/admin/update-product/${product.id}`}
                   className="block grow rounded bg-gray-400 text-white p-4 text-sm font-medium transition hover:scale-105"
                 >
                   Update
@@ -206,7 +206,7 @@ const AdminProductsView = () => {
         </h2>
       )}
       <Link
-        to="/admin/create"
+        to="/admin/create-product"
         className="bg-orange-600 hover:bg-orange-400 text-white rounded-xl my-5 mx-5 p-3 w-fit"
       >
         Create a Product

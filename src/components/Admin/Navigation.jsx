@@ -134,7 +134,7 @@ const Navigation = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/admin/create" className={activeLink}>
+                <NavLink to="/admin/create-product" className={activeLink}>
                   {/* <svg
                     aria-hidden="true"
                     className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -155,7 +155,7 @@ const Navigation = () => {
               </li>
 
               <li>
-                <NavLink className={activeLink} to="/admin/product_view">
+                <NavLink className={activeLink} to="/admin/products">
                   {/* <svg
                     aria-hidden="true"
                     className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"

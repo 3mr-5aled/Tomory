@@ -86,7 +86,7 @@ const UpdateProducts = () => {
         imageUrl: image ? URL.createObjectURL(image) : product.imageUrl,
       })
 
-      navigate("/admin/product_view")
+      navigate("/admin/products")
     } catch (error) {
       console.error(error)
       toast.error("Failed to update product")
@@ -176,7 +176,7 @@ const UpdateProducts = () => {
             </button>
             <NavLink
               className="px-4 py-2 text-orange-700 bg-transparent border-2 border-orange-700 rounded-lg dark:text-white hover:bg-orange-500 hover:text-white text-md"
-              to="/admin/product_view"
+              to="/admin/products"
             >
               Cancel
             </NavLink>

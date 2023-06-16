@@ -45,13 +45,13 @@ const AdminDashboard = () => {
         </p>
         <div className="flex flex-row gap-2 md:gap-5">
           <Link
-            to="/admin/create"
+            to="/admin/create-product"
             className="block bg-orange-600 hover:bg-orange-400 text-white rounded-xl my-5 p-3 w-fit"
           >
             Create Product
           </Link>
           <Link
-            to="/admin/product_view"
+            to="/admin/products"
             className="block bg-gray-500 hover:bg-gray-400 text-white rounded-xl my-5 p-3 w-fit"
           >
             Manage Products
