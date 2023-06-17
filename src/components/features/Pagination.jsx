@@ -1,6 +1,7 @@
 import React from "react"
 
 const Pagination = ({
+  currentProducts,
   productsPerPage,
   totalProducts,
   currentPage,
@@ -13,7 +14,13 @@ const Pagination = ({
   }
 
   return (
-    <nav className={productsPerPage == totalProducts ? `hidden` : `block`}>
+    <nav
+      className={
+        productsPerPage == totalProducts || currentProducts.length >= 0
+          ? `hidden`
+          : `block`
+      }
+    >
       <ul className="flex items-center justify-center mt-7">
         {pageNumbers.map((number) => (
           <li key={number}>

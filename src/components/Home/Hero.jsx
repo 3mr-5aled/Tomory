@@ -8,7 +8,7 @@ import { selectIsLoggedIn } from "../../redux/slice/authSlice"
 const Hero = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn)
   return (
-    <main className="flex flex-col justify-center items-center relative h-[calc(100vh-4rem)] overflow-hidden bg-fixed">
+    <main className="flex flex-col justify-center items-center relative h-[calc(100dvh-4rem)] overflow-hidden bg-fixed">
       {/* desktop */}
       <svg
         className="hidden md:block absolute left-0 top-0 w-full h-auto fill-white dark:fill-slate-800"
@@ -113,13 +113,13 @@ const Hero = () => {
           <div className="relative  sm:block sm:w-1/3 lg:w-2/5">
             <img
               src={datesPlate}
-              className="max-w-xs m-auto md:max-w-sm rotate-12 bg-orange-600 rounded-full drop-shadow-2xl animate-wiggle transition-all ease-in-out border-8 border-orange-400"
+              className="max-w-[15rem] m-auto md:max-w-sm rotate-12 bg-orange-600 rounded-full drop-shadow-2xl animate-wiggle transition-all ease-in-out border-8 border-orange-400"
             />
           </div>
         </div>
       </div>
       <button
-        className="animate-bounce z-20 text-3xl cursor-pointer text-orange-600 mb-3"
+        className="absolute bottom-0 bg-white rounded-full p-2 animate-bounce z-20 text-3xl cursor-pointer text-orange-600 mb-3"
         onClick={() => window.scrollTo({ top: 300, behavior: "smooth" })}
       >
         <BsFillArrowDownCircleFill />

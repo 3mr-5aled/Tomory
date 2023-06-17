@@ -27,7 +27,7 @@ const OrderTable = ({ orders, status }) => {
                 <td className="px-4 py-2 bg-gray-200 dark:bg-slate-500 dark:text-white">
                   {index + 1}
                 </td>
-                <td className="px-4 py-2 text-yellow-500 dark:text-yellow-300">
+                <td className="px-4 py-2 text-yellow-500 dark:text-yellow-300 w-fit whitespace-nowrap">
                   {orderDate} at {orderTime}
                 </td>
                 <td className="px-4 py-2">{id}</td>
@@ -35,7 +35,7 @@ const OrderTable = ({ orders, status }) => {
                   {"$"}
                   {orderAmount}
                 </td>
-                <td className="px-4 py-2 flex justify-center whitespace-nowrap">
+                <td className="px-4 py-2 flex items-center justify-center whitespace-nowrap">
                   <p
                     className={
                       orderStatus !== "Delivered"

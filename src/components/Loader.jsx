@@ -1,8 +1,7 @@
 import React from "react"
-import ReactDOM from "react-dom"
 
-function Loader() {
-  return ReactDOM.createPortal(
+const Loader = () => {
+  return (
     <div className="absolute bg-black opacity-70 flex h-full w-full items-center justify-center text-center z-30">
       <div role="status">
         <svg
@@ -23,8 +22,7 @@ function Loader() {
         </svg>
         <span className="sr-only">Loading...</span>
       </div>
-    </div>,
-    document.getElementById("loader")
+    </div>
   )
 }
 

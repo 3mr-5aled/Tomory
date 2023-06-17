@@ -177,6 +177,7 @@ const ProductsList = () => {
                 })}
               </ul>
               <Pagination
+                currentProducts={currentProducts}
                 productsPerPage={productsPerPage}
                 totalProducts={data.length}
                 currentPage={currentPage}
