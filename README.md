@@ -1,8 +1,9 @@
-<img src="https://github.com/3mr-5aled/Tomory/blob/master/src/assets/logo.png?raw=true" width="200" height="200" />
 
-# Tomory
+# <img src="https://github.com/3mr-5aled/Tomory/blob/master/src/assets/logo.png?raw=true" width="50" height="50" />  Tomory 
 
 Ecommerce React website for buying the best dates from the Middle East.
+
+<img src="https://github.com/3mr-5aled/Tomory/blob/master/public/screenshot-rocks%20(2).jpg"/>
 
 ## Features
 
@@ -17,6 +18,7 @@ Ecommerce React website for buying the best dates from the Middle East.
 - contains admin panel for admins and managing the website's products and orders
 - has a cart and wishlist for users saved to the browser local storage 
 - Nice and responsive UI and has darkmode 😎
+- search , sorting , pagination
 
 ## Technologies Used
 
