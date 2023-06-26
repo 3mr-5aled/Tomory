@@ -133,7 +133,7 @@ const ProductItem = () => {
                 className="flex flex-row items-center text-orange-600 hover:text-orange-400 mx-5"
               >
                 <BsArrowLeftCircleFill />
-                <p className="px-3">Back To Orders</p>
+                <p className="px-3">Back To Previous Page</p>
               </button>
               <img
                 alt={product.name}
@@ -145,7 +145,7 @@ const ProductItem = () => {
             <div className="sticky top-0">
               <div className="mt-4 md:mt-20 flex justify-between w-full">
                 <div className="max-w-[35ch] space-y-2">
-                  <h1 className="text-xl font-bold sm:text-2xl ">
+                  <h1 className="text-xl font-bold md:text-4xl ">
                     {product.name}
                   </h1>
 

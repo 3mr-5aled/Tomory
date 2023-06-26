@@ -95,8 +95,8 @@ const UpdateProducts = () => {
 
   return (
     <Admin>
-      <div className="flex flex-col md:p-5 dark:text-white py-5 max-w-xs md:max-w-auto">
-        <h2 className="text-xl font-bold dark:text-white ml-5">
+      <div className="flex flex-col md:p-5 dark:text-white py-5 max-w-xs md:max-w-full">
+        <h2 className="text-xl md:text-4xl font-bold dark:text-white ml-5">
           Update a Product
         </h2>
         <form onSubmit={handleSubmit}>

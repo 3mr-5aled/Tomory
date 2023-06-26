@@ -15,7 +15,7 @@ const AdminOrderDetails = () => {
   return (
     <Admin>
       <div>
-        <h2 className="text-slate-900 text-2xl font-bold text-center my-5 decoration-wavy underline underline-offset-4 dark:text-white">
+        <h2 className="text-slate-900 text-2xl md:text-3xl font-bold text-center my-5 decoration-wavy underline underline-offset-4 dark:text-white">
           Order Details
         </h2>
         <div>

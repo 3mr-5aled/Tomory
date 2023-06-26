@@ -24,7 +24,7 @@ const AdminOrderView = () => {
   return (
     <Admin>
       <div>
-        <h2 className="text-slate-900 text-2xl font-bold text-center my-5 decoration-wavy underline underline-offset-8 dark:text-white">
+        <h2 className="text-slate-900 text-2xl md:text-3xl font-bold text-center my-5 decoration-wavy underline underline-offset-8 dark:text-white">
           Your Order History
         </h2>
         <p className="dark:text-gray-300 px-3">

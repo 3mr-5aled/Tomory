@@ -42,7 +42,7 @@ function Orders() {
 
   return (
     <>
-      <h1 className="text-slate-900 text-2xl font-bold text-center my-5 decoration-wavy underline underline-offset-4 dark:text-white">
+      <h1 className="text-slate-900 text-2xl md:text-3xl font-bold text-center my-5 decoration-wavy underline underline-offset-4 dark:text-white">
         Orders
       </h1>
       {isLoading ? (

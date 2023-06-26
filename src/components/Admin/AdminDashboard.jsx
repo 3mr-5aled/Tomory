@@ -39,7 +39,9 @@ const AdminDashboard = () => {
   return (
     <Admin>
       <div className="p-5">
-        <h2 className="text-2xl text-orange-400 font-bold">Welcome Admin</h2>
+        <h2 className="text-2xl md:text-3xl text-orange-400 font-bold">
+          Welcome Admin
+        </h2>
         <p className="mt-5 dark:text-white">
           You can here add new products and edit them
         </p>

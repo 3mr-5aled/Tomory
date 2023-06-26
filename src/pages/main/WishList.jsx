@@ -38,7 +38,7 @@ const WishList = () => {
           <div className="mx-auto max-w-3xl">
             <header className="text-center">
               <h1 className="text-xl font-bold text-gray-900 dark:text-white sm:text-3xl">
-                Wish List ❤
+                WishList ❤
               </h1>
             </header>
             {isLoading ? (
