@@ -76,248 +76,167 @@ function Register() {
   return (
     <>
       {isLoading && <Loader />}
-      <section className="bg-white dark:bg-slate-800">
-        <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-          <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
-            <img
-              alt="Night"
-              src={registerImage}
-              className="absolute inset-0 h-full w-full object-cover opacity-80"
-            />
+      <section className="relative flex min-h-[calc(100dvh-5rem)] items-center justify-center overflow-hidden bg-[#f3eadf] px-6 py-12 dark:bg-slate-900">
+        {/* Background Elements */}
+        <div className="pointer-events-none absolute inset-0 bg-grain opacity-20" />
+        <div className="absolute -left-20 -top-20 h-96 w-96 animate-drift rounded-full bg-amber-200/40 blur-[100px] dark:bg-amber-900/20" />
+        <div className="absolute -right-20 -bottom-20 h-96 w-96 animate-drift rounded-full bg-orange-200/30 blur-[100px] dark:bg-orange-900/10" />
 
-            <div className="hidden lg:relative lg:block lg:p-12 bg-gradient-to-t from-black to-transparent">
-              <div className="">
-                <a href="#" className="flex items-center">
-                  <img
-                    src={logo}
-                    className="h-24 mr-3 rotate-12 bg-white rounded-full"
-                    alt=""
-                  />
-                </a>
-
-                <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
-                  Welcome to Tomory
-                </h2>
-
-                <p className="mt-4 leading-relaxed text-white/90">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Eligendi nam dolorum aliquam, quibusdam aperiam voluptatum.
-                </p>
+        <div className="relative z-10 w-full max-w-2xl animate-fadeUp">
+          {/* Logo/Brand */}
+          <div className="mb-8 flex flex-col items-center justify-center text-center">
+            <Link to="/" className="group flex flex-col items-center">
+              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white p-3 shadow-xl transition-transform duration-500 group-hover:rotate-12 dark:bg-slate-800">
+                <img src={logo} alt="Tomory Logo" className="h-full w-full object-contain" />
               </div>
-            </div>
-          </section>
+              <h1 className="font-display text-3xl font-bold tracking-tight text-stone-900 dark:text-amber-50">
+                Tomory
+              </h1>
+            </Link>
+          </div>
 
-          <main
-            aria-label="Main"
-            className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:py-12 lg:px-16 xl:col-span-6"
-          >
-            <div className="max-w-xl lg:max-w-3xl">
-              <div className="relative -mt-16 block lg:hidden">
-                <a
-                  className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-orange-600 sm:h-20 sm:w-20"
-                  href="/"
-                >
-                  <span className="sr-only">Home</span>
-                  <img src={logo} alt="logo" className="rotate-12" />
-                </a>
-
-                <h1 className="mt-2 text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
-                  Welcome to Tomory
-                </h1>
-
-                <p className="mt-4 leading-relaxed text-gray-500 dark:text-white">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Eligendi nam dolorum aliquam, quibusdam aperiam voluptatum.
-                </p>
-              </div>
-
-              <h2 className="text-center text-3xl font-bold dark:text-white mt-6">
-                Sign up
+          {/* Register Card */}
+          <div className="rounded-[2.5rem] border border-amber-200/60 bg-white/70 p-8 shadow-2xl backdrop-blur-md dark:border-slate-700/50 dark:bg-slate-800/80 sm:p-12">
+            <div className="mb-8 text-center">
+              <h2 className="font-display text-4xl font-bold text-stone-900 dark:text-white">
+                Create Account
               </h2>
-              <form
-                onSubmit={handleSubmit}
-                className="mt-4 grid grid-cols-6 gap-6"
-              >
-                {/* <div className="col-span-6 sm:col-span-3">
-                <label
-                  for="FirstName"
-                  className="block text-sm font-medium text-gray-700 dark:text-white"
-                >
-                  First Name
-                </label>
+              <p className="font-body mt-2 text-stone-600 dark:text-stone-400">
+                Join us for a premium dates experience
+              </p>
+            </div>
 
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="Email"
+                  className="font-body mb-2 block text-sm font-semibold text-stone-700 dark:text-stone-300"
+                >
+                  Email Address
+                </label>
                 <input
-                  type="text"
-                  id="FirstName"
-                  name="first_name"
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  type="email"
+                  id="Email"
+                  name="email"
+                  className="font-body w-full rounded-2xl border-stone-200 bg-white/50 px-5 py-4 transition-all focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-slate-600 dark:bg-slate-700/50 dark:text-white"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="name@example.com"
+                  required
                 />
               </div>
 
-              <div className="col-span-6 sm:col-span-3">
+              <div>
                 <label
-                  for="LastName"
-                  className="block text-sm font-medium text-gray-700 dark:text-white"
+                  htmlFor="Password"
+                  className="font-body mb-2 block text-sm font-semibold text-stone-700 dark:text-stone-300"
                 >
-                  Last Name
+                  Password
                 </label>
-
-                <input
-                  type="text"
-                  id="LastName"
-                  name="last_name"
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
-              </div> */}
-
-                <div className="col-span-6">
-                  <label
-                    htmlFor="Email"
-                    className="block text-sm font-medium text-gray-700 dark:text-white"
-                  >
-                    Email
-                  </label>
-
+                <div className="relative">
                   <input
-                    type="email"
-                    id="Email"
-                    name="email"
-                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    type={showPassword ? "text" : "password"}
+                    id="Password"
+                    name="password"
+                    className="font-body w-full rounded-2xl border-stone-200 bg-white/50 px-5 py-4 transition-all focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-slate-600 dark:bg-slate-700/50 dark:text-white"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
                     required
                   />
-                </div>
-
-                <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="Password"
-                    className="block text-sm font-medium text-gray-700 dark:text-white"
-                  >
-                    Password
-                  </label>
-                  <div className="relative">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      id="Password"
-                      name="password"
-                      className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700  shadow-sm"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                    <button
-                      type="button"
-                      className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500"
-                      onClick={togglePasswordVisibility}
-                    >
-                      {showPassword ? <BsEyeSlashFill /> : <BsEyeFill />}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="PasswordConfirmation"
-                    className="block text-sm font-medium text-gray-700 dark:text-white"
-                  >
-                    Password Confirmation
-                  </label>
-
-                  <div className="relative">
-                    <input
-                      type={showPassword2 ? "text" : "password"}
-                      id="PasswordConfirmation"
-                      name="password_confirmation"
-                      className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                      value={cPassword}
-                      onChange={(e) => setCPassword(e.target.value)}
-                      required
-                    />
-                    <button
-                      type="button"
-                      className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500"
-                      onClick={togglePasswordVisibility2}
-                    >
-                      {showPassword2 ? <BsEyeSlashFill /> : <BsEyeFill />}
-                    </button>
-                  </div>
-                </div>
-
-                {/* <div className="col-span-6">
-                  <label htmlFor="MarketingAccept" className="flex gap-4">
-                    <input
-                      type="checkbox"
-                      id="MarketingAccept"
-                      name="marketing_accept"
-                      className="h-5 w-5 rounded-md border-gray-200 bg-white shadow-sm"
-                    />
-
-                    <span className="text-sm text-gray-700 dark:text-white">
-                      I want to receive emails about events, product updates and
-                      company announcements.
-                    </span>
-                  </label>
-                </div> */}
-                <div
-                  id="loginWithGoogle"
-                  className="shadow flex flex-row justify-center items-center col-span-6 w-full p-2 rounded-lg cursor-pointer  border-2 border-orange-600 bg-white px-12 py-3 text-sm font-medium text-orange-600 transition hover:bg-orange-600 hover:text-white focus:outline-none focus:ring active:text-orange-500"
-                >
                   <button
-                    onClick={registerWithEmail}
-                    className="block w-full shrink-0 rounded-md "
+                    type="button"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-amber-600 transition-colors"
+                    onClick={togglePasswordVisibility}
                   >
-                    Create an account
+                    {showPassword ? <BsEyeSlashFill size={18} /> : <BsEyeFill size={18} />}
                   </button>
                 </div>
-                <p className="block col-span-full text-black dark:text-white text-center w-full">
-                  {" "}
-                  --- or ---
-                </p>
-                <div
-                  id="loginWithGoogle"
-                  className="shadow bg-[orangered] flex flex-row justify-center items-center col-span-6 w-full p-2 rounded-lg text-white hover:text-orange-600 hover:bg-white cursor-pointer transition border-[orangered] border-2"
-                >
-                  <BsGoogle />
-                  <button className="px-2" onClick={signInWithGoogle}>
-                    Sign up with Google
-                  </button>
-                </div>
-                <div className="col-span-6">
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    By creating an account, you agree to our{" "}
-                    <a
-                      href="#"
-                      className="text-gray-700 dark:text-white underline"
-                    >
-                      terms and conditions
-                    </a>{" "}
-                    and{" "}
-                    <a
-                      href="#"
-                      className="text-gray-700 dark:text-white underline"
-                    >
-                      privacy policy
-                    </a>
-                    .
-                  </p>
-                </div>
+              </div>
 
-                <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                  <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
-                    Already have an account?
-                    <Link
-                      to="/login"
-                      className="text-gray-700 dark:text-white underline"
-                    >
-                      Log in
-                    </Link>
-                    .
-                  </p>
+              <div>
+                <label
+                  htmlFor="PasswordConfirmation"
+                  className="font-body mb-2 block text-sm font-semibold text-stone-700 dark:text-stone-300"
+                >
+                  Confirm Password
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword2 ? "text" : "password"}
+                    id="PasswordConfirmation"
+                    name="password_confirmation"
+                    className="font-body w-full rounded-2xl border-stone-200 bg-white/50 px-5 py-4 transition-all focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-slate-600 dark:bg-slate-700/50 dark:text-white"
+                    value={cPassword}
+                    onChange={(e) => setCPassword(e.target.value)}
+                    placeholder="••••••••"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-amber-600 transition-colors"
+                    onClick={togglePasswordVisibility2}
+                  >
+                    {showPassword2 ? <BsEyeSlashFill size={18} /> : <BsEyeFill size={18} />}
+                  </button>
                 </div>
-              </form>
-            </div>
-          </main>
+              </div>
+
+              <div className="sm:col-span-2">
+                <button
+                  type="button"
+                  onClick={registerWithEmail}
+                  className="font-body w-full rounded-full bg-amber-700 py-4 text-sm font-semibold uppercase tracking-wider text-white shadow-lg shadow-amber-900/20 transition-all hover:bg-amber-800 hover:shadow-xl active:scale-[0.98]"
+                >
+                  Create Account
+                </button>
+              </div>
+
+              <div className="relative my-4 flex items-center justify-center sm:col-span-2">
+                <div className="absolute h-[1px] w-full bg-stone-200 dark:bg-stone-700" />
+                <span className="font-body relative bg-[#f9f7f4] px-4 text-xs font-medium uppercase tracking-widest text-stone-400 dark:bg-slate-800">
+                  Or sign up with
+                </span>
+              </div>
+
+              <div className="sm:col-span-2">
+                <button
+                  type="button"
+                  onClick={signInWithGoogle}
+                  className="font-body flex w-full items-center justify-center gap-3 rounded-full border-2 border-stone-900 py-3.5 text-sm font-semibold transition-all hover:bg-stone-900 hover:text-white dark:border-amber-200 dark:text-amber-200 dark:hover:bg-amber-200 dark:hover:text-stone-900"
+                >
+                  <BsGoogle size={18} />
+                  <span>Google Account</span>
+                </button>
+              </div>
+
+              <div className="sm:col-span-2">
+                <p className="font-body text-center text-sm text-stone-500 dark:text-stone-400">
+                  By creating an account, you agree to our{" "}
+                  <a href="#" className="font-semibold text-stone-900 underline dark:text-white">
+                    Terms
+                  </a>{" "}
+                  and{" "}
+                  <a href="#" className="font-semibold text-stone-900 underline dark:text-white">
+                    Privacy Policy
+                  </a>
+                  .
+                </p>
+              </div>
+
+              <div className="sm:col-span-2">
+                <p className="font-body text-center text-sm text-stone-500 dark:text-stone-400">
+                  Already have an account?{" "}
+                  <Link
+                    to="/login"
+                    className="font-bold text-stone-900 hover:underline dark:text-white"
+                  >
+                    Log in
+                  </Link>
+                </p>
+              </div>
+            </form>
+          </div>
         </div>
       </section>
     </>
