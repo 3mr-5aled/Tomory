@@ -1,10 +1,12 @@
 import React, { useRef, useEffect } from "react"
 import { NavLink } from "react-router-dom"
 import { BsArrowDown } from "react-icons/bs"
+import { useLenis } from "../features/SmoothScroll"
 import datesPlate from "../../assets/datesPlate.png"
 import redDates from "../../assets/red-dates-4.svg"
 
 const ImmersiveHero = () => {
+  const { lenis } = useLenis()
   const containerRef = useRef(null)
   const parallaxTransition = 'transform 0.4s cubic-bezier(0.2, 0, 0.2, 1)'
 
@@ -176,13 +178,13 @@ const ImmersiveHero = () => {
         </div>
       </div>
 
-      <a
-        href="#story"
+      <button
+        onClick={() => lenis?.scrollTo('#story', { duration: 1.5 })}
         className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900 shadow-lg backdrop-blur transition hover:-translate-y-1"
       >
         Scroll
         <BsArrowDown className="text-base" />
-      </a>
+      </button>
     </section>
   )
 }
