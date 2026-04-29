@@ -39,6 +39,11 @@ const ImmersiveHero = () => {
   return (
     <section 
       ref={containerRef}
+      style={{ 
+        '--mouse-x': 0, 
+        '--mouse-y': 0,
+        transition: 'transform 0.4s cubic-bezier(0.2, 0, 0.2, 1)'
+      }}
       className="relative overflow-hidden bg-amber-50 dark:bg-slate-900"
     >
       <div
@@ -47,10 +52,12 @@ const ImmersiveHero = () => {
       ></div>
       <div
         className="absolute -left-24 top-8 h-64 w-64 rounded-full bg-amber-200/70 blur-3xl motion-safe:animate-drift"
+        style={{ transform: 'translate3d(calc(var(--mouse-x) * 30px), calc(var(--mouse-y) * 30px), 0)' }}
         aria-hidden="true"
       ></div>
       <div
         className="absolute -right-16 top-20 h-72 w-72 rounded-full bg-orange-300/40 blur-3xl motion-safe:animate-float-slow"
+        style={{ transform: 'translate3d(calc(var(--mouse-x) * -30px), calc(var(--mouse-y) * -30px), 0)' }}
         aria-hidden="true"
       ></div>
       <img
