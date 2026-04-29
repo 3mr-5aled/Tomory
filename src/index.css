@@ -37,3 +37,24 @@
 ::selection {
   @apply bg-orange-400 text-white;
 }
+
+/* Global Content Protection */
+@layer base {
+  body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Allow selection for form elements and interactive areas */
+  input, 
+  textarea, 
+  [contenteditable="true"],
+  .selectable {
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+  }
+}
