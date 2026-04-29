@@ -2,7 +2,7 @@ import React from "react"
 
 const Loader = () => {
   return (
-    <div className="absolute bg-black opacity-70 flex h-full w-full items-center justify-center text-center z-30">
+    <div className="absolute bg-transparent opacity-70 flex h-full w-full items-center justify-center text-center z-30">
       <div role="status">
         <svg
           aria-hidden="true"

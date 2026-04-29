@@ -42,7 +42,7 @@ const Header = () => {
     setCollapsedPMenu(!CollapsedPMenu)
   }
 
-  // ! Getting user information
+  // Getting user information
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -64,7 +64,7 @@ const Header = () => {
             userName: user.displayName ? user.displayName : userNameState,
             userEmail: user.email,
             userPhoto: user.photoURL,
-          })
+          }),
         )
       } else {
         setUserName("")
@@ -89,7 +89,8 @@ const Header = () => {
   }
 
   const activeLink = ({ isActive }) => {
-    const baseClasses = "px-4 py-2 text-sm font-medium transition-all duration-300 ease-in-out"
+    const baseClasses =
+      "px-4 py-2 text-sm font-medium transition-all duration-300 ease-in-out"
     return isActive
       ? `${baseClasses} text-amber-900 bg-amber-100 rounded-full dark:bg-amber-900/30 dark:text-amber-100`
       : `${baseClasses} text-stone-600 rounded-full hover:bg-amber-50 md:hover:text-amber-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white`
@@ -254,7 +255,11 @@ const Header = () => {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d={Collapsed ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+                    d={
+                      Collapsed
+                        ? "M6 18L18 6M6 6l12 12"
+                        : "M4 6h16M4 12h16M4 18h16"
+                    }
                   />
                 </svg>
               </button>
@@ -264,23 +269,37 @@ const Header = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`${!Collapsed ? "hidden" : "block"} md:hidden border-t border-amber-100/50 bg-white/90 backdrop-blur-lg dark:border-slate-700/50 dark:bg-slate-900/90`}>
+      <div
+        className={`${!Collapsed ? "hidden" : "block"} md:hidden border-t border-amber-100/50 bg-white/90 backdrop-blur-lg dark:border-slate-700/50 dark:bg-slate-900/90`}
+      >
         <nav aria-label="Mobile Nav" className="p-4">
           <ul className="flex flex-col gap-2">
             <li>
-              <NavLink className={activeLink} to="/" onClick={() => setCollapsed(false)}>
+              <NavLink
+                className={activeLink}
+                to="/"
+                onClick={() => setCollapsed(false)}
+              >
                 Home
               </NavLink>
             </li>
 
             <li>
-              <NavLink className={activeLink} to="/products" onClick={() => setCollapsed(false)}>
+              <NavLink
+                className={activeLink}
+                to="/products"
+                onClick={() => setCollapsed(false)}
+              >
                 Products
               </NavLink>
             </li>
 
             <li>
-              <NavLink className={activeLink} to="/contact" onClick={() => setCollapsed(false)}>
+              <NavLink
+                className={activeLink}
+                to="/contact"
+                onClick={() => setCollapsed(false)}
+              >
                 Contact
               </NavLink>
             </li>

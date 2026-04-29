@@ -1,0 +1,43 @@
+<h2>Hero Section Animations</h2>
+<p class="subtitle">Explore different floating animation styles for the hero section</p>
+
+<div class="cards">
+  <div class="card" data-choice="current" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #fff8e1; display: flex; align-items: center; justify-content: center; height: 120px;">
+      <div style="width: 60px; height: 60px; background: #fbbf24; border-radius: 50%; animation: float-slow 10s ease-in-out infinite;"></div>
+    </div>
+    <div class="card-body">
+      <h3>Current Styles</h3>
+      <p>Subtle vertical floating and drifting for background blobs.</p>
+    </div>
+  </div>
+  <div class="card" data-choice="float-enhanced" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #fff8e1; display: flex; align-items: center; justify-content: center; height: 120px;">
+      <div style="width: 60px; height: 60px; background: #f59e0b; border-radius: 50%; animation: float-enhanced 4s ease-in-out infinite;"></div>
+    </div>
+    <div class="card-body">
+      <h3>Enhanced Floating</h3>
+      <p>More pronounced vertical movement for the main product image.</p>
+    </div>
+  </div>
+  <div class="card" data-choice="parallax" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #fff8e1; display: flex; align-items: center; justify-content: center; height: 120px;">
+      <div style="width: 60px; height: 60px; background: #d97706; border-radius: 50%; transform: translate3d(var(--x, 0), var(--y, 0), 0);"></div>
+    </div>
+    <div class="card-body">
+      <h3>Mouse Parallax</h3>
+      <p>Elements react subtly to mouse movement for a sense of depth.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes float-enhanced {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-25px); }
+}
+</style>

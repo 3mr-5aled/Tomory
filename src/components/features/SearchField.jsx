@@ -21,7 +21,7 @@ const SearchField = ({ items, onFilter }) => {
     <div className="w-full relative mr-3">
       <input
         type="text"
-        className="h-10 rounded border-gray-300 text-sm px-3 w-full mx-3 focus:border-orange-600 focus:ring-orange-600 dark:bg-slate-700"
+        className="h-10 rounded border-gray-300 text-sm dark:text-white px-3 w-full mx-3 focus:border-orange-600 focus:ring-orange-600 dark:bg-slate-700"
         placeholder="Search..."
         value={searchQuery}
         onChange={handleSearch}

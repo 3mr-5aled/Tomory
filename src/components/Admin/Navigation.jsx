@@ -4,13 +4,15 @@ import {
   BsBagPlusFill,
   BsBox2Fill,
   BsClipboardDataFill,
+  BsList,
+  BsX,
+  BsArrowLeftCircleFill,
 } from "react-icons/bs"
 import { useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
 import avatar from "../../assets/avatar.png"
 import logo from "../../assets/logo.png"
 import {
-  selectIsAdmin,
   selectUserEmail,
   selectUserName,
   selectUserPhoto,
@@ -20,213 +22,150 @@ import DarkModeButton from "../features/DarkModeButton"
 const Navigation = () => {
   const userName = useSelector(selectUserName)
   const userEmail = useSelector(selectUserEmail)
-  const isAdmin = useSelector(selectIsAdmin)
   const userPhoto = useSelector(selectUserPhoto)
 
-  const [CollapsedPMenu, setCollapsedPMenu] = useState(false)
-
-  const collapsePMenu = () => {
-    setCollapsedPMenu(!CollapsedPMenu)
-  }
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [showProfile, setShowProfile] = useState(false)
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen)
-  }
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen)
 
-  const activeLink = ({ isActive }) => {
-    return isActive
-      ? "flex items-center p-2 text-gray-900 rounded-lg dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700"
-      : "flex items-center p-2 text-gray-700 rounded-lg dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-500"
-  }
+  const navLinks = [
+    {
+      to: "/admin/dashboard",
+      icon: <BsClipboardDataFill />,
+      label: "Dashboard",
+    },
+    { to: "/admin/products", icon: <BsBagFill />, label: "Products" },
+    {
+      to: "/admin/create-product",
+      icon: <BsBagPlusFill />,
+      label: "Create Product",
+      badge: "New",
+    },
+    { to: "/admin/orders", icon: <BsBox2Fill />, label: "Orders" },
+  ]
+
+  const activeLink = ({ isActive }) =>
+    `flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 ${
+      isActive
+        ? "bg-amber-600 text-white shadow-lg shadow-amber-900/20"
+        : "text-slate-500 hover:bg-amber-50 dark:text-slate-400 dark:hover:bg-slate-800/50 hover:text-amber-700 dark:hover:text-amber-400"
+    }`
 
   return (
     <>
+      {/* Mobile Toggle */}
       <button
-        data-drawer-target="cta-button-sidebar"
-        data-drawer-toggle="cta-button-sidebar"
-        aria-controls="cta-button-sidebar"
-        type="button"
-        className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
         onClick={toggleSidebar}
+        className="fixed top-4 left-4 z-50 p-3 rounded-2xl bg-white dark:bg-slate-800 shadow-xl lg:hidden border border-amber-100 dark:border-slate-700"
       >
-        <span className="sr-only">Open sidebar</span>
-        <svg
-          className="w-6 h-6"
-          aria-hidden="true"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clipRule="evenodd"
-            fillRule="evenodd"
-            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-          ></path>
-        </svg>
+        {isSidebarOpen ? <BsX size={24} /> : <BsList size={24} />}
       </button>
 
+      {/* Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm lg:hidden"
+          onClick={toggleSidebar}
+        />
+      )}
+
       <aside
-        id="cta-button-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-full transition-transform ${
+        className={`fixed top-0 left-0 z-40 h-full w-72 transform transition-transform duration-500 ease-out lg:translate-x-0 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } sm:translate-x-0 dark:text-white`}
-        aria-label="Sidebar"
+        }`}
       >
-        <div className="flex flex-col justify-between h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          <div>
-            <div className="flex flex-row items-center justify-between mb-5">
-              <a href="/" className="flex items-center pl-2.5 cursor-pointer">
-                <img
-                  src={logo}
-                  className="h-6 mr-3 sm:h-7 rotate-12 bg-white rounded-full"
-                  alt="Tomory Logo"
-                />
-                <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-                  Tomory
+        <div className="flex h-full flex-col bg-white dark:bg-slate-900 border-r border-amber-100 dark:border-slate-800 relative overflow-hidden">
+          {/* Grain & Blurs */}
+          <div className="pointer-events-none absolute inset-0 bg-grain opacity-[0.05]" />
+          <div className="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-amber-500/5 blur-3xl" />
+
+          {/* Logo Section */}
+          <div className="relative z-10 px-8 py-10">
+            <a href="/" className="flex items-center gap-3 group">
+              <div className="p-2 bg-amber-50 dark:bg-slate-800 rounded-xl border border-amber-100 dark:border-slate-700 group-hover:rotate-12 transition-transform duration-500">
+                <img src={logo} className="h-8 w-auto" alt="Tomory Logo" />
+              </div>
+              <span className="font-display text-2xl font-bold tracking-tight text-amber-900 dark:text-white">
+                Tomory<span className="text-amber-600">.</span>
+              </span>
+            </a>
+          </div>
+
+          {/* Navigation Links */}
+          <nav className="relative z-10 flex-1 px-4 space-y-2">
+            <p className="px-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-4">
+              Management
+            </p>
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={activeLink}
+                onClick={() => setIsSidebarOpen(false)}
+              >
+                <span className="text-xl">{link.icon}</span>
+                <span className="font-body font-semibold tracking-wide flex-1">
+                  {link.label}
                 </span>
+                {link.badge && (
+                  <span className="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full text-[10px] font-bold">
+                    {link.badge}
+                  </span>
+                )}
+              </NavLink>
+            ))}
+          </nav>
+
+          {/* Footer / User Profile */}
+          <div className="relative z-10 p-4 border-t border-amber-50 dark:border-slate-800">
+            <div className="flex items-center justify-between mb-4 px-2">
+              <DarkModeButton />
+              <a
+                href="/"
+                className="p-2 text-slate-400 hover:text-amber-600 transition-colors"
+                title="Back to Store"
+              >
+                <BsArrowLeftCircleFill size={20} />
               </a>
-              <div className="space-x-4">
-                <DarkModeButton />
+            </div>
+
+            <button
+              onClick={() => setShowProfile(!showProfile)}
+              className="flex w-full items-center gap-3 p-3 rounded-2xl bg-amber-50/50 dark:bg-slate-800/50 border border-amber-100/50 dark:border-slate-700/50 transition-all hover:bg-amber-50 dark:hover:bg-slate-800"
+            >
+              <img
+                src={userPhoto || avatar}
+                className="h-10 w-10 rounded-xl object-cover border-2 border-white dark:border-slate-700 shadow-sm"
+                alt="Profile"
+              />
+              <div className="text-left flex-1 min-w-0">
+                <p className="text-sm font-bold text-amber-900 dark:text-white truncate">
+                  {userName || "Admin"}
+                </p>
+                <p className="text-[10px] font-medium text-slate-400 truncate uppercase tracking-widest">
+                  Administrator
+                </p>
+              </div>
+            </button>
+
+            {/* Profile Popup */}
+            {showProfile && (
+              <div className="absolute bottom-24 left-4 right-4 p-4 rounded-3xl bg-white dark:bg-slate-800 shadow-2xl border border-amber-100 dark:border-slate-700 animate-fadeUp">
+                <p className="text-xs font-bold text-amber-900 dark:text-amber-500 mb-1">
+                  Signed in as:
+                </p>
+                <p className="text-sm text-slate-600 dark:text-slate-400 truncate mb-4">
+                  {userEmail}
+                </p>
                 <button
-                  data-drawer-target="cta-button-sidebar"
-                  data-drawer-toggle="cta-button-sidebar"
-                  aria-controls="cta-button-sidebar"
-                  type="button"
-                  className="inline-flex items-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                  onClick={toggleSidebar}
+                  onClick={() => setShowProfile(false)}
+                  className="w-full py-2 rounded-xl bg-slate-100 dark:bg-slate-700 text-xs font-bold uppercase tracking-widest hover:bg-amber-600 hover:text-white transition-all"
                 >
-                  <span className="sr-only">Open sidebar</span>
-                  <svg
-                    className="w-6 h-6"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      clipRule="evenodd"
-                      fillRule="evenodd"
-                      d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-                    ></path>
-                  </svg>
+                  Close
                 </button>
               </div>
-            </div>
-            <ul className="space-y-2 font-medium">
-              <li>
-                <NavLink to="/admin/dashboard" className={activeLink}>
-                  {/* <svg
-                    aria-hidden="true"
-                    className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                    <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                  </svg> */}
-                  <BsClipboardDataFill />
-                  <span className="flex-1 ml-3 whitespace-nowrap">
-                    Dashboard
-                  </span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/admin/create-product" className={activeLink}>
-                  {/* <svg
-                    aria-hidden="true"
-                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                  </svg> */}
-                  <BsBagPlusFill />
-                  <span className="flex-1 ml-3 whitespace-nowrap">
-                    Create Products
-                  </span>
-                  <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">
-                    New
-                  </span>
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink className={activeLink} to="/admin/products">
-                  {/* <svg
-                    aria-hidden="true"
-                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg> */}
-                  <BsBagFill />
-                  <span className="flex-1 ml-3 whitespace-nowrap">
-                    Products
-                  </span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink className={activeLink} to="/admin/orders">
-                  {/* <svg
-                    aria-hidden="true"
-                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg> */}
-                  <BsBox2Fill />
-                  <span className="flex-1 ml-3 whitespace-nowrap">Orders</span>
-                </NavLink>
-              </li>
-            </ul>
-          </div>
-          <div className="relative self-end">
-            <button>
-              <img
-                className="bg-orange-300 rounded-full h-10 w-10 hover:border-gray-500 hover:border-2 float-right"
-                src={userPhoto || avatar}
-                alt=""
-                onClick={collapsePMenu}
-              />
-            </button>
-            <div
-              className={`z-50 ${
-                !CollapsedPMenu ? "hidden" : "block"
-              } absolute right-0 bottom-7 my-5 whitespace-nowrap font-bold text-base list-none bg-gray-300 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}
-            >
-              <div className="px-4 py-3">
-                <span className="block text-sm text-gray-900 dark:text-white">
-                  {userName || "User"}
-                </span>
-                <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">
-                  {userEmail || "user@gmail.com"}
-                </span>
-              </div>
-              <ul className="py-2">
-                <a
-                  href="/"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  Back to Homepage
-                </a>
-              </ul>
-            </div>
+            )}
           </div>
         </div>
       </aside>

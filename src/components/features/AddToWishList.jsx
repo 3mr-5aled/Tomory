@@ -23,7 +23,7 @@ const AddToWishList = ({ product }) => {
   return (
     <button
       onClick={() => handleWishList(product)}
-      className="absolute right-4 top-4 z-50 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75"
+      className="group/wishlist relative z-50 rounded-full bg-white/80 p-2 text-slate-900 shadow-sm backdrop-blur-md transition-all hover:bg-white hover:text-red-500 hover:shadow-md dark:bg-slate-800/80 dark:text-slate-100 dark:hover:bg-slate-700"
     >
       <span className="sr-only">Wishlist</span>
 
@@ -41,8 +41,8 @@ const AddToWishList = ({ product }) => {
           d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
         />
       </svg>
-      <span className="pointer-events-none absolute -top-8 -left-5 w-max opacity-0 transition-opacity group-hover:opacity-100 bg-gray-700 rounded-md px-3 py-2 text-white">
-        WishList
+      <span className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 scale-75 whitespace-nowrap rounded bg-slate-800 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white opacity-0 transition-all group-hover/wishlist:scale-100 group-hover/wishlist:opacity-100">
+        Wishlist
       </span>
     </button>
   )

@@ -1,0 +1,61 @@
+<h2>Mouse Parallax Refinement</h2>
+<p class="subtitle">How intense should the mouse reaction be?</p>
+
+<div class="options">
+  <div class="option" data-choice="subtle" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Subtle & Premium</h3>
+      <p>Barely noticeable movement (5-10px) that adds a sense of "air" without being distracting.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="playful" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Playful & Dynamic</h3>
+      <p>More responsive movement (20-30px) that clearly follows the mouse, making the interface feel interactive.</p>
+    </div>
+  </div>
+</div>
+
+<div class="mockup" style="margin-top: 2rem;">
+  <div class="mockup-header">Parallax Preview</div>
+  <div class="mockup-body" id="parallax-preview" style="height: 300px; background: #fff8e1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+    <div id="layer-back" style="position: absolute; width: 100px; height: 100px; background: #fde68a; border-radius: 50%; opacity: 0.5; filter: blur(20px);"></div>
+    <div id="layer-mid" style="position: absolute; width: 80px; height: 80px; background: #fbbf24; border-radius: 50%;"></div>
+    <div id="layer-front" style="position: absolute; padding: 10px 20px; background: #78350f; color: white; border-radius: 12px; font-weight: bold; font-size: 14px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">Product Plate</div>
+  </div>
+</div>
+
+<script>
+  const preview = document.getElementById('parallax-preview');
+  const back = document.getElementById('layer-back');
+  const mid = document.getElementById('layer-mid');
+  const front = document.getElementById('layer-front');
+  
+  let intensity = 10;
+  
+  // Listen for selection changes to update intensity
+  window.addEventListener('click', (e) => {
+    const option = e.target.closest('.option');
+    if (option) {
+      intensity = option.dataset.choice === 'playful' ? 30 : 10;
+    }
+  });
+
+  preview.addEventListener('mousemove', (e) => {
+    const rect = preview.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    
+    back.style.transform = `translate(${x * intensity * 0.5}px, ${y * intensity * 0.5}px)`;
+    mid.style.transform = `translate(${x * intensity}px, ${y * intensity}px)`;
+    front.style.transform = `translate(${x * intensity * 1.5}px, ${y * intensity * 1.5}px)`;
+  });
+  
+  preview.addEventListener('mouseleave', () => {
+    back.style.transform = 'translate(0, 0)';
+    mid.style.transform = 'translate(0, 0)';
+    front.style.transform = 'translate(0, 0)';
+  });
+</script>

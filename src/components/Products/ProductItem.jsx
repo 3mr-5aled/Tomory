@@ -5,6 +5,7 @@ import useFetchDocument from "../../customHooks/useFetchDocument"
 import {
   ADD_TO_CART,
   CALCULATE_TOTAL_QUANTITY,
+  selectCartItems,
   // DECREASE_CART,
 } from "../../redux/slice/cartSlice"
 import Loader from "../Loader"
@@ -15,6 +16,7 @@ import {
   BsStarFill,
   BsStarHalf,
   BsStar,
+  BsInfoCircleFill,
 } from "react-icons/bs"
 import { auth } from "../../firebase/config"
 import { onAuthStateChanged } from "firebase/auth"
@@ -39,7 +41,11 @@ const ProductItem = () => {
   const navigate = useNavigate()
   const product = useSelector((state) => selectProductById(state, id))
   const isLoggedIn = useSelector(selectIsLoggedIn)
+  const cartItems = useSelector(selectCartItems)
   // const [product, setProduct] = useState(null)
+
+  const cartProduct = cartItems.find((item) => item.id === id)
+  const cartQuantity = cartProduct ? cartProduct.cartQuantity : 0
 
   // const { document } = useFetchDocument("products", id)
 
@@ -114,7 +120,7 @@ const ProductItem = () => {
       const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0)
       for (let i = 0; i < emptyStars; i++) {
         stars.push(
-          <BsStar key={fullStars + i + 1} className="text-amber-400" />
+          <BsStar key={fullStars + i + 1} className="text-amber-400" />,
         )
       }
 
@@ -168,7 +174,7 @@ const ProductItem = () => {
             >
               <div className="flex items-start justify-between">
                 <div className="space-y-4">
-                  <h1 className="font-display text-4xl font-bold tracking-tight text-amber-950 dark:text-slate-100 md:text-6xl">
+                  <h1 className="font-display text-4xl font-bold tracking-tight text-amber-900 dark:text-slate-100 md:text-6xl">
                     {product.name}
                   </h1>
 
@@ -239,26 +245,34 @@ const ProductItem = () => {
                 </div>
               </div>
 
-              <div className="mt-12 flex flex-col gap-4 sm:flex-row">
-                <button
-                  type="button"
-                  className={`flex items-center justify-center gap-3 rounded-full px-8 py-5 text-sm font-semibold uppercase tracking-widest text-white shadow-xl transition-all active:scale-95 sm:flex-1 ${
-                    isProductOutOfStock(product)
-                      ? "cursor-not-allowed bg-slate-400 shadow-none"
-                      : "bg-amber-700 shadow-amber-900/20 hover:-translate-y-1 hover:bg-amber-800"
-                  }`}
-                  onClick={() => handleAddToCart(product)}
-                >
-                  <BsFillBagPlusFill className="text-lg" />
-                  Add to Cart
-                </button>
-                <Link
-                  to="/cart"
-                  className="flex items-center justify-center gap-3 rounded-full border-2 border-amber-900/20 px-8 py-5 text-sm font-semibold uppercase tracking-widest text-amber-900 transition-all hover:bg-amber-900 hover:text-white dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700 sm:flex-1"
-                >
-                  <BsFillCartFill className="text-lg" />
-                  View Cart
-                </Link>
+              <div className="mt-12 space-y-4">
+                {cartQuantity > 0 && (
+                  <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400 animate-fadeUp">
+                    <BsInfoCircleFill />
+                    Currently in your cart: {cartQuantity} Kilo
+                  </div>
+                )}
+                <div className="flex flex-col gap-4 sm:flex-row">
+                  <button
+                    type="button"
+                    className={`flex items-center justify-center gap-3 rounded-full px-8 py-5 text-sm font-semibold uppercase tracking-widest text-white shadow-xl transition-all active:scale-95 sm:flex-1 ${
+                      isProductOutOfStock(product)
+                        ? "cursor-not-allowed bg-slate-400 shadow-none"
+                        : "bg-amber-700 shadow-amber-900/20 hover:-translate-y-1 hover:bg-amber-800"
+                    }`}
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    <BsFillBagPlusFill className="text-lg" />
+                    Add to Cart
+                  </button>
+                  <Link
+                    to="/cart"
+                    className="flex items-center justify-center gap-3 rounded-full border-2 border-amber-900/20 px-8 py-5 text-sm font-semibold uppercase tracking-widest text-amber-900 transition-all hover:bg-amber-900 hover:text-white dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700 sm:flex-1"
+                  >
+                    <BsFillCartFill className="text-lg" />
+                    View Cart
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

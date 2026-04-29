@@ -3,13 +3,13 @@ import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { db } from "../../firebase/config"
-import { Admin } from "../../pages"
 import Loader from "../Loader"
 import { useDispatch } from "react-redux"
 import { UPDATE_ORDERS_STATUS } from "../../redux/slice/orderSlice"
+import { BsArrowRepeat } from "react-icons/bs"
 
 const ChangeOrderStatus = ({ order, id }) => {
-  const [status, setStatus] = useState("")
+  const [status, setStatus] = useState(order.orderStatus || "")
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -20,18 +20,7 @@ const ChangeOrderStatus = ({ order, id }) => {
     const editedTime = Timestamp.now().toDate()
 
     const orderConfig = {
-      userID: order.userID,
-      firstName: order.firstName,
-      lastName: order.lastName,
-      email: order.email,
-      phoneNumber: order.phoneNumber,
-      country: order.country,
-      postalCode: order.postalCode,
-      orderDate: order.orderDate,
-      orderTime: order.orderTime,
-      orderAmount: order.orderAmount,
-      cartItems: order.cartItems,
-      createdAt: order.createdAt,
+      ...order,
       orderStatus: status,
       editedAt: editedTime,
     }
@@ -43,75 +32,58 @@ const ChangeOrderStatus = ({ order, id }) => {
           orderId: id,
           orderStatus: status,
           editedAt: editedTime,
-        })
+        }),
       )
       setIsLoading(false)
-      toast.success("Order status changes successfully")
+      toast.success("Order status updated successfully")
       navigate("/admin/orders")
     } catch (error) {
       setIsLoading(false)
       toast.error(error.message)
-      console.error(error.message)
     }
   }
 
   return (
-    <>
+    <div className="max-w-md">
       {isLoading && <Loader />}
 
-      <div className="m-5">
-        <h4 className="font-medium py-3 dark:text-gray-300">Update Status:</h4>
-        <form onSubmit={(e) => editOrder(e, id)}>
-          <span>
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              className="rounded border-2 border-orange-500 form-select p-3  font-bold"
-            >
-              <option
-                className="bg-white divide-y-2 text-black font-bold "
-                value=""
-                disabled
-              >
-                -- Choose one --
-              </option>
-              <option
-                className="bg-white divide-y-2 text-blue-500 font-bold "
-                value="Order Placed..."
-              >
-                Order Placed...
-              </option>
-              <option
-                className="bg-white divide-y-2 text-red-500 font-bold "
-                value="Processing..."
-              >
-                Processing...
-              </option>
-              <option
-                className="bg-white divide-y-2 text-yellow-500 font-bold "
-                value="Shipped..."
-              >
-                Shipped...
-              </option>
-              <option
-                className="bg-white divide-y-2 text-green-500 font-bold"
-                value="Delivered"
-              >
-                Delivered
-              </option>
-            </select>
-          </span>
-          <span>
-            <button
-              type="submit"
-              className=" text-white bg-orange-500 p-3 rounded font-bold m-5"
-            >
-              Update Status
-            </button>
-          </span>
+      <div className="space-y-4">
+        <h3 className="font-display text-2xl font-bold text-amber-900 dark:text-white">
+          Update Fulfillment Status
+        </h3>
+        <p className="text-sm text-slate-500 dark:text-slate-400">
+          Updating the status will notify the customer and update their order
+          timeline.
+        </p>
+
+        <form
+          onSubmit={(e) => editOrder(e, id)}
+          className="mt-6 flex flex-col sm:flex-row gap-4"
+        >
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="flex-1 rounded-2xl border-amber-200 bg-white px-5 py-4 font-body text-sm font-bold text-amber-900 transition-all focus:border-amber-600 focus:ring-0 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+          >
+            <option value="" disabled>
+              -- Select New Status --
+            </option>
+            <option value="Order Placed...">Order Placed</option>
+            <option value="Processing...">Processing</option>
+            <option value="Shipped...">Shipped</option>
+            <option value="Delivered">Delivered</option>
+          </select>
+
+          <button
+            type="submit"
+            className="flex items-center justify-center gap-3 rounded-2xl bg-amber-600 px-8 py-4 text-xs font-bold uppercase tracking-widest text-white shadow-lg shadow-amber-900/20 transition-all hover:bg-amber-700 hover:-translate-y-1 active:scale-95"
+          >
+            <BsArrowRepeat size={18} />
+            Update
+          </button>
         </form>
       </div>
-    </>
+    </div>
   )
 }
 
