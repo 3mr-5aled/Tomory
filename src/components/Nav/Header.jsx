@@ -89,30 +89,35 @@ const Header = () => {
   }
 
   const activeLink = ({ isActive }) => {
+    const baseClasses = "px-4 py-2 text-sm font-medium transition-all duration-300 ease-in-out"
     return isActive
-      ? "block font-bold py-2 pl-3 pr-4 text-white bg-orange-500 rounded md:bg-transparent md:text-orange-700 md:p-0 dark:text-white underline underline-offset-4 decoration-orange-700 decoration-3 decoration-wavy"
-      : "block font-bold py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+      ? `${baseClasses} text-amber-900 bg-amber-100 rounded-full dark:bg-amber-900/30 dark:text-amber-100`
+      : `${baseClasses} text-stone-600 rounded-full hover:bg-amber-50 md:hover:text-amber-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white`
   }
 
   return (
-    <header className="bg-gray-100 dark:bg-slate-700">
-      <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 ">
-        <div className="flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-50 w-full border-b border-amber-200/30 bg-white/80 backdrop-blur-md dark:border-slate-700/50 dark:bg-slate-900/80 font-body">
+      <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-20 items-center justify-between">
           <div className="md:flex md:items-center md:gap-12">
-            <Link className="flex flex-row items-center text-orange-600" to="/">
+            <Link className="flex items-center gap-3 group" to="/">
               <span className="sr-only">Home</span>
-              <img
-                className="h-10 w-10 mr-3 ml-3 rotate-12 bg-white rounded-full"
-                src={logo}
-                alt=""
-              />
-              <span className="font-bold text-xl">Tomory</span>
+              <div className="p-1 bg-white rounded-full shadow-sm border border-amber-100 group-hover:border-amber-200 transition-colors">
+                <img
+                  className="h-10 w-10 object-contain rounded-full transition-transform group-hover:scale-110"
+                  src={logo}
+                  alt="Tomory Logo"
+                />
+              </div>
+              <span className="font-display text-2xl font-semibold tracking-tight text-stone-800 dark:text-white">
+                Tomory
+              </span>
             </Link>
           </div>
 
           <div className="hidden md:block">
             <nav aria-label="Site Nav">
-              <ul className="flex items-center gap-6 text-sm">
+              <ul className="flex items-center gap-2">
                 <li>
                   <NavLink className={activeLink} to="/">
                     Home
@@ -138,103 +143,109 @@ const Header = () => {
             <DarkModeButton />
             {/* switching navbar components on login */}
             <ShowOnLogin>
-              <div className="relative flex flex-row items-center">
+              <div className="relative flex items-center gap-2">
                 <NavLink
-                  className="relative group mr-5 text-orange-600"
+                  className="relative p-2 text-stone-600 hover:text-amber-900 dark:text-slate-300 dark:hover:text-white transition-colors"
                   to="/cart"
                 >
-                  <BsFillCartFill size={25} />
-                  <span className="pointer-events-none text-sm z-index-50 absolute top-5 -left-3 w-max opacity-0 transition-opacity group-hover:opacity-100 bg-gray-700 rounded-md px-3 text-white">
-                    Cart
-                  </span>
-                  <p className="absolute -top-3.5 -right-1.5 font-bold">
-                    {cartItems.length}
-                  </p>
+                  <BsFillCartFill size={22} />
+                  {cartItems.length > 0 && (
+                    <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-600 text-[10px] font-bold text-white shadow-sm ring-2 ring-white dark:ring-slate-900">
+                      {cartItems.length}
+                    </span>
+                  )}
                 </NavLink>
-                <button>
-                  <img
-                    className="bg-orange-300 rounded-full h-10 w-10 hover:border-gray-500 hover:border-2"
-                    src={userPhoto || avatar}
-                    alt=""
+
+                <div className="relative">
+                  <button
                     onClick={collapsePMenu}
-                  />
-                </button>
-                <div
-                  className={`z-50 ${
-                    !CollapsedPMenu ? "hidden" : "block"
-                  } absolute right-0 top-7 my-4 whitespace-nowrap font-bold text-base list-none bg-gray-300 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}
-                >
-                  <div className="px-4 py-3">
-                    <span className="block text-sm text-gray-900 dark:text-white">
-                      {userName || "User"}
-                    </span>
-                    <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">
-                      {userEmail || "user@gmail.com"}
-                    </span>
-                  </div>
-                  <ul className="py-2">
-                    {isAdmin ? (
-                      <a
-                        href="/admin/dashboard"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    className="flex items-center gap-2 p-1 rounded-full border border-amber-100 hover:border-amber-300 transition-all dark:border-slate-700 dark:hover:border-slate-500"
+                  >
+                    <img
+                      className="h-9 w-9 rounded-full object-cover"
+                      src={userPhoto || avatar}
+                      alt="User avatar"
+                    />
+                  </button>
+                  <div
+                    className={`z-50 ${
+                      !CollapsedPMenu ? "hidden" : "block"
+                    } absolute right-0 top-full mt-2 w-56 divide-y divide-amber-100 rounded-2xl border border-amber-100 bg-white/95 p-2 shadow-xl backdrop-blur-sm dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-800/95`}
+                  >
+                    <div className="px-4 py-3">
+                      <span className="block text-sm font-semibold text-stone-900 dark:text-white">
+                        {userName || "User"}
+                      </span>
+                      <span className="block text-xs text-stone-500 truncate dark:text-slate-400">
+                        {userEmail || "user@gmail.com"}
+                      </span>
+                    </div>
+                    <ul className="py-1">
+                      {isAdmin && (
+                        <li>
+                          <Link
+                            to="/admin/dashboard"
+                            className="block rounded-lg px-4 py-2 text-sm text-stone-700 hover:bg-amber-50 dark:text-slate-200 dark:hover:bg-slate-700/50 transition-colors"
+                          >
+                            Dashboard
+                          </Link>
+                        </li>
+                      )}
+
+                      <li>
+                        <NavLink
+                          to="/orders"
+                          className="block rounded-lg px-4 py-2 text-sm text-stone-700 hover:bg-amber-50 dark:text-slate-200 dark:hover:bg-slate-700/50 transition-colors"
+                        >
+                          My Orders
+                        </NavLink>
+                      </li>
+
+                      <li>
+                        <NavLink
+                          to="/wishlist"
+                          className="block rounded-lg px-4 py-2 text-sm text-stone-700 hover:bg-amber-50 dark:text-slate-200 dark:hover:bg-slate-700/50 transition-colors"
+                        >
+                          Wishlist ♥
+                        </NavLink>
+                      </li>
+                    </ul>
+                    <div className="py-1">
+                      <button
+                        onClick={logoutUser}
+                        className="w-full text-left rounded-lg px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors"
                       >
-                        Dashboard
-                      </a>
-                    ) : (
-                      ""
-                    )}
-
-                    <NavLink
-                      to="/orders"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      My Orders
-                    </NavLink>
-
-                    <NavLink
-                      to="/wishlist"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Wishlist ♥
-                    </NavLink>
-
-                    <NavLink
-                      onClick={logoutUser}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Sign out
-                    </NavLink>
-                  </ul>
+                        Sign out
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </ShowOnLogin>
             <ShowOnLogout>
-              <div className="sm:flex sm:gap-4">
+              <div className="flex items-center gap-3">
                 <NavLink
-                  className="rounded-md bg-orange-600 px-5 py-2.5 text-sm font-medium text-white shadow"
+                  className="text-sm font-medium text-stone-600 hover:text-amber-900 dark:text-slate-300 dark:hover:text-white transition-colors"
                   to="/login"
                 >
-                  Login
+                  Log in
                 </NavLink>
-
-                <div className="hidden sm:flex">
-                  <NavLink
-                    className="rounded-md bg-gray-200 px-5 py-2.5 text-sm font-medium text-orange-600 dark:bg-gray-100"
-                    to="/register"
-                  >
-                    Register
-                  </NavLink>
-                </div>
+                <NavLink
+                  className="hidden sm:block rounded-full bg-amber-600 px-5 py-2.5 text-sm font-medium text-white shadow-md hover:bg-amber-700 transition-all hover:shadow-lg active:scale-95"
+                  to="/register"
+                >
+                  Join Tomory
+                </NavLink>
               </div>
             </ShowOnLogout>
             <div className="block md:hidden">
               <button
-                className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
+                className="rounded-full bg-amber-50 p-2 text-amber-900 transition hover:bg-amber-100 dark:bg-slate-800 dark:text-amber-100 dark:hover:bg-slate-700"
                 onClick={collapse}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
+                  className="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -243,7 +254,7 @@ const Header = () => {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d="M4 6h16M4 12h16M4 18h16"
+                    d={Collapsed ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
                   />
                 </svg>
               </button>
@@ -251,32 +262,25 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className={`${!Collapsed ? "hidden" : "block"} md:hidden`}>
-        <nav aria-label="Site Nav">
-          <ul className="flex justify-center items-center gap-6 text-sm mt-5 pb-5">
+
+      {/* Mobile Menu */}
+      <div className={`${!Collapsed ? "hidden" : "block"} md:hidden border-t border-amber-100/50 bg-white/90 backdrop-blur-lg dark:border-slate-700/50 dark:bg-slate-900/90`}>
+        <nav aria-label="Mobile Nav" className="p-4">
+          <ul className="flex flex-col gap-2">
             <li>
-              <NavLink
-                className="text-gray-500 transition font-bold bg-white p-2 rounded-xl dark:text-gray-400 dark:hover:text-white hover:text-black"
-                to="/"
-              >
+              <NavLink className={activeLink} to="/" onClick={() => setCollapsed(false)}>
                 Home
               </NavLink>
             </li>
 
             <li>
-              <NavLink
-                className="text-gray-500 transition font-bold bg-white p-2 rounded-xl dark:text-gray-400 dark:hover:text-white hover:text-black"
-                to="/products"
-              >
+              <NavLink className={activeLink} to="/products" onClick={() => setCollapsed(false)}>
                 Products
               </NavLink>
             </li>
 
             <li>
-              <NavLink
-                className="text-gray-500 transition font-bold bg-white p-2 rounded-xl dark:text-gray-400 dark:hover:text-white hover:text-black"
-                to="/contact"
-              >
+              <NavLink className={activeLink} to="/contact" onClick={() => setCollapsed(false)}>
                 Contact
               </NavLink>
             </li>
