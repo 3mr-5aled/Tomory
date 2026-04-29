@@ -7,6 +7,35 @@ import redDates from "../../assets/red-dates-4.svg"
 const ImmersiveHero = () => {
   const containerRef = useRef(null)
 
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const handleMouseMove = (e) => {
+      const { clientX, clientY } = e
+      const { left, top, width, height } = container.getBoundingClientRect()
+
+      const x = (clientX - left) / width - 0.5
+      const y = (clientY - top) / height - 0.5
+
+      container.style.setProperty("--mouse-x", x.toFixed(4))
+      container.style.setProperty("--mouse-y", y.toFixed(4))
+    }
+
+    const handleMouseLeave = () => {
+      container.style.setProperty("--mouse-x", "0")
+      container.style.setProperty("--mouse-y", "0")
+    }
+
+    container.addEventListener("mousemove", handleMouseMove)
+    container.addEventListener("mouseleave", handleMouseLeave)
+
+    return () => {
+      container.removeEventListener("mousemove", handleMouseMove)
+      container.removeEventListener("mouseleave", handleMouseLeave)
+    }
+  }, [])
+
   return (
     <section 
       ref={containerRef}
