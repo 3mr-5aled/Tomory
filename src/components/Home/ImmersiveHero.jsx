@@ -120,12 +120,12 @@ const ImmersiveHero = () => {
             >
               Shop the harvest
             </NavLink>
-            <a
-              href="#story"
+            <button
+              onClick={() => lenis?.scrollTo('#story', { duration: 1.5 })}
               className="rounded-full border border-amber-600/60 px-6 py-3 text-sm font-semibold uppercase tracking-wider text-amber-900 transition hover:-translate-y-0.5 hover:bg-amber-100 dark:text-amber-100"
             >
               Our story
-            </a>
+            </button>
           </div>
 
           <div className="mt-10 grid gap-4 text-sm text-stone-600 dark:text-slate-200 sm:grid-cols-3">
