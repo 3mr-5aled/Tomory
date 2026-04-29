@@ -1,11 +1,15 @@
-import React, { useEffect, createContext, useContext, useState } from 'react'
+import React, { useEffect, createContext, useContext, useState, useMemo } from 'react'
 import Lenis from 'lenis'
 
-const LenisContext = createContext({
-  lenis: null
-})
+const LenisContext = createContext(null)
 
-export const useLenis = () => useContext(LenisContext)
+export const useLenis = () => {
+  const context = useContext(LenisContext)
+  if (!context) {
+    return { lenis: null }
+  }
+  return context
+}
 
 const SmoothScroll = ({ children }) => {
   const [lenisInstance, setLenisInstance] = useState(null)
@@ -40,8 +44,10 @@ const SmoothScroll = ({ children }) => {
     }
   }, [])
 
+  const value = useMemo(() => ({ lenis: lenisInstance }), [lenisInstance])
+
   return (
-    <LenisContext.Provider value={{ lenis: lenisInstance }}>
+    <LenisContext.Provider value={value}>
       {children}
     </LenisContext.Provider>
   )
