@@ -1,16 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Manrope:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply font-body;
+  }
+}
+
 @layer components {
   .no-spinner {
     -moz-appearance: textfield;
+    appearance: textfield;
   }
 
   .no-spinner::-webkit-outer-spin-button,
   .no-spinner::-webkit-inner-spin-button {
     margin: 0;
     -webkit-appearance: none;
+  }
+}
+
+@layer utilities {
+  .bg-grain {
+    background-image:
+      radial-gradient(rgba(255, 255, 255, 0.35) 0.5px, transparent 0.5px),
+      radial-gradient(rgba(255, 255, 255, 0.25) 0.5px, transparent 0.5px);
+    background-size: 12px 12px;
+    background-position:
+      0 0,
+      6px 6px;
   }
 }
 ::selection {

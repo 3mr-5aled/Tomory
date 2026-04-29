@@ -15,7 +15,7 @@ import {
   WishList,
 } from "./pages/index"
 // components
-import { Provider, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { PersistGate } from "redux-persist/integration/react"
@@ -31,7 +31,7 @@ import {
   UpdateProducts,
 } from "./components/index"
 import { selectIsAdmin } from "./redux/slice/authSlice"
-import store, { persistor } from "./redux/store"
+import { persistor } from "./redux/store"
 import NotFound from "./pages/NotFound"
 import ScrollToTop from "./components/features/ScrollToTop"
 
@@ -40,61 +40,56 @@ function App() {
   const isAdmin = useSelector(selectIsAdmin)
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <div
-          className={
-            (localStorage.getItem("darkMode" === "true" ? "dark" : "light"),
-            "dark:bg-slate-800")
-          }
-        >
-          <BrowserRouter>
-            <ToastContainer />
-            {location.pathname.startsWith("/admin") ? null : <Header />}
-            <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/products" element={<ProductsPage />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/product/:id" element={<ProductItem />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/wishlist" element={<WishList />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/checkout/status" element={<CheckoutStatus />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/order-details/:id" element={<OrderDetails />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/reset" element={<Reset />} />
-              {isAdmin && (
-                <>
-                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                  <Route
-                    path="/admin/create-product"
-                    element={<CreateProducts />}
-                  />
-                  <Route
-                    path="/admin/update-product/:id"
-                    element={<UpdateProducts />}
-                  />
-                  <Route
-                    path="/admin/products"
-                    element={<AdminProductsView />}
-                  />
-                  <Route path="/admin/orders" element={<AdminOrderView />} />
-                  <Route
-                    path="/admin/order-details/:id"
-                    element={<AdminOrderDetails />}
-                  />
-                </>
-              )}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            {location.pathname.startsWith("/admin") ? null : <Footer />}
-          </BrowserRouter>
-        </div>
-      </PersistGate>
-    </Provider>
+    <PersistGate loading={null} persistor={persistor}>
+      <div
+        className={`${localStorage.getItem("darkMode") === "true" ? "dark" : "light"} dark:bg-slate-800`}
+      >
+        <BrowserRouter>
+          <ToastContainer />
+          {location.pathname.startsWith("/admin") ? null : <Header />}
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/product/:id" element={<ProductItem />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/wishlist" element={<WishList />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout/status" element={<CheckoutStatus />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/order-details/:id" element={<OrderDetails />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/reset" element={<Reset />} />
+            {isAdmin && (
+              <>
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route
+                  path="/admin/create-product"
+                  element={<CreateProducts />}
+                />
+                <Route
+                  path="/admin/update-product/:id"
+                  element={<UpdateProducts />}
+                />
+                <Route
+                  path="/admin/products"
+                  element={<AdminProductsView />}
+                />
+                <Route path="/admin/orders" element={<AdminOrderView />} />
+                <Route
+                  path="/admin/order-details/:id"
+                  element={<AdminOrderDetails />}
+                />
+              </>
+            )}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          {location.pathname.startsWith("/admin") ? null : <Footer />}
+        </BrowserRouter>
+      </div>
+    </PersistGate>
   )
 }
 
