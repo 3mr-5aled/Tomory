@@ -89,7 +89,14 @@ const ImmersiveHero = () => {
       />
 
       <div className="relative z-10 mx-auto flex min-h-[calc(100dvh-4rem)] max-w-screen-xl flex-col gap-12 px-6 py-20 lg:flex-row lg:items-center">
-        <div className="flex-1">
+        <div 
+          className="flex-1"
+          style={{ 
+            transform: 'translate3d(calc(var(--mouse-x) * 16px), calc(var(--mouse-y) * 16px), 0)',
+            transition: parallaxTransition,
+            willChange: 'transform'
+          }}
+        >
           <div className="inline-flex items-center gap-3 rounded-full border border-amber-300/60 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.2em] text-amber-900 backdrop-blur dark:border-amber-200/30 dark:bg-slate-800/70 dark:text-amber-100">
             Handpicked harvest
             <span className="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
