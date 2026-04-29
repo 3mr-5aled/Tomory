@@ -1,12 +1,17 @@
-import React from "react"
+import React, { useRef, useEffect } from "react"
 import { NavLink } from "react-router-dom"
 import { BsArrowDown } from "react-icons/bs"
 import datesPlate from "../../assets/datesPlate.png"
 import redDates from "../../assets/red-dates-4.svg"
 
 const ImmersiveHero = () => {
+  const containerRef = useRef(null)
+
   return (
-    <section className="relative overflow-hidden bg-amber-50 dark:bg-slate-900">
+    <section 
+      ref={containerRef}
+      className="relative overflow-hidden bg-amber-50 dark:bg-slate-900"
+    >
       <div
         className="absolute inset-0 bg-grain opacity-60"
         aria-hidden="true"
