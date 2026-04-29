@@ -6,6 +6,7 @@ import redDates from "../../assets/red-dates-4.svg"
 
 const ImmersiveHero = () => {
   const containerRef = useRef(null)
+  const parallaxTransition = 'transform 0.4s cubic-bezier(0.2, 0, 0.2, 1)'
 
   useEffect(() => {
     const container = containerRef.current
@@ -52,7 +53,8 @@ const ImmersiveHero = () => {
       <div 
         style={{ 
           transform: 'translate3d(calc(var(--mouse-x) * 30px), calc(var(--mouse-y) * 30px), 0)',
-          transition: 'transform 0.4s cubic-bezier(0.2, 0, 0.2, 1)'
+          transition: parallaxTransition,
+          willChange: 'transform'
         }}
         className="absolute -left-24 top-8"
       >
@@ -64,7 +66,8 @@ const ImmersiveHero = () => {
       <div 
         style={{ 
           transform: 'translate3d(calc(var(--mouse-x) * -30px), calc(var(--mouse-y) * -30px), 0)',
-          transition: 'transform 0.4s cubic-bezier(0.2, 0, 0.2, 1)'
+          transition: parallaxTransition,
+          willChange: 'transform'
         }}
         className="absolute -right-16 top-20"
       >
@@ -76,10 +79,11 @@ const ImmersiveHero = () => {
       <img
         src={redDates}
         alt=""
-        className="pointer-events-none absolute right-0 top-0 h-full w-1/2 object-cover opacity-20"
+        className="pointer-events-none absolute right-0 top-0 h-full w-1/2 scale-110 object-cover opacity-20"
         style={{ 
           transform: 'translate3d(calc(var(--mouse-x) * 50px), calc(var(--mouse-y) * 50px), 0)',
-          transition: 'transform 0.4s cubic-bezier(0.2, 0, 0.2, 1)'
+          transition: parallaxTransition,
+          willChange: 'transform'
         }}
         aria-hidden="true"
       />
@@ -135,7 +139,8 @@ const ImmersiveHero = () => {
               className="absolute -top-6 left-6 rounded-full bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900 shadow-lg"
               style={{ 
                 transform: 'translate3d(calc(var(--mouse-x) * 100px), calc(var(--mouse-y) * 100px), 0)',
-                transition: 'transform 0.4s cubic-bezier(0.2, 0, 0.2, 1)'
+                transition: parallaxTransition,
+                willChange: 'transform'
               }}
             >
               Harvest 2026
@@ -146,14 +151,16 @@ const ImmersiveHero = () => {
               className="relative z-10 w-full rounded-[48px] border-4 border-amber-200/70 bg-white/80 p-6 shadow-2xl"
               style={{ 
                 transform: 'translate3d(calc(var(--mouse-x) * 80px), calc(var(--mouse-y) * 80px), 0)',
-                transition: 'transform 0.4s cubic-bezier(0.2, 0, 0.2, 1)'
+                transition: parallaxTransition,
+                willChange: 'transform'
               }}
             />
             <div 
               className="absolute -bottom-8 right-0 rounded-3xl bg-amber-800/90 px-6 py-4 text-sm text-amber-50 shadow-xl"
               style={{ 
                 transform: 'translate3d(calc(var(--mouse-x) * 110px), calc(var(--mouse-y) * 110px), 0)',
-                transition: 'transform 0.4s cubic-bezier(0.2, 0, 0.2, 1)'
+                transition: parallaxTransition,
+                willChange: 'transform'
               }}
             >
               48-hour freshness seal
