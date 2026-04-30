@@ -2,7 +2,8 @@
 
 Ecommerce React website for buying the best dates from the Middle East. 🍯🌴
 
-<img src="https://github.com/3mr-5aled/Tomory/blob/master/public/screenshot-rocks%20(2).jpg" alt="Tomory Screenshot"/>
+<img src="https://github.com/3mr-5aled/Tomory/blob/master/public/screenshot-rocks%20(2).png" alt="Tomory Screenshot"/>
+<img src="https://github.com/3mr-5aled/Tomory/blob/master/public/screenshot-rocks%20(1).png" alt="Tomory Screenshot"/>
 
 ---
 
