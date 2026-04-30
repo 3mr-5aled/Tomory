@@ -103,7 +103,7 @@ const Header = () => {
           <div className="md:flex md:items-center md:gap-12">
             <Link className="flex items-center gap-3 group" to="/">
               <span className="sr-only">Home</span>
-              <div className="p-1 bg-white rounded-full shadow-sm border border-amber-100 group-hover:border-amber-200 transition-colors">
+              <div className="rounded-full shadow-sm  group-hover:border-amber-200 transition-colors">
                 <img
                   className="h-10 w-10 object-contain rounded-full transition-transform group-hover:scale-110"
                   src={logo}

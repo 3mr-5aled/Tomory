@@ -1,5 +1,6 @@
 import React from "react"
 import redDates from "../../assets/red-dates-4.svg"
+import Logo from "../../assets/logo.png"
 
 const cards = [
   {
@@ -36,7 +37,7 @@ const SensoryShowcase = () => {
             </p>
           </div>
           <img
-            src={redDates}
+            src={Logo}
             alt="Illustration of dates"
             className="h-32 w-32 opacity-80 md:h-44 md:w-44"
           />
