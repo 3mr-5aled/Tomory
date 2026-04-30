@@ -8,7 +8,7 @@ import redDates from "../../assets/red-dates-4.svg"
 const ImmersiveHero = () => {
   const { lenis } = useLenis()
   const containerRef = useRef(null)
-  const parallaxTransition = 'transform 0.4s cubic-bezier(0.2, 0, 0.2, 1)'
+  const parallaxTransition = "transform 0.4s cubic-bezier(0.2, 0, 0.2, 1)"
 
   useEffect(() => {
     const container = containerRef.current
@@ -40,11 +40,11 @@ const ImmersiveHero = () => {
   }, [])
 
   return (
-    <section 
+    <section
       ref={containerRef}
-      style={{ 
-        '--mouse-x': 0, 
-        '--mouse-y': 0,
+      style={{
+        "--mouse-x": 0,
+        "--mouse-y": 0,
       }}
       className="relative overflow-hidden bg-amber-50 dark:bg-slate-900"
     >
@@ -52,11 +52,12 @@ const ImmersiveHero = () => {
         className="absolute inset-0 bg-grain opacity-60"
         aria-hidden="true"
       ></div>
-      <div 
-        style={{ 
-          transform: 'translate3d(calc(var(--mouse-x) * 30px), calc(var(--mouse-y) * 30px), 0)',
+      <div
+        style={{
+          transform:
+            "translate3d(calc(var(--mouse-x) * 30px), calc(var(--mouse-y) * 30px), 0)",
           transition: parallaxTransition,
-          willChange: 'transform'
+          willChange: "transform",
         }}
         className="absolute -left-24 top-8"
       >
@@ -65,11 +66,12 @@ const ImmersiveHero = () => {
           aria-hidden="true"
         ></div>
       </div>
-      <div 
-        style={{ 
-          transform: 'translate3d(calc(var(--mouse-x) * -30px), calc(var(--mouse-y) * -30px), 0)',
+      <div
+        style={{
+          transform:
+            "translate3d(calc(var(--mouse-x) * -30px), calc(var(--mouse-y) * -30px), 0)",
           transition: parallaxTransition,
-          willChange: 'transform'
+          willChange: "transform",
         }}
         className="absolute -right-16 top-20"
       >
@@ -82,21 +84,23 @@ const ImmersiveHero = () => {
         src={redDates}
         alt=""
         className="pointer-events-none absolute right-0 top-0 h-full w-1/2 scale-110 object-cover opacity-20"
-        style={{ 
-          transform: 'translate3d(calc(var(--mouse-x) * 50px), calc(var(--mouse-y) * 50px), 0)',
+        style={{
+          transform:
+            "translate3d(calc(var(--mouse-x) * 50px), calc(var(--mouse-y) * 50px), 0)",
           transition: parallaxTransition,
-          willChange: 'transform'
+          willChange: "transform",
         }}
         aria-hidden="true"
       />
 
       <div className="relative z-10 mx-auto flex min-h-[calc(100dvh-4rem)] max-w-screen-xl flex-col gap-12 px-6 py-20 lg:flex-row lg:items-center">
-        <div 
+        <div
           className="flex-1"
-          style={{ 
-            transform: 'translate3d(calc(var(--mouse-x) * 16px), calc(var(--mouse-y) * 16px), 0)',
+          style={{
+            transform:
+              "translate3d(calc(var(--mouse-x) * 16px), calc(var(--mouse-y) * 16px), 0)",
             transition: parallaxTransition,
-            willChange: 'transform'
+            willChange: "transform",
           }}
         >
           <div className="inline-flex items-center gap-3 rounded-full border border-amber-300/60 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.2em] text-amber-900 backdrop-blur dark:border-amber-200/30 dark:bg-slate-800/70 dark:text-amber-100">
@@ -121,7 +125,7 @@ const ImmersiveHero = () => {
               Shop the harvest
             </NavLink>
             <button
-              onClick={() => lenis?.scrollTo('#story', { duration: 1.5 })}
+              onClick={() => lenis?.scrollTo("#story", { duration: 1.5 })}
               className="rounded-full border border-amber-600/60 px-6 py-3 text-sm font-semibold uppercase tracking-wider text-amber-900 transition hover:-translate-y-0.5 hover:bg-amber-100 dark:text-amber-100"
             >
               Our story
@@ -144,12 +148,13 @@ const ImmersiveHero = () => {
         <div className="relative flex-1">
           <div className="absolute -left-8 bottom-8 h-36 w-36 rounded-full bg-amber-400/50 blur-2xl motion-safe:animate-float-fast"></div>
           <div className="relative mx-auto max-w-sm">
-            <div 
+            <div
               className="absolute -top-6 left-6 rounded-full bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900 shadow-lg"
-              style={{ 
-                transform: 'translate3d(calc(var(--mouse-x) * 100px), calc(var(--mouse-y) * 100px), 0)',
+              style={{
+                transform:
+                  "translate3d(calc(var(--mouse-x) * 100px), calc(var(--mouse-y) * 100px), 0)",
                 transition: parallaxTransition,
-                willChange: 'transform'
+                willChange: "transform",
               }}
             >
               Harvest 2026
@@ -157,19 +162,21 @@ const ImmersiveHero = () => {
             <img
               src={datesPlate}
               alt="Dates platter"
-              className="relative z-10 w-full rounded-[48px] border-4 border-amber-200/70 bg-white/80 p-6 shadow-2xl"
-              style={{ 
-                transform: 'translate3d(calc(var(--mouse-x) * 80px), calc(var(--mouse-y) * 80px), 0)',
+              className="relative z-10 w-full rounded-[48px] border-4 border-amber-200/70 bg-white/80 p-2 shadow-2xl"
+              style={{
+                transform:
+                  "translate3d(calc(var(--mouse-x) * 80px), calc(var(--mouse-y) * 80px), 0)",
                 transition: parallaxTransition,
-                willChange: 'transform'
+                willChange: "transform",
               }}
             />
-            <div 
+            <div
               className="absolute -bottom-8 right-0 rounded-3xl bg-amber-800/90 px-6 py-4 text-sm text-amber-50 shadow-xl"
-              style={{ 
-                transform: 'translate3d(calc(var(--mouse-x) * 110px), calc(var(--mouse-y) * 110px), 0)',
+              style={{
+                transform:
+                  "translate3d(calc(var(--mouse-x) * 110px), calc(var(--mouse-y) * 110px), 0)",
                 transition: parallaxTransition,
-                willChange: 'transform'
+                willChange: "transform",
               }}
             >
               48-hour freshness seal
@@ -179,7 +186,7 @@ const ImmersiveHero = () => {
       </div>
 
       <button
-        onClick={() => lenis?.scrollTo('#story', { duration: 1.5 })}
+        onClick={() => lenis?.scrollTo("#story", { duration: 1.5 })}
         className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900 shadow-lg backdrop-blur transition hover:-translate-y-1"
       >
         Scroll

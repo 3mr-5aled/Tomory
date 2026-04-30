@@ -110,7 +110,7 @@ const Hero = () => {
                 </a> */}
             </div>
           </div>
-          <div className="relative  sm:block sm:w-1/3 lg:w-2/5">
+          <div className="relative sm:block sm:w-1/3 lg:w-2/5">
             <img
               src={datesPlate}
               className="max-w-[15rem] m-auto md:max-w-sm rotate-12 bg-orange-600 rounded-full drop-shadow-2xl animate-wiggle transition-all ease-in-out border-8 border-orange-400"
